@@ -1,0 +1,57 @@
+.el-table-wrapper {
+  position: relative;
+  // 非自动高度，撑满容器
+  &:not(.el-table-wrapper-auto-height) {
+    height: 100%;
+
+    .el-table-wrapper-header {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 48px;
+
+      & + .el-table-wrapper-content {
+        top: 48px;
+      }
+    }
+
+    .el-table-wrapper-content {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 40px;
+      overflow: auto;
+    }
+
+    .el-table-wrapper-footer {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 40px;
+      padding: 4px 5px;
+      box-sizing: border-box;
+    }
+  }
+
+  // 自动高度，爱咋咋的
+  &.el-table-wrapper-auto-height {
+    height: auto;
+
+    .el-table-wrapper-footer {
+      height: 40px;
+      padding: 4px 5px;
+      box-sizing: border-box;
+    }
+  }
+
+  .el-table-wrapper-footer-pager {
+    float: left;
+    font-size: 12px;
+    padding: 5px 0;
+    line-height: 22px;
+    color: #555;
+  }
+}
