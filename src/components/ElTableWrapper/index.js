@@ -1,14 +1,34 @@
 import ElTableWrapper from './Template.vue'
 
-function setDefaultProps (defaults) {
-  for (let prop in defaults) {
-    if (!defaults.hasOwnProperty(prop)) {
+function setDefaultProps (customize) {
+  for (let prop in customize) {
+    if (!customize.hasOwnProperty(prop)) {
       continue
     }
     if (!ElTableWrapper.props.hasOwnProperty(prop)) {
       continue
     }
-    ElTableWrapper.props[prop]['default'] = defaults[prop]
+    let property = ElTableWrapper.props[prop]
+    if (typeof property.default !== 'function') {
+      property['default'] = customize[prop]
+      continue
+    }
+    // 默认值为函数的，就是数组或对象
+    // 组件定义的默认值
+    let value = property.default()
+    // 数组的话直接替换
+    if (Array.isArray(value)) {
+      property['default'] = customize[prop]
+      continue
+    }
+    let defaults = property['default']()
+    // 是对象的话就合并
+    property['default'] = function () {
+      return {
+        ...defaults,
+        ...customize[prop]
+      }
+    }
   }
 }
 

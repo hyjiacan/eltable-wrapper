@@ -40,16 +40,28 @@ const props = {
   ajax: {
     type: Function
   },
+  /**
+   * 向服务器请求数据的url
+   */
   ajaxUrl: {
     type: String
   },
+  /**
+   * 向服务器请求数据的method
+   */
   ajaxMethod: {
     type: String,
     default: 'get'
   },
+  /**
+   * 向服务器请求数据的参数
+   */
   ajaxParams: {
     type: Object
   },
+  /**
+   * 在使用服务器数据源时，是否在挂载后自动加载数据
+   */
   autoLoad: {
     type: Boolean,
     default: true
@@ -68,39 +80,21 @@ const props = {
     type: String,
     default: 'pageSize'
   },
+  /**
+   * 服务器分页时，返回数据中的数据总量字段名称
+   */
   totalField: {
     type: String,
     default: 'total'
   },
+  /**
+   * 服务器分页时，返回数据中的数据列表字段名称
+   */
   listField: {
     type: String,
     default: 'list'
   },
   // AJAX END===========================================================
-
-  // 增量 BEGIN======================================================
-  /**
-   * 在使用增量加载数据时，每次从服务器加载的数据量
-   */
-  increaseSize: {
-    type: Number,
-    default: 80
-  },
-  /**
-   * 增量加载数据时，增量参数名
-   */
-  increaseParam: {
-    type: String,
-    default: 'lastId'
-  },
-  /**
-   * 增量加载数据时，数据项的标识字段，若标识不在顶层，则使用数组传递
-   * 未指定时，使用 idField 的值
-   */
-  increaseId: {
-    type: [String, Array]
-  },
-  // 增量 END======================================================
 
   // 分页 BEGIN======================================================
   /**
@@ -111,12 +105,8 @@ const props = {
     default: 10
   },
   /**
-   * 分页列表
+   * 默认显示的页码
    */
-  sizes: {
-    type: [Array, Boolean],
-    default: () => [10, 20, 50, 100]
-  },
   index: {
     type: Number,
     default: 1
@@ -128,16 +118,77 @@ const props = {
     type: Boolean,
     default: false
   },
-  // 分页 BEGIN======================================================
-  tableOptions: {
-    type: Object,
-    required: true
+  // 分页 END======================================================
+
+  // 增量 BEGIN======================================================
+  /**
+   * 增量分页时每次向服务器请求的数据量
+   */
+  incSize: {
+    type: Number,
+    default: 80
   },
-  pagerOptions: {
+  /**
+   * 增量加载数据时，增量参数名
+   */
+  paramInc: {
+    type: String,
+    default: 'lastId'
+  },
+  /**
+   * 增量加载数据时，数据项的标识字段，用法与 idField 相同
+   * 未指定时，使用 idField 的值
+   */
+  incId: {
+    type: [String, Array, Function]
+  },
+  // 增量 END======================================================
+  /**
+   * ElTable 原始的属性与事件集合
+   * 不支持以下项:
+   */
+  tableOption: {
     type: Object,
-    required: false
+    default: () => {
+      return {
+        '@cell-mouse-enter': () => {
+        },
+        '@cell-mouse-leave': () => {
+        },
+        '@cell-click': () => {
+        },
+        '@cell-dblclick': () => {
+        },
+        '@row-click': () => {
+        },
+        '@row-contextmenu': () => {
+        },
+        '@row-dblclick': () => {
+        },
+        '@header-click': () => {
+        },
+        '@header-contextmenu': () => {
+        },
+        '@sort-change': () => {
+        },
+        '@filter-change': () => {
+        },
+        '@header-dragend': () => {
+        },
+        '@expand-change': () => {
+        }
+      }
+    }
+  },
+  /**
+   * ElPagination 原始的属性与事件集合
+   * 不支持以下项:
+   */
+  pagerOption: {
+    type: Object,
+    default: () => {
+    }
   }
-  // 分页 END========================================================
 }
 
 export default props

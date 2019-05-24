@@ -15,9 +15,6 @@ const component = {
       if (this.size) {
         this.pager.size = parseInt(this.size)
       }
-      if (this.sizes) {
-        this.pager.sizes = this.sizes
-      }
     },
     checkProps () {
       if (this.source === 'l') {
@@ -35,7 +32,7 @@ const component = {
     },
     _loadRemoteData () {
       if (this.source === 'i') {
-        this._loadIncreaseData()
+        this._loadIncData()
         return
       }
 
@@ -61,22 +58,22 @@ const component = {
      * 加载服务器返回的增量数据
      * @private
      */
-    _loadIncreaseData () {
+    _loadIncData () {
       this._sendAjax({
         // 这么写以避免搞掉原始参数
         ...this.ajaxParams,
-        [this.increaseParam]: this._getLastId(),
-        [this.paramSize]: this.increaseSize
+        [this.paramInc]: this._getLastId(),
+        [this.paramSize]: this.incSize
       }).then(data => {
-        if (data.length <= this.increaseSize) {
+        if (data.length <= this.incSize) {
           this.append(data)
           this.data.extra = null
           this._updatePageCount()
           return
         }
         // 还有更多数据
-        this.data.extra = data[this.increaseSize]
-        this.append(data.slice(0, this.increaseSize))
+        this.data.extra = data[this.incSize]
+        this.append(data.slice(0, this.incSize))
         this._updatePageCount()
         if (this.pager.index !== 1 || this.pager.count !== 1) {
           return
@@ -112,7 +109,7 @@ const component = {
       if (!data) {
         return ''
       }
-      return this.getDataId(data, this.increaseIdField)
+      return this.getDataId(data, this.incIdField)
     },
     _updatePageCount () {
       let length = 0
@@ -156,17 +153,25 @@ const component = {
       if (!this.data.view.length) {
         return []
       }
+      // 如果禁用分页，直接显示所有数据
+      if (this.disablePager) {
+        return this.data.view
+      }
+      // 如果指定的页码比总页数小，那么显示最后一页
+      if (this.pager.index > this.pager.count) {
+        this.pager.index = this.pager.count
+      }
       let from = (this.pager.index - 1) * this.pager.size
       return this.data.view.slice(from, from + this.pager.size)
     },
-    increaseIdField () {
-      if (!this.increaseId) {
+    incIdField () {
+      if (!this.incId) {
         return null
       }
-      if (Array.isArray(this.increaseId)) {
-        return this.increaseId
+      if (Array.isArray(this.incId)) {
+        return this.incId
       }
-      return [this.increaseId]
+      return [this.incId]
     },
     ajaxParamsName () {
       // 根据不同的请求设置参数

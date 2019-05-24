@@ -3,7 +3,7 @@
     <el-table-wrapper
       :table-options="{}"
       ajax-url="mock/data.json"
-      increase-id="id"
+      inc-id="id"
       :ajax="ajax"
       @select="onSelect"
       @selection-change="selectionChanged"

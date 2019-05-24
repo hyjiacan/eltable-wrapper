@@ -50,15 +50,31 @@ export default {
 
 ## 属性
 
-|name|type|default|description|
+|名称|类型|默认值|描述|
 |---|---|---|---|
-|url|String|-|the url for requesting data|
-|method|String|get|the method for requesting data|
-|ajax|function|-|Function to load data, should return `Promise` object. Required if `source` is `i` or `s`|
-|size|String/Number|10|Data amount per page|
-|sizes|Array\<Number>|-|Change size displayed per page|
-|auto-height|Boolean|false|Auto adjust component height, otherwise make height `100%`|
-|source|String|s|Paginate source, available values: `l`(local), `i`(increment), `s`(server)|
+|source|String|s|分页类型，可选值: `l`(本地分页), `i`(增量分页), `s`(服务器分页)|
+|id-field|String/Array/Function|id|数据项的标识字段，若标识不在顶层，则使用数组传递，也可以传入一个函数，函数接收一个行对象，函数的返回值将作为标识|
+|auto-height|Boolean|false|是否自动调整高度，设置为`false`时会设置高度撑满父容器|
+|advance-selection|Boolean|false|是否启用高级选择，启用时支持跨页页面选择|
+|ajax|function|-|向服务器发送ajax请求的方法，需要返回一个 `Promise`对象。当 `source` 为`i` 或 `s` 时是必须的|
+|ajax-url|String|-|向服务器请求数据的url|
+|ajax-method|String|get|向服务器请求数据的method|
+|ajax-params|Object|-|向服务器请求数据的参数|
+|auto-load|Boolean|true|在使用服务器数据源时，是否在挂载后自动加载数据|
+|param-index|String|pageIndex|向服务器发送请求时，页码参数名|
+|param-size|String|pageSize|向服务器发送请求时，数据量参数名|
+|total-field|String|total|服务器分页时，返回数据中的数据总量字段名称|
+|list-field|String|list|服务器分页时，返回数据中的数据列表字段名称|
+|size|Number|10|每页显示的数据量|
+|sizes|Array|-|切换每页显示数据量的列表|
+|index|Number|1|默认显示的页码|
+|disable-pager|Boolean|false|是否禁用分页|
+|incSize|Number|80|增量分页时每次向服务器请求的数据量|
+|paramInc|String|lastId|增量加载数据时，增量参数名|
+|incId|String|-|增量加载数据时，数据项的标识字段，未指定时，使用 idField 的值,用法与 idField 相同|
+|table-option|Object|-|ElTable 的[属性](OPTIONS.zh-CH.md#ElTable支持的属性)与[事件](OPTIONS.zh-CH.md#ElTable支持的事件))集合|
+|pager-option|Object|-|ElPagination 的[属性](OPTIONS.zh-CH.md#ElPagination支持的属性)集合(不支持事件)|
+
 
 可以通过以下方式指定组件属性的默认值: 
 

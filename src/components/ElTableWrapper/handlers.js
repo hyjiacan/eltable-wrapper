@@ -7,7 +7,7 @@ const handlers = {
     this.pager.indexChanged = true
     if (this.source === 'i' && index === this.pager.count) {
       // 当显示到最后一页时，加载更多数据
-      this._loadIncreaseData()
+      this._loadIncData()
     }
     if (this.pager.index === index) {
       return
@@ -134,6 +134,10 @@ const handlers = {
         let idx = this.selection.cache.findIndex(row => this.getDataId(row) === id)
         this.selection.cache.splice(idx, 1)
       }
+    }
+    if (!items.length) {
+      // 如果没有变化的项，就忽略
+      return
     }
     // 触发事件
     this.$emit('selection-change', [].concat(this.selection.cache), type, items)

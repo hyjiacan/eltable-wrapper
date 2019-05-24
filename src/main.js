@@ -13,11 +13,13 @@ Vue.use(ElementUI)
 Vue.use(ElTableWrapper, {
   method: 'get',
   size: 10,
-  sizes: () => [10, 20],
-  increaseSize: 10,
+  incSize: 10,
   autoHeight: false,
   disablePager: false,
-  source: 'i'
+  source: 'i',
+  pagerOption: {
+    layout: 'sizes, prev, pager, next, next, jumper'
+  }
 })
 
 new Vue({
