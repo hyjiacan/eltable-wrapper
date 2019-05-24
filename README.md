@@ -1,6 +1,6 @@
 # ElTableWrapper
 
-This component wraps component `ElTable` and `ElPagination` in `element-ui`.
+This component wraps component `ElTable` and `ElPagination` from `element-ui`.
 
 ## Data source
 
@@ -26,16 +26,39 @@ You can provide remote data in two ways:
 |---|---|---|---|
 |url|String|-|the url for requesting data|
 |method|String|get|the method for requesting data|
-|pre-handler|function|-|pre handle response data, then return a Array|
-|local|Array|-|Local data, if this property is specified, it means use local data source|
+|ajax|function|-|Function to load data, should return `Promise` object. Required if `source` is `i` or `s`|
 |size|String/Number|10|Data amount per page|
 |sizes|Array\<Number>|-|Change size displayed per page|
 |auto-height|Boolean|false|Auto adjust component height, otherwise make height `100%`|
-|type|String|s|Paginate type, available values: `l`(local), `i`(increment), `s`(server)|
+|source|String|s|Paginate source, available values: `l`(local), `i`(increment), `s`(server)|
 
+You can customize the default values like this: 
+
+```javascript
+import Vue from 'vue'
+import ElTableWrapper from '@hyjiacan/ElTableWrapper'
+const defaults = {
+    // set this for global ajax method
+    ajax: (e)=>{},
+    method: 'get',
+    size: 10,
+    sizes: () => [10, 20],
+    autoHeight: false,
+    disablePager: false,
+    source: 'l'
+}
+Vue.use(ElTableWrapper, defaults)
+```
 
 ## Methods
 
 |name|arguments|return|description|
 |---|---|---|---|
 |clear|-|-|clear table data and reset pagination|
+
+## Events
+
+|name|arguments|description|
+|---|---|---|
+|select|selected, prevSelected|Trigger while row click (single selection mode only)|
+|selection-change|selection rows, type, changed rows|Trigger while row selected/deselected (multiple selection mode only)|

@@ -1,48 +1,13 @@
 import props from './props'
+import methods from './methods'
+import handlers from './handlers'
+import data from './data'
 
 const component = {
   name: 'ElTableWrapper',
   props,
-  data () {
-    return {
-      /**
-       * 数据
-       */
-      data: {
-        /**
-         * 所有数据的缓存
-         */
-        cache: [],
-        /**
-         * 所有可用数据，比如过滤后的数据
-         * 客户端分页时，每一页的数据都是直接从这个里面取的
-         */
-        view: []
-      },
-      pager: {
-        size: 10,
-        sizes: [10, 20, 30, 40, 50, 100],
-        index: 1
-      },
-      /**
-       * 标记是否还有更多的数据，当客户端分页时使用
-       */
-      hasMoreData: true,
-      /**
-       * 当还有更多数据的时候，存放多查询出的那一条数据
-       */
-      extraItem: null
-    }
-  },
+  data,
   methods: {
-    onPageChanged (index) {
-      this.pager.index = index
-      this.$emit('update:index', index)
-    },
-    onSizeChanged (size) {
-      this.pager.size = size
-      this.$emit('update:size', size)
-    },
     init () {
       if (this.index) {
         this.pager.index = parseInt(this.index)
@@ -54,12 +19,119 @@ const component = {
         this.pager.sizes = this.sizes
       }
     },
-    /**
-     * 清空数据，并重置分页
-     */
-    clear () {
+    checkProps () {
+      if (this.source === 'l') {
+        // 本地数据
+        return
+      }
+      // 使用远程数据时，必须指定 dataLoader
+      if (!this.ajax) {
+        throw new Error('ElTableWrapper: Property "ajax" must be specified while source is not "l"(local)')
+      }
+      // 使用远程数据时，必须指定 url
+      if (!this.ajaxUrl) {
+        throw new Error('ElTableWrapper: Property "ajax-url" must be specified while source is not "l"(local)')
+      }
+    },
+    _loadRemoteData () {
+      if (this.source === 'i') {
+        this._loadIncreaseData()
+        return
+      }
 
-    }
+      if (this.source === 's') {
+        this._loadPagedData()
+        return
+      }
+
+      console.warn('ElTableWrapper: "load" method not allowed while source is "l"(local)')
+    },
+    /**
+     * 发送 ajax 请求
+     * @private
+     */
+    _sendAjax (params) {
+      return this.ajax({
+        url: this.ajaxUrl,
+        method: this.ajaxMethod,
+        [this.ajaxParamsName]: params
+      })
+    },
+    /**
+     * 加载服务器返回的增量数据
+     * @private
+     */
+    _loadIncreaseData () {
+      this._sendAjax({
+        // 这么写以避免搞掉原始参数
+        ...this.ajaxParams,
+        [this.increaseParam]: this._getLastId(),
+        [this.paramSize]: this.increaseSize
+      }).then(data => {
+        if (data.length <= this.increaseSize) {
+          this.append(data)
+          this.data.extra = null
+          this._updatePageCount()
+          return
+        }
+        // 还有更多数据
+        this.data.extra = data[this.increaseSize]
+        this.append(data.slice(0, this.increaseSize))
+        this._updatePageCount()
+        if (this.pager.index !== 1 || this.pager.count !== 1) {
+          return
+        }
+        // 渲染后触发一次分页事件
+        this.$nextTick(() => {
+          this.onPageChanged(this.pager.index)
+        })
+      }).catch(e => {
+        console.error(e)
+      })
+    },
+    /**
+     * 加载服务器分页好的数据
+     * @private
+     */
+    _loadPagedData () {
+      this._sendAjax({
+        // 这么写以避免搞掉原始参数
+        ...this.ajaxParams,
+        [this.paramIndex]: this.data.extra,
+        [this.paramSize]: this.pager.size
+      }).then(data => {
+        data.size = data[this.totalField]
+        this.data.view = this.data.cache = data[this.listField]
+        this._updatePageCount()
+      }).catch(e => {
+        console.error(e)
+      })
+    },
+    _getLastId () {
+      let data = this.data.extra
+      if (!data) {
+        return ''
+      }
+      return this.getDataId(data, this.increaseIdField)
+    },
+    _updatePageCount () {
+      let length = 0
+      switch (this.source) {
+        case 's':
+          length = this.data.size
+          break
+        case 'i':
+        case 'l':
+          length = this.data.view.length
+          break
+      }
+      if (!length) {
+        return 0
+      }
+      this.pager.count = Math.ceil(length / this.pager.size)
+    },
+    ...handlers,
+    ...methods
   },
   watch: {
     index (v) {
@@ -70,18 +142,13 @@ const component = {
     }
   },
   mounted () {
-    console.log(this)
     this.init()
-    if (this.useLocalData) {
-      this.data.view = this.data.cache = this.local
-    } else {
-      this.$emit('load', {})
+    this.checkProps()
+    if (this.autoLoad) {
+      this._loadRemoteData()
     }
   },
   computed: {
-    pageCount () {
-      return Math.ceil(this.local.length / this.pager.size)
-    },
     /**
      * 当前页显示的数据项
      */
@@ -92,8 +159,23 @@ const component = {
       let from = (this.pager.index - 1) * this.pager.size
       return this.data.view.slice(from, from + this.pager.size)
     },
-    useLocalData () {
-      return !!this.local
+    increaseIdField () {
+      if (!this.increaseId) {
+        return null
+      }
+      if (Array.isArray(this.increaseId)) {
+        return this.increaseId
+      }
+      return [this.increaseId]
+    },
+    ajaxParamsName () {
+      // 根据不同的请求设置参数
+      // PUT POST PATCH 设置 data
+      // 其它设置 params
+      return /^(put|post|patch)$/.test(this.method) ? 'data' : 'params'
+    },
+    isMultipleSelection () {
+      return !!this.$refs.table.$el.querySelector('.el-table-column--selection')
     }
   }
 }

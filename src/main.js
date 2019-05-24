@@ -14,9 +14,10 @@ Vue.use(ElTableWrapper, {
   method: 'get',
   size: 10,
   sizes: () => [10, 20],
+  increaseSize: 10,
   autoHeight: false,
   disablePager: false,
-  type: 'i'
+  source: 'i'
 })
 
 new Vue({

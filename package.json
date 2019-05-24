@@ -1,7 +1,30 @@
 {
   "name": "eltable-wrapper",
   "version": "0.1.0",
-  "private": true,
+  "main": "./src/components/ElTableWrapper/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyjiacan/eltable-wrapper.git"
+  },
+  "keywords": [
+    "vue",
+    "table",
+    "element-ui",
+    "pager",
+    "pagination"
+  ],
+  "author": "hyjiacan",
+  "license": "MIT",
+  "files": [
+    "docs",
+    "src",
+    "types"
+  ],
+  "typings": "types/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/hyjiacan/eltable-wrapper/issues"
+  },
+  "homepage": "https://hyjiacan.github.io/eltable-wrapper/",
   "scripts": {
     "serve": "npx vue-cli-service serve",
     "build": "npx vue-cli-service build",

@@ -12,6 +12,11 @@ function setDefaultProps (defaults) {
   }
 }
 
+/**
+ *
+ * @param Vue
+ * @param defaults 通过 Vue.use 注册组件时，设置的组件默认值
+ */
 ElTableWrapper.install = function (Vue, defaults) {
   if (defaults) {
     setDefaultProps(defaults)

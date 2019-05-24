@@ -2,8 +2,16 @@
   <div class="hello">
     <el-table-wrapper
       :table-options="{}"
-      :local="data"
+      ajax-url="mock/data.json"
+      increase-id="id"
+      :ajax="ajax"
+      @select="onSelect"
+      @selection-change="selectionChanged"
+      @select-all="selectionChanged"
+      advance-selection
+      ref="table"
     >
+      <el-table-column type="selection" prop="checked"></el-table-column>
       <el-table-column label="ID" prop="id"></el-table-column>
       <el-table-column label="Name" prop="name"></el-table-column>
       <el-table-column label="Dept." prop="dept"></el-table-column>
@@ -16,26 +24,25 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
   name: 'Demo',
-  data () {
-    let temp = []
-    for (let i = 0; i < 99; i++) {
-      temp.push({
-        id: i,
-        name: 'name' + i,
-        dept: 'dept' + i,
-        remark: 'remark' + i
-      })
-    }
-    return {
-      data: temp
-    }
-  },
   methods: {
-    load (e) {
-
+    ajax (e) {
+      return new Promise((resolve, reject) => {
+        axios.request(e).then(response => {
+          resolve(response.data)
+        }).catch(response => {
+          reject(response.data)
+        })
+      })
+    },
+    onSelect (selection, prev) {
+      console.log(selection, prev)
+    },
+    selectionChanged (selection, type, changed) {
+      console.log(selection, type, changed)
     }
   }
 }
