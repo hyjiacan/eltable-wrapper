@@ -67,11 +67,42 @@ const methods = {
     }
     rows.forEach(row => {
       let id = this.getDataId(row)
-      let idx = this.selection.cache.findIndex(row => this.getDataId(row) === id)
+      let idx = this.data.cache.findIndex(row => this.getDataId(row) === id)
       this.data.cache.splice(idx, 1)
+      idx = this.selection.cache.findIndex(row => this.getDataId(row) === id)
+      this.selection.cache.splice(idx, 1)
     })
     this.data.view = this.data.cache
     this.data.size = this.data.cache.length
+    return this
+  },
+  /**
+   * 从数据缓存中更新数据项
+   * @param rows
+   */
+  update (rows) {
+    if (!Array.isArray(rows)) {
+      rows = [rows]
+    }
+    let temp = {}
+    rows.forEach(row => {
+      temp[this.getDataId(row)] = row
+    })
+
+    let remain = rows.length
+    for (let i = 0; i < this.data.cache.length; i++) {
+      let row = this.data.cache[i]
+      let id = this.getDataId(row)
+      if (!temp.hasOwnProperty(id)) {
+        continue
+      }
+      this.$set(this.data.cache, i, temp[id])
+      delete temp[id]
+      remain--
+      if (remain <= 0) {
+        break
+      }
+    }
     return this
   },
   /**
@@ -93,6 +124,73 @@ const methods = {
       temp = temp[field]
     })
     return temp
+  },
+  /**
+   * 选中指定行
+   * @param rows
+   */
+  select (rows) {
+    let all = this.selection.all
+    let current = this.selection.current
+    let cache = this.selection.cache
+    // 单选
+    if (!this.isMultipleSelection) {
+      let id = this.getDataId(rows)
+      this.selection.all = this.selection.current = {
+        [id]: rows
+      }
+      this.$refs.table.setCurrentRow(rows)
+      return
+    }
+    // 多选
+    if (!Array.isArray(rows)) {
+      rows = [rows]
+    }
+    rows.forEach(row => {
+      let id = this.getDataId(row)
+      if (!all.hasOwnProperty(id)) {
+        all[id] = row
+        current[id] = row
+        cache.push(row)
+      }
+      console.log(all, current)
+      // this.$refs.table.toggleRowSelection(row, true)
+    })
+  },
+  deselect (rows) {
+    if (!this.isMultipleSelection) {
+
+    }
+    if (!Array.isArray(rows)) {
+      rows = [rows]
+    }
+    if (Array.isArray(rows)) {
+      rows.forEach(row => {
+        this.$refs.table.toggleRowSelection(row, false)
+      })
+    } else {
+      this.$refs.table.setCurrentRow(rows)
+    }
+  },
+  getSelection () {
+    console.log(this.selection.all)
+    if (this.isMultipleSelection) {
+      return [].concat(this.selection.cache)
+    }
+    return this.selection.cache[0]
+  },
+  /**
+   * 清除所有选中项
+   */
+  clearSelection () {
+    if (this.isMultipleSelection) {
+      this.$refs.table.clearSelection()
+    } else {
+      this.$refs.table.setCurrentRow()
+    }
+  },
+  clearSort () {
+    this.$refs.table.clearSort()
   }
 }
 

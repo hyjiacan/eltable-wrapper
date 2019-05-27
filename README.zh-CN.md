@@ -106,6 +106,7 @@ Vue.use(ElTableWrapper, defaults)
 |append|data: Array/Object|this|向表格尾追加数据项|
 |prepend|data: Array/Object|this|向表格头追加数据项|
 |insert|data: Array/Object, index: Number|this|向表格指定位置追加数据项|
+|update|data: Array/Object|this|从数据缓存中更新数据项|
 |remove|data: Array/Object|this|从数据缓存中移除数据项|
 |getDataId|row: Object, \[idField]: string|this|根配置的 idField 读取数据项的 id|
 

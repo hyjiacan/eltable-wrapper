@@ -30,6 +30,10 @@ export default {
       return new Promise((resolve, reject) => {
         axios.request(e).then(response => {
           resolve(response.data)
+          this.$nextTick(() => {
+            this.$refs.table.select(response.data[2])
+            console.log(this.$refs.table.getSelection())
+          })
         }).catch(response => {
           reject(response.data)
         })
@@ -41,6 +45,8 @@ export default {
     selectionChanged (selection, type, changed) {
       console.log(selection, type, changed)
     }
+  },
+  mounted () {
   }
 }
 </script>

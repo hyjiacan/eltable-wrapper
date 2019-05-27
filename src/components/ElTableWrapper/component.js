@@ -40,7 +40,7 @@ const component = {
         this._loadPagedData()
         return
       }
-
+      // eslint-disable-next-line
       console.warn('ElTableWrapper: "load" method not allowed while source is "l"(local)')
     },
     /**
@@ -83,6 +83,7 @@ const component = {
           this.onPageChanged(this.pager.index)
         })
       }).catch(e => {
+        // eslint-disable-next-line
         console.error(e)
       })
     },
@@ -101,6 +102,7 @@ const component = {
         this.data.view = this.data.cache = data[this.listField]
         this._updatePageCount()
       }).catch(e => {
+        // eslint-disable-next-line
         console.error(e)
       })
     },
@@ -127,6 +129,27 @@ const component = {
       }
       this.pager.count = Math.ceil(length / this.pager.size)
     },
+    _updateSelection () {
+      if (!this.selection.cache.length) {
+        return
+      }
+      this.selection.ignore = true
+      this.$nextTick(() => {
+        // 设置选中项
+        let cache = this.selection.cache
+        if (this.isMultipleSelection) {
+          cache.forEach(row => {
+            this.$refs.table.toggleRowSelection(row, true)
+          })
+        } else {
+          // 选中一行就行了
+          this.$refs.table.setCurrentRow(cache[0])
+        }
+        this.$nextTick(() => {
+          this.selection.ignore = false
+        })
+      })
+    },
     ...handlers,
     ...methods
   },
@@ -136,6 +159,9 @@ const component = {
     },
     size (v) {
       this.pager.size = v
+    },
+    currentData () {
+      this._updateSelection()
     }
   },
   mounted () {

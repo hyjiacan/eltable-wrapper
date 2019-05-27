@@ -15,25 +15,6 @@ const handlers = {
 
     this.pager.index = index
     this.$emit('update:index', index)
-
-    if (this.selection.cache.length) {
-      this.selection.ignore = true
-      this.$nextTick(() => {
-        // 设置选中项
-        let cache = this.selection.cache
-        if (this.isMultipleSelection) {
-          cache.forEach(row => {
-            this.$refs.table.toggleRowSelection(row, true)
-          })
-        } else {
-          // 选中一行就行了
-          this.$refs.table.setCurrentRow(cache[0])
-        }
-        this.$nextTick(() => {
-          this.selection.ignore = false
-        })
-      })
-    }
   },
   onSizeChanged (size) {
     if (this.pager.size === size) {
@@ -98,6 +79,7 @@ const handlers = {
 
     let items = []
     let current = this.selection.current
+    let all = this.selection.all
     if (type === 'select') {
       // 需要找出新选中的项
       selection.forEach(row => {
@@ -107,6 +89,7 @@ const handlers = {
         }
         // 这项就是新选中的了
         current[id] = row
+        all[id] = row
         items.push(row)
       })
       // 更新选中集合
@@ -129,7 +112,7 @@ const handlers = {
         }
         items.push(temp[id])
         delete current[id]
-        delete this.selection.all[id]
+        delete all[id]
         // 更新选中集合
         let idx = this.selection.cache.findIndex(row => this.getDataId(row) === id)
         this.selection.cache.splice(idx, 1)

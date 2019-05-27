@@ -20,14 +20,14 @@
     "src",
     "types"
   ],
-  "typings": "types/index.d.ts",
   "bugs": {
     "url": "https://github.com/hyjiacan/eltable-wrapper/issues"
   },
   "homepage": "https://hyjiacan.github.io/eltable-wrapper/",
   "scripts": {
     "serve": "npx vue-cli-service serve",
-    "build": "npx vue-cli-service build",
+    "build": "npx vue-cli-service build --target lib --dest=lib --name eltable-wrapper ./src/components/ElTableWrapper/index.js",
+    "build:docs": "npx vue-cli-service build",
     "lint": "npx vue-cli-service lint"
   },
   "dependencies": {
