@@ -25,15 +25,18 @@ import axios from 'axios'
 
 export default {
   name: 'Demo',
+  data () {
+    return {
+      cache: []
+    }
+  },
   methods: {
     ajax (e) {
       return new Promise((resolve, reject) => {
         axios.request(e).then(response => {
           resolve(response.data)
-          this.$nextTick(() => {
-            this.$refs.table.select(response.data[2])
-            console.log(this.$refs.table.getSelection())
-          })
+          this.cache = response.data
+          this.$refs.table.select(this.cache[2])
         }).catch(response => {
           reject(response.data)
         })
@@ -47,6 +50,10 @@ export default {
     }
   },
   mounted () {
+    setTimeout(() => {
+      this.$refs.table.deselect(this.cache[2])
+      console.info(this.$refs.table.getSelection())
+    }, 3000)
   }
 }
 </script>

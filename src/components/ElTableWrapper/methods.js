@@ -109,21 +109,21 @@ const methods = {
    * 根配置的 idField 读取数据项的 id
    * @param row
    * @param idField
-   * @return {*}
+   * @return {String}
    */
   getDataId (row, idField) {
     idField = idField || this.idField
     if (typeof idField === 'function') {
-      return idField(row)
+      return '' + idField(row)
     }
     if (!Array.isArray(idField)) {
-      return row[idField]
+      return '' + row[idField]
     }
     let temp = row
     idField.forEach(field => {
       temp = temp[field]
     })
-    return temp
+    return '' + temp
   },
   /**
    * 选中指定行
@@ -139,7 +139,7 @@ const methods = {
       this.selection.all = this.selection.current = {
         [id]: rows
       }
-      this.$refs.table.setCurrentRow(rows)
+      this._updateSelection()
       return
     }
     // 多选
@@ -153,27 +153,46 @@ const methods = {
         current[id] = row
         cache.push(row)
       }
-      console.log(all, current)
-      // this.$refs.table.toggleRowSelection(row, true)
     })
+    this._updateSelection()
+    return this
   },
+  /**
+   *
+   * @param rows 单选时此参数无效
+   */
   deselect (rows) {
     if (!this.isMultipleSelection) {
-
+      this.selection.all = this.selection.current = {}
+      this.selection.cache = []
+      this._updateSelection()
+      return
     }
     if (!Array.isArray(rows)) {
       rows = [rows]
     }
-    if (Array.isArray(rows)) {
-      rows.forEach(row => {
-        this.$refs.table.toggleRowSelection(row, false)
-      })
-    } else {
-      this.$refs.table.setCurrentRow(rows)
-    }
+    let all = this.selection.all
+    let current = this.selection.current
+    let cache = this.selection.cache
+    this.selection.ignore = true
+    rows.forEach(row => {
+      let id = this.getDataId(row)
+      if (all.hasOwnProperty(id)) {
+        delete all[id]
+        delete current[id]
+        let idx = cache.findIndex(row => this.getDataId(row) === id)
+        cache.splice(idx, 1)
+      }
+      this.$refs.table.toggleRowSelection(row, false)
+    })
+    this.selection.ignore = false
+    return this
   },
+  /**
+   * 获取选中行
+   * @return {*[]|*}
+   */
   getSelection () {
-    console.log(this.selection.all)
     if (this.isMultipleSelection) {
       return [].concat(this.selection.cache)
     }
@@ -183,14 +202,31 @@ const methods = {
    * 清除所有选中项
    */
   clearSelection () {
+    if (!this.selection.cache.length) {
+      return this
+    }
     if (this.isMultipleSelection) {
       this.$refs.table.clearSelection()
     } else {
       this.$refs.table.setCurrentRow()
     }
+    return this
   },
   clearSort () {
     this.$refs.table.clearSort()
+    return this
+  },
+  clearFilter (columnKey) {
+    this.$refs.table.clearFilter(columnKey)
+    return this
+  },
+  doLayout () {
+    this.$refs.table.doLayout()
+    return this
+  },
+  sort (prop, order) {
+    this.$refs.table.sort(prop, order)
+    return this
   }
 }
 

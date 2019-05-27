@@ -7,7 +7,9 @@ const handlers = {
     this.pager.indexChanged = true
     if (this.source === 'i' && index === this.pager.count) {
       // 当显示到最后一页时，加载更多数据
-      this._loadIncData()
+      this.$nextTick(() => {
+        this._loadIncData()
+      })
     }
     if (this.pager.index === index) {
       return
@@ -23,49 +25,48 @@ const handlers = {
     this.pager.size = size
     this.$emit('update:size', size)
   },
-  onTableSelectionChanged (selection, prev) {
+  onTableCurrentRowChanged (selected, prev) {
     if (this.selection.ignore) {
       // 忽略由程序触发的事件
       return
     }
-    if (!this.isMultipleSelection) {
-      if (this.pager.indexChanged) {
-        this.selection.current = {}
-        this.pager.indexChanged = false
-        // 高级选择时，切换页面不触发取消选择事件
-        if (this.advanceSelection && this.selection.cache.length) {
-          return
-        }
-
-        // 如果没有开启高级选择模式，那么在切换页面时，清空选中项
-        this.selection.cache = []
-        this.selection.all = {}
-      }
-      // 单选模式
-      this.selection.all = this.selection.current = {
-        [this.getDataId(selection)]: selection
-      }
-      this.selection.cache = [selection]
-      this.$emit('select', selection, prev)
+    // 如果是多选模式
+    if (this.isMultipleSelection) {
       return
     }
-    // 多选模式
+    if (this.pager.indexChanged) {
+      this.selection.current = {}
+      this.pager.indexChanged = false
+      // 高级选择时，切换页面不触发取消选择事件
+      if (this.advanceSelection && this.selection.cache.length) {
+        return
+      }
 
-    // 若选中项不是数组，表示仅仅点击了行
-    // 不作处理
-    if (!Array.isArray(selection)) {
+      // 如果没有开启高级选择模式，那么在切换页面时，清空选中项
+      this.selection.cache = []
+      this.selection.all = {}
+    }
+    // 单选模式
+    this.selection.all = this.selection.current = {
+      [this.getDataId(selected)]: selected
+    }
+    this.selection.cache = [selected]
+    this.$emit('select', selected, prev)
+  },
+  onTableSelectionChanged (selection) {
+    if (this.selection.ignore) {
+      // 忽略由程序触发的事件
       return
     }
-
-    // 是取消选中项(unselect)了还是选中项(select)了
+    // 是取消选中项(deselect)了还是选中项(select)了
     let currentPageSelectedLength = Object.keys(this.selection.current).length
-    let type = currentPageSelectedLength < selection.length ? 'select' : 'unselect'
+    let type = currentPageSelectedLength < selection.length ? 'select' : 'deselect'
     if (this.pager.indexChanged) {
       this.selection.current = {}
       this.pager.indexChanged = false
       // 高级选择时，切换页面不触发取消选择事件
       if (this.advanceSelection) {
-        if (type === 'unselect' && currentPageSelectedLength > 0) {
+        if (type === 'deselect' && currentPageSelectedLength > 0) {
           // 当前页有选中时才阻止这个事件
           // 否则会导致页面跳转后选中事件无效
           return
@@ -89,6 +90,9 @@ const handlers = {
         }
         // 这项就是新选中的了
         current[id] = row
+        if (all.hasOwnProperty(id)) {
+          return
+        }
         all[id] = row
         items.push(row)
       })

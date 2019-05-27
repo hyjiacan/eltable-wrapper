@@ -10,7 +10,8 @@
           height="100%"
           highlight-current-row
           :data="currentData"
-          @current-change="onTableSelectionChanged"
+          :row-key="getDataId"
+          @current-change="onTableCurrentRowChanged"
           @selection-change="onTableSelectionChanged"
           :maxHeight="tMaxHeight"
           :stripe="tStripe"

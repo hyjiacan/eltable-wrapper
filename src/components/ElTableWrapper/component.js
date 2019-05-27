@@ -79,9 +79,12 @@ const component = {
           return
         }
         // 渲染后触发一次分页事件
-        this.$nextTick(() => {
-          this.onPageChanged(this.pager.index)
-        })
+        if (this.source === 'i' && this.pager.index === this.pager.count) {
+          // 当只有一页数据时，加载更多数据
+          this.$nextTick(() => {
+            this._loadIncData()
+          })
+        }
       }).catch(e => {
         // eslint-disable-next-line
         console.error(e)
@@ -143,7 +146,11 @@ const component = {
           })
         } else {
           // 选中一行就行了
-          this.$refs.table.setCurrentRow(cache[0])
+          if (cache.length) {
+            this.$refs.table.setCurrentRow(cache[0])
+          } else {
+            this.$refs.table.setCurrentRow()
+          }
         }
         this.$nextTick(() => {
           this.selection.ignore = false
