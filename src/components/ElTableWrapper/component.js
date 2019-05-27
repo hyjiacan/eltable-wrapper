@@ -12,8 +12,8 @@ const component = {
       if (this.index) {
         this.pager.index = parseInt(this.index)
       }
-      if (this.size) {
-        this.pager.size = parseInt(this.size)
+      if (this.pageSize) {
+        this.pager.size = parseInt(this.pageSize)
       }
     },
     checkProps () {
@@ -154,7 +154,7 @@ const component = {
         return []
       }
       // 如果禁用分页，直接显示所有数据
-      if (this.disablePager) {
+      if (this.pDisabled) {
         return this.data.view
       }
       // 如果指定的页码比总页数小，那么显示最后一页
@@ -180,7 +180,11 @@ const component = {
       return /^(put|post|patch)$/.test(this.method) ? 'data' : 'params'
     },
     isMultipleSelection () {
-      return !!this.$refs.table.$el.querySelector('.el-table-column--selection')
+      // 循环列 查找多选列
+      let selectionCol = this.$slots.default.filter(node => {
+        return node.componentOptions.propsData.type === 'selection'
+      })
+      return !!selectionCol.length
     }
   }
 }

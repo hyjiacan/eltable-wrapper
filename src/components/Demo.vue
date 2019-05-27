@@ -16,9 +16,6 @@
       <el-table-column label="Name" prop="name"></el-table-column>
       <el-table-column label="Dept." prop="dept"></el-table-column>
       <el-table-column label="Remark" prop="remark"></el-table-column>
-      <template slot="footer">
-        底部的东西
-      </template>
     </el-table-wrapper>
   </div>
 </template>

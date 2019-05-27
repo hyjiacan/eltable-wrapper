@@ -2,6 +2,8 @@
 
 This component wraps component `ElTable` and `ElPagination` from `element-ui`.
 
+> [点击此处](README.zh-CN.md)查看中文文档
+
 ## Data source
 
 Data source should always be `Array`.

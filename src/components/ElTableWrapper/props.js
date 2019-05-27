@@ -100,7 +100,7 @@ const props = {
   /**
    * 每页显示的数据量
    */
-  size: {
+  pageSize: {
     type: Number,
     default: 10
   },
@@ -143,52 +143,151 @@ const props = {
     type: [String, Array, Function]
   },
   // 增量 END======================================================
-  /**
-   * ElTable 原始的属性与事件集合
-   * 不支持以下项:
-   */
-  tableOption: {
+
+  // ElTable 原生属性 BEGIN =======================================
+  tMaxHeight: {
+    type: [String, Number]
+  },
+  tStripe: {
+    type: Boolean,
+    default: false
+  },
+  tBorder: {
+    type: Boolean,
+    default: false
+  },
+  tSize: {
+    type: String
+  },
+  tFit: {
+    type: Boolean,
+    default: true
+  },
+  tShowHeader: {
+    type: Boolean,
+    default: true
+  },
+  tCurrentRowKey: {
+    type: [String, Number]
+  },
+  tRowClassName: {
+    type: [String, Function]
+  },
+  tRowStyle: {
+    type: [String, Function]
+  },
+  tCellClassName: {
+    type: [String, Function]
+  },
+  tCellStyle: {
+    type: [String, Function]
+  },
+  tHeaderRowClassName: {
+    type: [String, Function]
+  },
+  tHeaderRowStyle: {
+    type: [String, Function]
+  },
+  tHeaderCellClassName: {
+    type: [String, Function]
+  },
+  tHeaderCellStyle: {
+    type: [String, Function]
+  },
+  tRowKey: {
+    type: [String, Function]
+  },
+  tEmptyText: {
+    type: String,
+    default: '暂无数据'
+  },
+  tDefaultExpandAll: {
+    type: Boolean,
+    default: false
+  },
+  tExpandRowKeys: {
+    type: Array
+  },
+  tDefaultSort: {
     type: Object,
     default: () => {
       return {
-        '@cell-mouse-enter': () => {
-        },
-        '@cell-mouse-leave': () => {
-        },
-        '@cell-click': () => {
-        },
-        '@cell-dblclick': () => {
-        },
-        '@row-click': () => {
-        },
-        '@row-contextmenu': () => {
-        },
-        '@row-dblclick': () => {
-        },
-        '@header-click': () => {
-        },
-        '@header-contextmenu': () => {
-        },
-        '@sort-change': () => {
-        },
-        '@filter-change': () => {
-        },
-        '@header-dragend': () => {
-        },
-        '@expand-change': () => {
-        }
+        order: 'ascending'
       }
     }
   },
-  /**
-   * ElPagination 原始的属性与事件集合
-   * 不支持以下项:
-   */
-  pagerOption: {
-    type: Object,
+  tTooltipEffect: {
+    type: String
+  },
+  tShowSummary: {
+    type: Boolean,
+    default: false
+  },
+  tSumText: {
+    type: String,
+    default: '合计'
+  },
+  tSummaryMethod: {
+    type: Function
+  },
+  tSpanMethod: {
+    type: Function
+  },
+  tSelectOnIndeterminate: {
+    type: Boolean,
+    default: true
+  },
+  tIndent: {
+    type: Number,
+    default: 16
+  },
+  tLazy: {
+    type: Boolean
+  },
+  tLoad: {
+    type: Function
+  },
+  // ElTable 原生属性 END =======================================
+  // ELPagination 原生属性 BEGIN ================================
+  pSmall: {
+    type: Boolean,
+    default: false
+  },
+  pBackground: {
+    type: Boolean,
+    default: false
+  },
+  pPagerCount: {
+    type: Number,
+    default: 7
+  },
+  pLayout: {
+    type: String,
+    default: 'prev, pager, next, jumper, ->, total'
+  },
+  pPageSizes: {
+    type: Array,
     default: () => {
+      return [10, 20, 30, 40, 50, 100]
     }
+  },
+  pPopperClass: {
+    type: String
+  },
+  pPrevText: {
+    type: String
+  },
+  pNextText: {
+    type: String
+  },
+  pDisabled: {
+    type: Boolean,
+    default: false
+  },
+  pHideOnSinglePage: {
+    type: Boolean
   }
+  // ELPagination 原生属性 END ==================================
 }
 
 export default props

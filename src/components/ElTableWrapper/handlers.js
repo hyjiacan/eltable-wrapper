@@ -141,6 +141,71 @@ const handlers = {
     }
     // 触发事件
     this.$emit('selection-change', [].concat(this.selection.cache), type, items)
+  },
+  onCellMouseEnter () {
+    let args = [].slice.apply(arguments)
+    args.unshift('cell-mouse-enter')
+    this.$emit.apply(this, args)
+  },
+  onCellMouseLeave () {
+    let args = [].slice.apply(arguments)
+    args.unshift('cell-mouse-leave')
+    this.$emit.apply(this, args)
+  },
+  onCellClick () {
+    let args = [].slice.apply(arguments)
+    args.unshift('cell-click')
+    this.$emit.apply(this, args)
+  },
+  onCellDblclick () {
+    let args = [].slice.apply(arguments)
+    args.unshift('cell-dblclick')
+    this.$emit.apply(this, args)
+  },
+  onRowClick () {
+    let args = [].slice.apply(arguments)
+    args.unshift('row-click')
+    this.$emit.apply(this, args)
+  },
+  onRowContextmenu () {
+    let args = [].slice.apply(arguments)
+    args.unshift('row-contextmenu')
+    this.$emit.apply(this, args)
+  },
+  onRowDblclick () {
+    let args = [].slice.apply(arguments)
+    args.unshift('row-dblclick')
+    this.$emit.apply(this, args)
+  },
+  onHeaderClick () {
+    let args = [].slice.apply(arguments)
+    args.unshift('header-click')
+    this.$emit.apply(this, args)
+  },
+  onHeaderContextmenu () {
+    let args = [].slice.apply(arguments)
+    args.unshift('header-contextmenu')
+    this.$emit.apply(this, args)
+  },
+  onSortChange () {
+    let args = [].slice.apply(arguments)
+    args.unshift('sort-change')
+    this.$emit.apply(this, args)
+  },
+  onFilterChange () {
+    let args = [].slice.apply(arguments)
+    args.unshift('filter-change')
+    this.$emit.apply(this, args)
+  },
+  onHeaderDragend () {
+    let args = [].slice.apply(arguments)
+    args.unshift('header-dragend')
+    this.$emit.apply(this, args)
+  },
+  onExpandChange () {
+    let args = [].slice.apply(arguments)
+    args.unshift('expand-change')
+    this.$emit.apply(this, args)
   }
 }
 

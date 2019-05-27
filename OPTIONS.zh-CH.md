@@ -34,7 +34,9 @@
 - lazy
 - load
 
-## table-option支持的事件
+当需要设置这些属性时，在这些属性前面添加前缀 `t-`
+
+## ElTable支持的事件
 
 - @cell-mouse-enter
 - @cell-mouse-leave
@@ -50,7 +52,7 @@
 - @header-dragend
 - @expand-change
 
-## pager-option支持的属性
+## ElPagination支持的属性
 
 - small
 - background
@@ -62,3 +64,5 @@
 - next-text
 - disabled
 - hide-on-single-page
+
+当需要设置这些属性时，在这些属性前面添加前缀 `p-`

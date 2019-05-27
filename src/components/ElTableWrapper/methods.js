@@ -11,7 +11,7 @@ const methods = {
    * 清空数据，并重置分页
    */
   clear () {
-    this.data.cache = []
+    this.data.view = this.data.cache = []
     this.data.extra = null
     this.pager.index = 1
     return this
@@ -70,7 +70,7 @@ const methods = {
       let idx = this.selection.cache.findIndex(row => this.getDataId(row) === id)
       this.data.cache.splice(idx, 1)
     })
-    this.data.vie = this.data.cache
+    this.data.view = this.data.cache
     this.data.size = this.data.cache.length
     return this
   },

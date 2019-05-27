@@ -4,6 +4,8 @@
 
 > 注: 后将此组件统称为 `组件`
 
+> [CLICK HERE](README.zh-CN.md) to view docs in English
+
 ## 数据源(分页方式)
 
 组件可使用两种数据源: 本地数据，服务器数据
@@ -68,12 +70,13 @@ export default {
 |size|Number|10|每页显示的数据量|
 |sizes|Array|-|切换每页显示数据量的列表|
 |index|Number|1|默认显示的页码|
-|disable-pager|Boolean|false|是否禁用分页|
 |incSize|Number|80|增量分页时每次向服务器请求的数据量|
 |paramInc|String|lastId|增量加载数据时，增量参数名|
 |incId|String|-|增量加载数据时，数据项的标识字段，未指定时，使用 idField 的值,用法与 idField 相同|
-|table-option|Object|-|ElTable 的[属性](OPTIONS.zh-CH.md#ElTable支持的属性)与[事件](OPTIONS.zh-CH.md#ElTable支持的事件))集合|
-|pager-option|Object|-|ElPagination 的[属性](OPTIONS.zh-CH.md#ElPagination支持的属性)集合(不支持事件)|
+
+- `ElTable` 的原生属性支持见 [ElTable支持的属性](OPTIONS.zh-CH.md#ElTable支持的属性)
+- `ElTable` 的原生事件支持见 [ElTable支持的事件](OPTIONS.zh-CH.md#ElTable支持的事件)
+- `ElPagination` 的原生属性支持见 [ElPagination支持的属性](OPTIONS.zh-CH.md#ElPagination支持的属性)
 
 
 可以通过以下方式指定组件属性的默认值: 
@@ -94,15 +97,42 @@ const defaults = {
 Vue.use(ElTableWrapper, defaults)
 ```
 
-## Methods
+## 方法
 
-|name|arguments|return|description|
+|名称|参数|返回值|描述|
 |---|---|---|---|
-|clear|-|-|clear table data and reset pagination|
+|load|-|this|在使用服务器数据源时，调用此方法以从服务器加载数据|
+|clear|-|this|清空数据并重置分页|
+|append|data: Array/Object|this|向表格尾追加数据项|
+|prepend|data: Array/Object|this|向表格头追加数据项|
+|insert|data: Array/Object, index: Number|this|向表格指定位置追加数据项|
+|remove|data: Array/Object|this|从数据缓存中移除数据项|
+|getDataId|row: Object, \[idField]: string|this|根配置的 idField 读取数据项的 id|
 
-## Events
+## 事件
 
-|name|arguments|description|
+|名称|参数|描述|
 |---|---|---|
-|select|selected, prevSelected|Trigger while row click (single selection mode only)|
-|selection-change|selection rows, type, changed rows|Trigger while row selected/deselected (multiple selection mode only)|
+|select|selected: Object, prevSelected: Object|在单选时，行被点击后触发|
+|selection-change|selection: Array, type: String, changed: Array|多选时，选中或取消选中行时触发|
+|cell-mouse-enter|-|ElTable 事件|
+|cell-mouse-leave|-|ElTable 事件|
+|cell-click|-|ElTable 事件|
+|cell-dblclick|-|ElTable 事件|
+|row-click|-|ElTable 事件|
+|row-contextmenu|-|ElTable 事件|
+|row-dblclick|-|ElTable 事件|
+|header-click|-|ElTable 事件|
+|header-contextmenu|-|ElTable 事件|
+|sort-change|-|ElTable 事件|
+|filter-change|-|ElTable 事件|
+|header-dragend|-|ElTable 事件|
+|expand-change|-|ElTable 事件|
+
+## 插槽
+
+|名称|数据|描述|
+|---|---|---|
+|default|-|`ElTable` 的列集合，用法与 `ElTable` 的默认插槽相同|
+|empty|-|`ElTable` 的 `empty` 插槽|
+|footer|selected: Number|分页左侧的文字，`selected`为选中项的数量|

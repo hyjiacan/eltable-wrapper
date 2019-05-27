@@ -8,27 +8,7 @@ function setDefaultProps (customize) {
     if (!ElTableWrapper.props.hasOwnProperty(prop)) {
       continue
     }
-    let property = ElTableWrapper.props[prop]
-    if (typeof property.default !== 'function') {
-      property['default'] = customize[prop]
-      continue
-    }
-    // 默认值为函数的，就是数组或对象
-    // 组件定义的默认值
-    let value = property.default()
-    // 数组的话直接替换
-    if (Array.isArray(value)) {
-      property['default'] = customize[prop]
-      continue
-    }
-    let defaults = property['default']()
-    // 是对象的话就合并
-    property['default'] = function () {
-      return {
-        ...defaults,
-        ...customize[prop]
-      }
-    }
+    ElTableWrapper.props[prop]['default'] = customize[prop]
   }
 }
 
