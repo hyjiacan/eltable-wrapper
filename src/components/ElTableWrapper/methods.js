@@ -158,6 +158,17 @@ const methods = {
     return this
   },
   /**
+   * 全选，仅多选时有效
+   */
+  selectAll () {
+    if (!this.isMultipleSelection) {
+      return
+    }
+    let data = this.advanceSelection ? this.currentData : this.data.cache
+    this.select(data)
+    return this
+  },
+  /**
    *
    * @param rows 单选时此参数无效
    */
@@ -186,6 +197,17 @@ const methods = {
       this.$refs.table.toggleRowSelection(row, false)
     })
     this.selection.ignore = false
+    return this
+  },
+  /**
+   * 取消全选，仅多选时有效
+   */
+  deselectAll () {
+    if (!this.isMultipleSelection) {
+      return
+    }
+    let data = this.advanceSelection ? this.currentData : this.data.cache
+    this.deselect(data)
     return this
   },
   /**

@@ -156,7 +156,9 @@ Vue.use(ElTableWrapper, defaults)
 |remove|data: Array/Object|this|从数据缓存中移除数据项|
 |getDataId|row: Object, \[idField]: string|this|根配置的 idField 读取数据项的 id|
 |select|rows: Object/Array|this|选中指定的行|
+|selectAll|-|this|全选，仅在多选时生效|
 |deselect|rows: Object/Array|this|取消选中指定的行|
+|deselectAll|-|this|取消全选，仅在多选时生效|
 |getSelection|-|Array/Object|获取选中的行，单选时返回选中的行对象，多选时返回行集合|
 |clearSelection|-|this|清除所有选中|
 |clearSort|-|this|`ElTable` 的 `clearSort` 方法|
