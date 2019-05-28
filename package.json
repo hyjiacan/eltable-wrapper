@@ -17,7 +17,7 @@
   "author": "hyjiacan",
   "license": "MIT",
   "files": [
-    "docs",
+    "lib",
     "src",
     "types"
   ],

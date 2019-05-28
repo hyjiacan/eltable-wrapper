@@ -6,12 +6,20 @@
 
 > [CLICK HERE](README.zh-CN.md) to view docs in English
 
+## 安装
+
+```bash
+npm istall @hyjiacan/eltable-wrapper
+```
+
 ## 用法
 
 *main.js*
 ```javascript
 import Vue from 'vue'
 import ElTableWrapper from '@hyjiacan/ElTableWrapper'
+import '@hyjiacan/eltable-wrapper/lib/eltable-wrapper.css'
+
 const defaults = {
     // 设置全局的ajax请求方法
     ajax: (e)=>{},
