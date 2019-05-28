@@ -59,12 +59,12 @@ const component = {
      * @private
      */
     _loadIncData () {
-      this._sendAjax({
-        // 这么写以避免搞掉原始参数
-        ...this.ajaxParams,
+      // 这么写以避免搞掉原始参数
+      let p = Object.assign({}, this.ajaxParams, {
         [this.paramInc]: this._getLastId(),
         [this.paramSize]: this.incSize
-      }).then(data => {
+      })
+      this._sendAjax(p).then(data => {
         if (data.length <= this.incSize) {
           this.append(data)
           this.data.extra = null
@@ -86,8 +86,7 @@ const component = {
           })
         }
       }).catch(e => {
-        // eslint-disable-next-line
-        console.error(e)
+        this.$emit('load-error', e)
       })
     },
     /**
@@ -95,18 +94,17 @@ const component = {
      * @private
      */
     _loadPagedData () {
-      this._sendAjax({
-        // 这么写以避免搞掉原始参数
-        ...this.ajaxParams,
+      // 这么写以避免搞掉原始参数
+      let p = Object.assign({}, this.ajaxParams, {
         [this.paramIndex]: this.data.extra,
         [this.paramSize]: this.pager.size
-      }).then(data => {
+      })
+      this._sendAjax(p).then(data => {
         data.size = data[this.totalField]
         this.data.view = this.data.cache = data[this.listField]
         this._updatePageCount()
       }).catch(e => {
-        // eslint-disable-next-line
-        console.error(e)
+        this.$emit('load-error', e)
       })
     },
     _getLastId () {
@@ -215,7 +213,9 @@ const component = {
     isMultipleSelection () {
       // 循环列 查找多选列
       let selectionCol = this.$slots.default.filter(node => {
-        return node.componentOptions.propsData.type === 'selection'
+        return node.componentOptions &&
+          node.componentOptions.propsData &&
+          node.componentOptions.propsData.type === 'selection'
       })
       return !!selectionCol.length
     }

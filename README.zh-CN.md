@@ -91,7 +91,6 @@ const defaults = {
     size: 10,
     sizes: () => [10, 20],
     autoHeight: false,
-    disablePager: false,
     source: 'l'
 }
 Vue.use(ElTableWrapper, defaults)
@@ -122,6 +121,7 @@ Vue.use(ElTableWrapper, defaults)
 
 |名称|参数|描述|
 |---|---|---|
+|load-error|{data, message, response}|加载jax数据失败的事件|
 |select|selected: Object, prevSelected: Object|在单选时，行被点击后触发|
 |selection-change|selection: Array, type: String, changed: Array|多选时，选中或取消选中行时触发|
 |cell-mouse-enter|-|ElTable 事件|

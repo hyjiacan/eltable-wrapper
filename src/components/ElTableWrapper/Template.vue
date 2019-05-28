@@ -63,7 +63,7 @@
           </slot>
         </el-table>
       </div>
-      <div class="el-table-wrapper-footer" v-if="!disablePager || $slots.footer">
+      <div class="el-table-wrapper-footer" v-if="!pDisabled || $slots.footer">
         <div class="el-table-wrapper-footer-text">
           <slot name="footer" :selected="selection.cache.length">
             <template v-if="isMultipleSelection">
@@ -75,7 +75,7 @@
           </slot>
         </div>
         <div class="el-table-wrapper-pager">
-          <span class="el-table-wrapper-pager-summary" v-if="source === 'i'">已加载 {{data.size}} 条数据</span>
+          <span class="el-table-wrapper-pager-summary" v-if="source === 'i' && data.extra">已加载 {{data.size}} 条数据</span>
           <span class="el-table-wrapper-pager-summary" v-else>共 {{data.size}} 条数据</span>
           <el-pagination
             :page-size="pager.size"

@@ -46,7 +46,6 @@ const defaults = {
     size: 10,
     sizes: () => [10, 20],
     autoHeight: false,
-    disablePager: false,
     source: 'l'
 }
 Vue.use(ElTableWrapper, defaults)

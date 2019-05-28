@@ -1,7 +1,7 @@
 {
   "name": "eltable-wrapper",
   "version": "0.1.0",
-  "main": "./src/components/ElTableWrapper/index.js",
+  "main": "lib/eltable-wrapper.common.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hyjiacan/eltable-wrapper.git"
@@ -26,7 +26,7 @@
   "homepage": "https://hyjiacan.github.io/eltable-wrapper/",
   "scripts": {
     "serve": "npx vue-cli-service serve",
-    "build": "npx vue-cli-service build --target lib --dest=lib --name eltable-wrapper ./src/components/ElTableWrapper/index.js",
+    "build": "npx vue-cli-service build --target lib --dest=lib --formats=commonjs --name eltable-wrapper ./src/components/ElTableWrapper/index.js",
     "build:docs": "npx vue-cli-service build",
     "lint": "npx vue-cli-service lint"
   },
