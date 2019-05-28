@@ -6,6 +6,45 @@
 
 > [CLICK HERE](README.zh-CN.md) to view docs in English
 
+## 用法
+
+*main.js*
+```javascript
+import Vue from 'vue'
+import ElTableWrapper from '@hyjiacan/ElTableWrapper'
+const defaults = {
+    // 设置全局的ajax请求方法
+    ajax: (e)=>{},
+    method: 'get',
+    size: 10,
+    autoHeight: false,
+    source: 'l'
+}
+Vue.use(ElTableWrapper, defaults)
+```
+
+```vue
+<el-table-wrapper
+    ajax-url="/path/to/url"
+    :ajax-params="{p0: 1}"
+    @ajax-error="onAjaxError"
+    >
+  <el-table-column type="selection"></el-table-column>    
+  <el-table-column prop="id"></el-table-column>    
+  <el-table-column prop="name"></el-table-column>    
+</el-table-wrapper>
+<script>
+export default {
+  methods:{
+    onAjaxError(e) {
+      console.error(e)
+    }
+  }
+}
+</script>
+
+```
+
 ## 数据源(分页方式)
 
 组件可使用两种数据源: 本地数据，服务器数据
@@ -121,7 +160,7 @@ Vue.use(ElTableWrapper, defaults)
 
 |名称|参数|描述|
 |---|---|---|
-|load-error|{data, message, response}|加载jax数据失败的事件|
+|ajax-error|{data, message, response}|加载jax数据失败的事件|
 |select|selected: Object, prevSelected: Object|在单选时，行被点击后触发|
 |selection-change|selection: Array, type: String, changed: Array|多选时，选中或取消选中行时触发|
 |cell-mouse-enter|-|ElTable 事件|

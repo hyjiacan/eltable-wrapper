@@ -86,7 +86,7 @@ const component = {
           })
         }
       }).catch(e => {
-        this.$emit('load-error', e)
+        this.$emit('ajax-error', e)
       })
     },
     /**
@@ -104,7 +104,7 @@ const component = {
         this.data.view = this.data.cache = data[this.listField]
         this._updatePageCount()
       }).catch(e => {
-        this.$emit('load-error', e)
+        this.$emit('ajax-error', e)
       })
     },
     _getLastId () {

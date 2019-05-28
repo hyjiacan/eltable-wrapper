@@ -1,7 +1,8 @@
 {
   "name": "eltable-wrapper",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "lib/eltable-wrapper.common.js",
+  "description": "Wrap component `ElTable` and `ElPagination` for `element-ui`",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hyjiacan/eltable-wrapper.git"
@@ -27,7 +28,9 @@
   "scripts": {
     "serve": "npx vue-cli-service serve",
     "build": "npx vue-cli-service build --target lib --dest=lib --formats=commonjs --name eltable-wrapper ./src/components/ElTableWrapper/index.js",
-    "build:docs": "npx vue-cli-service build",
+    "build:demo": "npx vue-cli-service build --dest=demo",
+    "build:docs": "npx vue-cli-service build --dest=docs",
+    "release": "yarn run lint & yarn run build & yarn run build:demo & yarn run docs",
     "lint": "npx vue-cli-service lint"
   },
   "dependencies": {
