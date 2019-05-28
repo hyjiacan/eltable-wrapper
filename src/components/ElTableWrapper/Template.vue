@@ -61,6 +61,7 @@
           <slot name="empty" slot="empty">
             {{tEmptyText}}
           </slot>
+          <slot name="append" slot="append"></slot>
         </el-table>
       </div>
       <div class="el-table-wrapper-footer" v-if="!pDisabled || $slots.footer">

@@ -184,4 +184,5 @@ Vue.use(ElTableWrapper, defaults)
 |header|-|可选的表格顶部插槽|
 |default|-|`ElTable` 的列集合，用法与 `ElTable` 的默认插槽相同|
 |empty|-|`ElTable` 的 `empty` 插槽|
+|append|-|`ElTable` 的 `append` 插槽|
 |footer|selected: Number|分页左侧的文字，`selected`为选中项的数量|
