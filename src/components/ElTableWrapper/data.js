@@ -20,7 +20,8 @@ const data = () => {
       /**
        * 所有缓存的数据量
        */
-      size: 0
+      size: 0,
+      loading: false
     },
     /**
      * 选中数据的存放

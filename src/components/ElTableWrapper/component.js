@@ -23,11 +23,12 @@ const component = {
       }
       // 使用远程数据时，必须指定 dataLoader
       if (!this.ajax) {
-        throw new Error('ElTableWrapper: Property "ajax" must be specified while source is not "l"(local)')
+        console.warn('ElTableWrapper: Property "ajax" must be specified while source is not "l"(local)')
+        return
       }
       // 使用远程数据时，必须指定 url
       if (!this.ajaxUrl) {
-        throw new Error('ElTableWrapper: Property "ajax-url" must be specified while source is not "l"(local)')
+        console.warn('ElTableWrapper: Property "ajax-url" must be specified while source is not "l"(local)')
       }
     },
     _loadRemoteData () {
@@ -64,6 +65,7 @@ const component = {
         [this.paramInc]: this._getLastId(),
         [this.paramSize]: this.incSize
       })
+      this.data.loading = true
       this._sendAjax(p).then(data => {
         if (data.length <= this.incSize) {
           this.append(data)
@@ -87,6 +89,8 @@ const component = {
         }
       }).catch(e => {
         this.$emit('ajax-error', e)
+      }).finally(() => {
+        this.data.loading = false
       })
     },
     /**
@@ -99,12 +103,15 @@ const component = {
         [this.paramIndex]: this.data.extra,
         [this.paramSize]: this.pager.size
       })
+      this.data.loading = true
       this._sendAjax(p).then(data => {
         data.size = data[this.totalField]
         this.data.view = this.data.cache = data[this.listField]
         this._updatePageCount()
       }).catch(e => {
         this.$emit('ajax-error', e)
+      }).finally(() => {
+        this.data.loading = false
       })
     },
     _getLastId () {
@@ -126,7 +133,7 @@ const component = {
           break
       }
       if (!length) {
-        return 0
+        this.pager.count = 0
       }
       this.pager.count = Math.ceil(length / this.pager.size)
     },
@@ -211,6 +218,9 @@ const component = {
       return /^(put|post|patch)$/.test(this.method) ? 'data' : 'params'
     },
     isMultipleSelection () {
+      if (!this.$slots.default) {
+        return false
+      }
       // 循环列 查找多选列
       let selectionCol = this.$slots.default.filter(node => {
         return node.componentOptions &&

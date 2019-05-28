@@ -13,7 +13,12 @@ const methods = {
   clear () {
     this.data.view = this.data.cache = []
     this.data.extra = null
+    this.data.size = 0
     this.pager.index = 1
+    this.pager.count = 0
+    this.selection.cache = []
+    this.selection.all = {}
+    this.selection.current = {}
     return this
   },
   /**
@@ -26,8 +31,9 @@ const methods = {
     } else {
       this.data.cache.push(row)
     }
-    this.data.view = this.data.cache
     this.data.size = this.data.cache.length
+    this.pager.count = Math.ceil(this.data.size / this.pager.size)
+    this.data.view = this.data.cache
     return this
   },
   /**
@@ -41,6 +47,8 @@ const methods = {
       this.data.cache.unshift(row)
     }
     this.data.size = this.data.cache.length
+    this.pager.count = Math.ceil(this.data.size / this.pager.size)
+    this.data.view = this.data.cache
     return this
   },
   /**
@@ -55,6 +63,8 @@ const methods = {
       this.data.cache.splice(index, 0, row)
     }
     this.data.size = this.data.cache.length
+    this.pager.count = Math.ceil(this.data.size / this.pager.size)
+    this.data.view = this.data.cache
     return this
   },
   /**
@@ -72,8 +82,9 @@ const methods = {
       idx = this.selection.cache.findIndex(row => this.getDataId(row) === id)
       this.selection.cache.splice(idx, 1)
     })
-    this.data.view = this.data.cache
     this.data.size = this.data.cache.length
+    this.pager.count = Math.ceil(this.data.size / this.pager.size)
+    this.data.view = this.data.cache
     return this
   },
   /**

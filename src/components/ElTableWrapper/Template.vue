@@ -1,12 +1,12 @@
 <template>
   <div class="el-table-wrapper" :class="{'el-table-wrapper-auto-height': autoHeight}">
-    <div class="el-table-wrapper-layout">
+    <div class="el-table-wrapper-layout" v-loading="data.loading">
       <div class="el-table-wrapper-header" v-if="$slots.header">
         <slot name="header"></slot>
       </div>
       <div class="el-table-wrapper-content">
         <el-table
-          width="100%"
+          style="width: 100%"
           height="100%"
           highlight-current-row
           :data="currentData"
