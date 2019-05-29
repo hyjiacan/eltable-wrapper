@@ -105,6 +105,10 @@ export default {
 |id-field|String/Array/Function|id|数据项的标识字段，若标识不在顶层，则使用数组传递，也可以传入一个函数，函数接收一个行对象，函数的返回值将作为标识|
 |auto-height|Boolean|false|是否自动调整高度，设置为`false`时会设置高度撑满父容器|
 |advance-selection|Boolean|false|是否启用高级选择，启用时支持跨页页面选择|
+|customClass|String|-|自定义的样式类|
+|pagerPosition|String|bottom|分页条位置，可选值为 `bottom` `top` `both`|
+|header-size|String/Number|48|`header` 高度，单位为`px`|
+|footer-size|String/Number|40|`footer` 高度，单位为`px`|
 |ajax|function|-|向服务器发送ajax请求的方法，需要返回一个 `Promise`对象。当 `source` 为`i` 或 `s` 时是必须的|
 |ajax-url|String|-|向服务器请求数据的url|
 |ajax-method|String|get|向服务器请求数据的method|
@@ -114,10 +118,10 @@ export default {
 |param-size|String|pageSize|向服务器发送请求时，数据量参数名|
 |total-field|String|total|服务器分页时，返回数据中的数据总量字段名称|
 |list-field|String|list|服务器分页时，返回数据中的数据列表字段名称|
-|size|Number|10|每页显示的数据量|
+|size|String/Number|10|每页显示的数据量|
 |sizes|Array|-|切换每页显示数据量的列表|
-|index|Number|1|默认显示的页码|
-|incSize|Number|80|增量分页时每次向服务器请求的数据量|
+|index|String/Number|1|默认显示的页码|
+|incSize|String/Number|80|增量分页时每次向服务器请求的数据量|
 |paramInc|String|lastId|增量加载数据时，增量参数名|
 |incId|String|-|增量加载数据时，数据项的标识字段，未指定时，使用 idField 的值,用法与 idField 相同|
 
@@ -195,4 +199,5 @@ Vue.use(ElTableWrapper, defaults)
 |default|-|`ElTable` 的列集合，用法与 `ElTable` 的默认插槽相同|
 |empty|-|`ElTable` 的 `empty` 插槽|
 |append|-|`ElTable` 的 `append` 插槽|
+|pagerSlot|-|`ElPagination` 的插槽，默认放在分页左侧|
 |footer|selected: Number|分页左侧的文字，`selected`为选中项的数量|

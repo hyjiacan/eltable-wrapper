@@ -185,6 +185,42 @@ const component = {
   },
   computed: {
     /**
+     * 附加的样式类
+     */
+    wrapperClass () {
+      let cls = {
+        'el-table-wrapper-auto-height': this.autoHeight,
+        'el-table-wrapper-header-visible': this.headerVisible,
+        'el-table-wrapper-footer-visible': this.footerVisible
+      }
+      if (this.customClass) {
+        cls[this.customClass] = true
+      }
+      return cls
+    },
+    headerStyle () {
+      return {
+        height: this.headerVisible ? `${parseFloat(this.headerSize)}px` : 0
+      }
+    },
+    contentStyle () {
+      return {
+        top: this.headerVisible ? `${parseFloat(this.headerSize)}px` : 0,
+        bottom: this.footerVisible ? `${parseFloat(this.footerSize)}px` : 0
+      }
+    },
+    footerStyle () {
+      return {
+        height: this.footerVisible ? `${parseFloat(this.footerSize)}px` : 0
+      }
+    },
+    headerVisible () {
+      return (!this.pDisabled && this.pagerPosition !== 'bottom') || this.$slots.header
+    },
+    footerVisible () {
+      return (!this.pDisabled && this.pagerPosition !== 'top') || this.$slots.footer
+    },
+    /**
      * 当前页显示的数据项
      */
     currentData () {
@@ -228,6 +264,18 @@ const component = {
           node.componentOptions.propsData.type === 'selection'
       })
       return !!selectionCol.length
+    },
+    pagerLayout () {
+      let layout = this.pLayout
+      if (!this.$slots.pagerSlot) {
+        return layout
+      }
+      // 默认放在分页左侧
+      if (layout.indexOf('slot') === -1) {
+        return 'slot, ' + layout
+      }
+
+      return layout
     }
   }
 }

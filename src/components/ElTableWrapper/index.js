@@ -5,6 +5,10 @@ function setDefaultProps (customize) {
     if (!customize.hasOwnProperty(prop)) {
       continue
     }
+    // 处理带下划线格式成驼峰
+    prop = prop.replace(/-[a-z]/g, match => {
+      return match[1].toUpperCase()
+    })
     if (!ElTableWrapper.props.hasOwnProperty(prop)) {
       continue
     }

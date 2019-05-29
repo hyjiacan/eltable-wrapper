@@ -1,5 +1,6 @@
 .el-table-wrapper {
   position: relative;
+  box-sizing: border-box;
   // 非自动高度，撑满容器
   &:not(.el-table-wrapper-auto-height) {
     height: 100%;
@@ -9,11 +10,6 @@
       top: 0;
       right: 0;
       left: 0;
-      height: 48px;
-
-      & + .el-table-wrapper-content {
-        top: 48px;
-      }
     }
 
     .el-table-wrapper-content {
@@ -21,7 +17,7 @@
       top: 0;
       right: 0;
       left: 0;
-      bottom: 40px;
+      bottom: 0;
       overflow: auto;
     }
 
@@ -30,7 +26,6 @@
       bottom: 0;
       right: 0;
       left: 0;
-      height: 40px;
       padding: 4px 5px;
       box-sizing: border-box;
     }
@@ -41,18 +36,15 @@
     height: auto;
 
     .el-table-wrapper-footer {
-      height: 40px;
       padding: 4px 5px;
       box-sizing: border-box;
     }
   }
 }
 
-
 .el-table-wrapper-pager {
   float: right;
 }
-
 
 .el-table-wrapper-pager-summary {
   float: left;
@@ -67,14 +59,28 @@
   float: left;
 }
 
-.el-table-wrapper-footer {
-  background-color: #FFFFFF;
+.el-table-wrapper-header {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.el-table-wrapper-footer-text {
+.el-table-wrapper-footer {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.el-table-wrapper-pager-slot {
+  height: 32px;
+  float: left;
+}
+
+.el-table-wrapper-footer-text, .el-table-wrapper-header-text {
   float: left;
   font-size: 12px;
   padding: 5px 0;
   line-height: 22px;
   color: #555;
+  box-sizing: border-box;
 }

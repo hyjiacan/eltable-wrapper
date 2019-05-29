@@ -34,8 +34,23 @@ const props = {
   /**
    * 自定义的样式类
    */
-  customizeClass: {
+  customClass: {
     type: String
+  },
+  /**
+   * 分页条位置，可选值为 bottom top both
+   */
+  pagerPosition: {
+    type: String,
+    default: 'bottom'
+  },
+  headerSize: {
+    type: [String, Number],
+    default: 48
+  },
+  footerSize: {
+    type: [String, Number],
+    default: 40
   },
   // 通用 END===========================================================
 
@@ -107,14 +122,14 @@ const props = {
    * 每页显示的数据量
    */
   pageSize: {
-    type: Number,
+    type: [String, Number],
     default: 10
   },
   /**
    * 默认显示的页码
    */
   index: {
-    type: Number,
+    type: [String, Number],
     default: 1
   },
   // 分页 END======================================================
@@ -124,7 +139,7 @@ const props = {
    * 增量分页时每次向服务器请求的数据量
    */
   incSize: {
-    type: Number,
+    type: [String, Number],
     default: 80
   },
   /**
