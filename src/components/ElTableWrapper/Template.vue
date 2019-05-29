@@ -12,6 +12,9 @@
         </slot>
       </div>
       <div class="el-table-wrapper-pager" v-show="!pDisabled && pagerPosition !== 'bottom'">
+        <div class="el-table-wrapper-pager-prepend" v-if="this.$slots.pagerPrepend">
+          <slot name="pagerPrepend"></slot>
+        </div>
         <span class="el-table-wrapper-pager-summary" v-if="source === 'i' && data.extra">已加载 {{data.size}} 条数据</span>
         <span class="el-table-wrapper-pager-summary" v-else>共 {{data.size}} 条数据</span>
         <el-pagination
@@ -29,7 +32,11 @@
           :disabled="pDisabled"
           :hideOnSinglePage="pHideOnSinglePage"
           @current-change="onPageChanged"
-          @size-change="onSizeChanged"></el-pagination>
+          @size-change="onSizeChanged">
+        </el-pagination>
+        <div class="el-table-wrapper-pager-append" v-if="this.$slots.pagerAppend">
+          <slot name="pagerAppend"></slot>
+        </div>
       </div>
     </div>
     <div class="el-table-wrapper-content" :style="contentStyle">
@@ -92,7 +99,8 @@
         <slot name="append" slot="append"></slot>
       </el-table>
     </div>
-    <div class="el-table-wrapper-footer" :style="footerStyle" v-if="(!pDisabled && pagerPosition !== 'top') || $slots.footer">
+    <div class="el-table-wrapper-footer" :style="footerStyle"
+         v-if="(!pDisabled && pagerPosition !== 'top') || $slots.footer">
       <div class="el-table-wrapper-footer-text">
         <slot name="footer" :selected="selection.cache.length">
           <template v-if="isMultipleSelection">
@@ -104,8 +112,13 @@
         </slot>
       </div>
       <div class="el-table-wrapper-pager" v-show="!pDisabled && pagerPosition !== 'top'">
-        <span class="el-table-wrapper-pager-summary" v-if="source === 'i' && data.extra">已加载 {{data.size}} 条数据</span>
-        <span class="el-table-wrapper-pager-summary" v-else>共 {{data.size}} 条数据</span>
+        <div class="el-table-wrapper-pager-prepend" v-if="this.$slots.pagerPrepend">
+          <slot name="pagerPrepend"></slot>
+        </div>
+        <template v-if="showPagerSummary">
+          <span class="el-table-wrapper-pager-summary" v-if="source === 'i' && data.extra">已加载 {{data.size}} 条数据</span>
+          <span class="el-table-wrapper-pager-summary" v-else>共 {{data.size}} 条数据</span>
+        </template>
         <el-pagination
           :page-size="pager.size"
           :page-count="pager.count"
@@ -113,7 +126,7 @@
           :small="pSmall"
           :background="pBackground"
           :pagerCount="pPagerCount"
-          :layout="pagerLayout"
+          :layout="pLayout"
           :pageSizes="pPageSizes"
           :popperClass="pPopperClass"
           :prevText="pPrevText"
@@ -122,10 +135,10 @@
           :hideOnSinglePage="pHideOnSinglePage"
           @current-change="onPageChanged"
           @size-change="onSizeChanged">
-          <div class="el-table-wrapper-pager-slot" v-if="this.$refs.pagerSlot">
-            <slot name="pagerSlot"></slot>
-          </div>
         </el-pagination>
+        <div class="el-table-wrapper-pager-append" v-if="this.$slots.pagerAppend">
+          <slot name="pagerAppend"></slot>
+        </div>
       </div>
     </div>
   </div>

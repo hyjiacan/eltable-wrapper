@@ -176,7 +176,7 @@ Vue.use(ElTableWrapper, defaults)
 |---|---|---|
 |ajax-error|{data, message, response}|加载jax数据失败的事件|
 |select|selected: Object, prevSelected: Object|在单选时，行被点击后触发|
-|selection-change|selection: Array, type: String, changed: Array|多选时，选中或取消选中行时触发|
+|selection-change|{selection: Array, type: String, changed: Array, allSelected: Boolean}|多选时，选中或取消选中行时触发；当没有数据项时，`allSelected`始终为`false`|
 |cell-mouse-enter|-|ElTable 事件|
 |cell-mouse-leave|-|ElTable 事件|
 |cell-click|-|ElTable 事件|
@@ -199,5 +199,6 @@ Vue.use(ElTableWrapper, defaults)
 |default|-|`ElTable` 的列集合，用法与 `ElTable` 的默认插槽相同|
 |empty|-|`ElTable` 的 `empty` 插槽|
 |append|-|`ElTable` 的 `append` 插槽|
-|pagerSlot|-|`ElPagination` 的插槽，默认放在分页左侧|
+|pagerPrepend|-|分页插槽，默认放在分页左侧|
+|pagerAppend|-|分页插槽，默认放在分页右侧|
 |footer|selected: Number|分页左侧的文字，`selected`为选中项的数量|

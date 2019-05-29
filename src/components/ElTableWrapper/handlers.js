@@ -126,8 +126,15 @@ const handlers = {
       // 如果没有变化的项，就忽略
       return
     }
+    // 是否选择了所有数据项
+    let allSelected = this.selection.cache.length > 0 && this.selection.cache.length === this.data.cache.length
     // 触发事件
-    this.$emit('selection-change', [].concat(this.selection.cache), type, items)
+    this.$emit('selection-change', {
+      selection: [].concat(this.selection.cache),
+      type,
+      changed: items,
+      allSelected
+    })
   },
   onCellMouseEnter () {
     let args = [].slice.apply(arguments)

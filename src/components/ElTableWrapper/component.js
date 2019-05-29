@@ -179,7 +179,7 @@ const component = {
   mounted () {
     this.init()
     this.checkProps()
-    if (this.autoLoad) {
+    if (this.source !== 'l' && this.autoLoad) {
       this._loadRemoteData()
     }
   },
@@ -248,7 +248,7 @@ const component = {
       return [this.incId]
     },
     ajaxParamsName () {
-      // 根据不同的请求设置参数
+      // 根据不同的请求设置参数: axios 用法
       // PUT POST PATCH 设置 data
       // 其它设置 params
       return /^(put|post|patch)$/.test(this.method) ? 'data' : 'params'
@@ -264,18 +264,6 @@ const component = {
           node.componentOptions.propsData.type === 'selection'
       })
       return !!selectionCol.length
-    },
-    pagerLayout () {
-      let layout = this.pLayout
-      if (!this.$slots.pagerSlot) {
-        return layout
-      }
-      // 默认放在分页左侧
-      if (layout.indexOf('slot') === -1) {
-        return 'slot, ' + layout
-      }
-
-      return layout
     }
   }
 }

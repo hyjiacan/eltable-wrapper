@@ -16,6 +16,12 @@
       <el-table-column label="Name" prop="name"></el-table-column>
       <el-table-column label="Dept." prop="dept"></el-table-column>
       <el-table-column label="Remark" prop="remark"></el-table-column>
+      <div slot="pagerPrepend">
+        prepend content
+      </div>
+      <div slot="pagerAppend">
+        append content
+      </div>
     </el-table-wrapper>
   </div>
 </template>
@@ -45,8 +51,8 @@ export default {
     onSelect (selection, prev) {
       console.log(selection, prev)
     },
-    selectionChanged (selection, type, changed) {
-      console.log(selection, type, changed)
+    selectionChanged (e) {
+      console.log(e.selection, e.type, e.changed, e.allSelected)
     }
   },
   mounted () {

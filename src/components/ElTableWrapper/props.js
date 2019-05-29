@@ -132,6 +132,13 @@ const props = {
     type: [String, Number],
     default: 1
   },
+  /**
+   * 是否显示分页统计信息
+   */
+  showPagerSummary: {
+    type: Boolean,
+    default: true
+  },
   // 分页 END======================================================
 
   // 增量 BEGIN======================================================
