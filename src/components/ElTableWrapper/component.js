@@ -266,7 +266,7 @@ const component = {
     },
     isMultipleSelection () {
       if (!this.$slots.default) {
-        return false
+        return this.multiSelect
       }
       // 循环列 查找多选列
       let selectionCol = this.$slots.default.filter(node => {
@@ -274,7 +274,7 @@ const component = {
           node.componentOptions.propsData &&
           node.componentOptions.propsData.type === 'selection'
       })
-      return !!selectionCol.length
+      return !!selectionCol.length || this.multiSelect
     }
   }
 }

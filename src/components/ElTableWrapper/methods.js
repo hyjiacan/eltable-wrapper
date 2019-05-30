@@ -170,14 +170,16 @@ const methods = {
   },
   /**
    * 全选，仅多选时有效
+   * @return 选中的数据项
    */
   selectAll () {
     if (!this.isMultipleSelection) {
-      return
+      console.warn('ElTableWrapper: method "selectAll" only allowed for multiple selection')
+      return []
     }
-    let data = this.advanceSelection ? this.currentData : this.data.cache
+    let data = this.advanceSelection ? this.data.cache : this.currentData
     this.select(data)
-    return this
+    return data
   },
   /**
    *
@@ -212,14 +214,16 @@ const methods = {
   },
   /**
    * 取消全选，仅多选时有效
+   * @return 取消选中的数据项
    */
   deselectAll () {
     if (!this.isMultipleSelection) {
-      return
+      console.warn('ElTableWrapper: method "deselectAll" only allowed for multiple selection')
+      return []
     }
-    let data = this.advanceSelection ? this.currentData : this.data.cache
+    let data = this.advanceSelection ? this.data.cache : this.currentData
     this.deselect(data)
-    return this
+    return data
   },
   /**
    * 获取选中行

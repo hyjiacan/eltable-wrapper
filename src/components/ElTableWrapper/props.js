@@ -52,6 +52,13 @@ const props = {
     type: [String, Number],
     default: 40
   },
+  /**
+   * 指示表格是否支持多选，当表格列中指定了 type="selection" 时，会覆盖此值
+   */
+  multiSelect: {
+    type: Boolean,
+    default: false
+  },
   // 通用 END===========================================================
 
   // AJAX BEGIN===========================================================

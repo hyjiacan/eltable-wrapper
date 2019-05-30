@@ -12,8 +12,8 @@
         </slot>
       </div>
       <pager v-show="!pDisabled && pagerPosition !== 'bottom'">
-        <slot name="pagerPrepend"></slot>
-        <slot name="pageAppend"></slot>
+        <slot name="pagerPrepend" slot="pagerPrepend"></slot>
+        <slot name="pagerAppend" slot="pagerAppend"></slot>
       </pager>
     </div>
     <div class="el-table-wrapper-content" :style="contentStyle">
@@ -89,8 +89,8 @@
         </slot>
       </div>
       <pager v-show="!pDisabled && pagerPosition !== 'top'">
-        <slot name="pagerPrepend"></slot>
-        <slot name="pageAppend"></slot>
+        <slot name="pagerPrepend" slot="pagerPrepend"></slot>
+        <slot name="pagerAppend" slot="pagerAppend"></slot>
       </pager>
     </div>
   </div>

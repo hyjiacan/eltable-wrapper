@@ -18,8 +18,7 @@
   "license": "MIT",
   "files": [
     "lib",
-    "src",
-    "types"
+    "src"
   ],
   "bugs": {
     "url": "https://github.com/hyjiacan/eltable-wrapper/issues"

@@ -1,47 +1,7 @@
 .el-table-wrapper {
   position: relative;
   box-sizing: border-box;
-  // 非自动高度，撑满容器
-  &:not(.el-table-wrapper-auto-height) {
-    height: 100%;
-
-    .el-table-wrapper-header {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      padding: 5px;
-
-      &:after {
-        content: '';
-        position: absolute;
-        background-color: #EBEEF5;
-        z-index: 1;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-      }
-    }
-
-    .el-table-wrapper-content {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      overflow: auto;
-    }
-
-    .el-table-wrapper-footer {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      padding: 4px 5px;
-      box-sizing: border-box;
-    }
-  }
+  height: 100%;
 
   // 自动高度，爱咋咋的
   &.el-table-wrapper-auto-height {
@@ -52,6 +12,43 @@
       box-sizing: border-box;
     }
   }
+}
+
+.el-table-wrapper-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 5px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    background-color: #EBEEF5;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+}
+
+.el-table-wrapper-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
+.el-table-wrapper-footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 4px 5px;
+  box-sizing: border-box;
 }
 
 .el-table-wrapper-pager {

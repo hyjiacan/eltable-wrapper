@@ -109,6 +109,7 @@ export default {
 |pager-position|String|bottom|分页条位置，可选值为 `bottom` `top` `both`|
 |header-size|String/Number|48|`header` 高度，单位为`px`|
 |footer-size|String/Number|40|`footer` 高度，单位为`px`|
+|multi-select|Boolean|false|指示表格是否支持多选，当表格列中指定了 `type="selection"` 时，会覆盖此值|
 |ajax|function|-|向服务器发送ajax请求的方法，需要返回一个 `Promise`对象。当 `source` 为`i` 或 `s` 时是必须的|
 |ajax-url|String|-|向服务器请求数据的url|
 |ajax-method|String|get|向服务器请求数据的method|
@@ -162,9 +163,9 @@ Vue.use(ElTableWrapper, defaults)
 |remove|data: Array/Object|this|从数据缓存中移除数据项|
 |getDataId|row: Object, \[idField]: string|this|根配置的 idField 读取数据项的 id|
 |select|rows: Object/Array|this|选中指定的行|
-|selectAll|-|this|全选，仅在多选时生效|
+|selectAll|-|Array|全选，仅在多选时生效，返回选中的数据项|
 |deselect|rows: Object/Array|this|取消选中指定的行|
-|deselectAll|-|this|取消全选，仅在多选时生效|
+|deselectAll|-|Array|取消全选，仅在多选时生效，返回取消选中的数据项|
 |getSelection|-|Array/Object|获取选中的行，单选时返回选中的行对象，多选时返回行集合|
 |clearSelection|-|this|清除所有选中|
 |clearSort|-|this|`ElTable` 的 `clearSort` 方法|
