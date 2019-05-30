@@ -13,7 +13,7 @@ Vue.use(ElementUI)
 Vue.use(ElTableWrapper, {
   method: 'get',
   size: 10,
-  incSize: 10,
+  incSize: 80,
   autoHeight: false,
   source: 'i',
   pLayout: 'sizes, prev, pager, next'

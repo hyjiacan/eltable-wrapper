@@ -85,7 +85,7 @@ const component = {
           return
         }
         // 渲染后触发一次分页事件
-        if (this.source === 'i' && this.pager.index === this.pager.count) {
+        if (this.source === 'i') {
           // 当只有一页数据时，加载更多数据
           this.$nextTick(() => {
             this._loadIncData()

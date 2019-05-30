@@ -5,7 +5,7 @@
 const handlers = {
   onPageChanged (index) {
     this.pager.indexChanged = true
-    if (this.source === 'i' && index === this.pager.count) {
+    if (this.data.extra && this.source === 'i' && index === this.pager.count) {
       // 当显示到最后一页时，加载更多数据
       this.$nextTick(() => {
         this._loadIncData()
