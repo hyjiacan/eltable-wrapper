@@ -29,7 +29,7 @@
     "serve": "npx vue-cli-service serve",
     "build": "npx vue-cli-service build --target lib --dest=lib --formats=commonjs --name eltable-wrapper ./src/components/ElTableWrapper/index.js",
     "build:docs": "npx vue-cli-service build --dest=docs",
-    "release": "yarn run lint & yarn run build & yarn run docs",
+    "release": "yarn run lint & yarn run build & yarn run build:docs",
     "lint": "npx vue-cli-service lint"
   },
   "dependencies": {
@@ -43,7 +43,6 @@
     "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-plugin-eslint": "^3.7.0",
     "@vue/cli-service": "^3.7.0",
-    "@vue/cli-service-global": "^3.7.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
