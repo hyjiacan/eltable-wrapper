@@ -113,6 +113,7 @@ export default {
 |ajax-url|String|-|向服务器请求数据的url|
 |ajax-method|String|get|向服务器请求数据的method|
 |ajax-params|Object|-|向服务器请求数据的参数|
+|response-handler|Function|-|设置当服务器返回数据后，预处理函数，处理后的数据通过返回值提交|
 |auto-load|Boolean|true|在使用服务器数据源时，是否在挂载后自动加载数据|
 |param-index|String|pageIndex|向服务器发送请求时，页码参数名|
 |param-size|String|pageSize|向服务器发送请求时，数据量参数名|

@@ -67,6 +67,7 @@ const component = {
       })
       this.data.loading = true
       this._sendAjax(p).then(data => {
+        data = this._invokeResponseHandler(data)
         if (data.length <= this.incSize) {
           this.append(data)
           this.data.extra = null
@@ -105,6 +106,7 @@ const component = {
       })
       this.data.loading = true
       this._sendAjax(p).then(data => {
+        data = this._invokeResponseHandler(data)
         data.size = data[this.totalField]
         this.data.view = this.data.cache = data[this.listField]
         this._updatePageCount()
@@ -113,6 +115,12 @@ const component = {
       }).finally(() => {
         this.data.loading = false
       })
+    },
+    _invokeResponseHandler (data) {
+      if (this.responseHandler) {
+        return this.responseHandler(data)
+      }
+      return data
     },
     _getLastId () {
       let data = this.data.extra

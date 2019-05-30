@@ -80,6 +80,9 @@ const props = {
   ajaxParams: {
     type: Object
   },
+  responseHandler: {
+    type: Function
+  },
   /**
    * 在使用服务器数据源时，是否在挂载后自动加载数据
    */
