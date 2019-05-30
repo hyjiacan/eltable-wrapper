@@ -3,6 +3,12 @@
  * @type {{}}
  */
 const handlers = {
+  resetScroll () {
+    let wrapper = this.$el.querySelector('.el-table__body-wrapper')
+    if (wrapper) {
+      wrapper.scrollTop = 0
+    }
+  },
   onPageChanged (index) {
     this.pager.indexChanged = true
     if (this.data.extra && this.source === 'i' && index === this.pager.count) {
@@ -14,7 +20,7 @@ const handlers = {
     if (this.pager.index === index) {
       return
     }
-
+    this.resetScroll()
     this.pager.index = index
     this.$emit('update:index', index)
   },
@@ -22,7 +28,9 @@ const handlers = {
     if (this.pager.size === size) {
       return
     }
+    this.resetScroll()
     this.pager.size = size
+    this._updatePageCount()
     this.$emit('update:size', size)
   },
   onTableCurrentRowChanged (selected, prev) {

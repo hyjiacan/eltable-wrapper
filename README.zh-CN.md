@@ -110,6 +110,7 @@ export default {
 |header-size|String/Number|48|`header` 高度，单位为`px`|
 |footer-size|String/Number|40|`footer` 高度，单位为`px`|
 |multi-select|Boolean|false|指示表格是否支持多选，当表格列中指定了 `type="selection"` 时，会覆盖此值|
+|default-id|String/Number|''|默认的数据id，当未加载数据时，增量更新请求时使用此值|
 |ajax|function|-|向服务器发送ajax请求的方法，需要返回一个 `Promise`对象。当 `source` 为`i` 或 `s` 时是必须的|
 |ajax-url|String|-|向服务器请求数据的url|
 |ajax-method|String|get|向服务器请求数据的method|

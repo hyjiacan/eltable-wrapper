@@ -53,6 +53,13 @@ const props = {
     default: 40
   },
   /**
+   * 默认的数据id，当未加载数据时，请求时使用此值
+   */
+  defaultId: {
+    type: [String, Number],
+    default: ''
+  },
+  /**
    * 指示表格是否支持多选，当表格列中指定了 type="selection" 时，会覆盖此值
    */
   multiSelect: {

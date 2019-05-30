@@ -7,15 +7,28 @@ const component = {
   props,
   data,
   methods: {
-    init () {
+    __init () {
       if (this.index) {
         this.pager.index = parseInt(this.index)
+        if (this.pager.index < 1 || isNaN(this.pager.index)) {
+          this.pager.index = 1
+        }
       }
       if (this.pageSize) {
         this.pager.size = parseInt(this.pageSize)
       }
     },
-    checkProps () {
+    /**
+     * 检查传入的属性是否合法
+     * @private
+     */
+    _checkProps () {
+      if (isNaN(this.index)) {
+        console.warn('ElTableWrapper: Invalid value for property "index", numeric required')
+      }
+      if (this.index < 1) {
+        console.warn('ElTableWrapper: Invalid value for property "index", expected equals or great than "1"')
+      }
       // 检查pager-position
       let available = ['top', 'bottom', 'both']
       if (available.indexOf(this.pagerPosition) === -1) {
@@ -128,7 +141,7 @@ const component = {
     _getLastId () {
       let data = this.data.extra
       if (!data) {
-        return ''
+        return this.defaultId
       }
       return this.getDataId(data, this.incIdField)
     },
@@ -188,8 +201,8 @@ const component = {
     }
   },
   mounted () {
-    this.init()
-    this.checkProps()
+    this.__init()
+    this._checkProps()
     if (this.source !== 'l' && this.autoLoad) {
       this._loadRemoteData()
     }
