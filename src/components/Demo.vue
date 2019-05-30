@@ -5,6 +5,7 @@
       ajax-url="mock/data.json"
       inc-id="id"
       :ajax="ajax"
+      pager-position="both"
       @select="onSelect"
       @selection-change="selectionChanged"
       @select-all="selectionChanged"
@@ -15,7 +16,11 @@
       <el-table-column label="ID" prop="id"></el-table-column>
       <el-table-column label="Name" prop="name"></el-table-column>
       <el-table-column label="Dept." prop="dept"></el-table-column>
-      <el-table-column label="Remark" prop="remark"></el-table-column>
+      <el-table-column label="Remark">
+        <template slot-scope="{row}">
+          {{row.remark}}xxx
+        </template>
+      </el-table-column>
       <div slot="pagerPrepend">
         prepend content
       </div>

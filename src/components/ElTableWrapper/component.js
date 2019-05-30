@@ -4,7 +4,6 @@ import handlers from './handlers'
 import data from './data'
 
 const component = {
-  name: 'ElTableWrapper',
   props,
   data,
   methods: {
@@ -17,6 +16,11 @@ const component = {
       }
     },
     checkProps () {
+      // 检查pager-position
+      let available = ['top', 'bottom', 'both']
+      if (available.indexOf(this.pagerPosition) === -1) {
+        console.warn('ElTableWrapper: Invalid value for property "pager-position", available are: ' + available.join(','))
+      }
       if (this.source === 'l') {
         // 本地数据
         return
@@ -24,7 +28,6 @@ const component = {
       // 使用远程数据时，必须指定 dataLoader
       if (!this.ajax) {
         console.warn('ElTableWrapper: Property "ajax" must be specified while source is not "l"(local)')
-        return
       }
       // 使用远程数据时，必须指定 url
       if (!this.ajaxUrl) {
