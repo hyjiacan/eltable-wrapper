@@ -20,7 +20,7 @@ const component = {
       }
     },
     _throwError (msg) {
-      throw new Warn(`ElTableWrapper: ${msg}`)
+      throw new Error(`ElTableWrapper: ${msg}`)
     },
     /**
      * 检查传入的属性是否合法
