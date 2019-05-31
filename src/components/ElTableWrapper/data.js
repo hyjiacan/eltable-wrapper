@@ -55,7 +55,8 @@ const data = () => {
        */
       count: 0,
       indexChanged: false
-    }
+    },
+    _ajaxParamsBuffer: null
   }
 }
 

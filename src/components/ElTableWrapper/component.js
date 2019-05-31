@@ -1,3 +1,4 @@
+import eql from 'deep-eql'
 import props from './props'
 import methods from './methods'
 import handlers from './handlers'
@@ -198,6 +199,16 @@ const component = {
     },
     currentData () {
       this._updateSelection()
+    },
+    ajaxParams (v) {
+      // 检查两个对象是否相同
+      if (this.loadWhenParamsChange && !eql(this._ajaxParamsBuffer, v)) {
+        this.load()
+      }
+
+      this._ajaxParamsBuffer = {
+        ...this.ajaxParams
+      }
     }
   },
   mounted () {

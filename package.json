@@ -1,6 +1,6 @@
 {
   "name": "@hyjiacan/eltable-wrapper",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "main": "lib/eltable-wrapper.common.js",
   "description": "Wrap component `ElTable` and `ElPagination` for `element-ui`",
   "repository": {
@@ -34,6 +34,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
+    "deep-eql": "^4.0.0",
     "element-ui": "^2.8.2",
     "vue": "^2.6.10"
   },

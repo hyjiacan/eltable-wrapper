@@ -1138,7 +1138,7 @@
   resolved "https://registry.npm.taobao.org/@vue/cli-overlay/download/@vue/cli-overlay-3.8.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Fcli-overlay%2Fdownload%2F%40vue%2Fcli-overlay-3.8.0.tgz#e4e8e2fa92b06fc282916df9c924f1dba50eeabb"
   integrity sha1-5Oji+pKwb8KCkW35ySTx26UO6rs=
 
-"@vue/cli-plugin-babel@^3.7.0", "@vue/cli-plugin-babel@^3.8.0":
+"@vue/cli-plugin-babel@^3.7.0":
   version "3.8.0"
   resolved "https://registry.npm.taobao.org/@vue/cli-plugin-babel/download/@vue/cli-plugin-babel-3.8.0.tgz#a7ce6ef9c6680e7953c609d859451dd937c7284e"
   integrity sha1-p85u+cZoDnlTxgnYWUUd2TfHKE4=
@@ -1149,7 +1149,7 @@
     babel-loader "^8.0.5"
     webpack ">=4 < 4.29"
 
-"@vue/cli-plugin-eslint@^3.7.0", "@vue/cli-plugin-eslint@^3.8.0":
+"@vue/cli-plugin-eslint@^3.7.0":
   version "3.8.0"
   resolved "https://registry.npm.taobao.org/@vue/cli-plugin-eslint/download/@vue/cli-plugin-eslint-3.8.0.tgz#0402dfd3864b0224bceb264df89a4209000bb98c"
   integrity sha1-BALf04ZLAiS86yZN+JpCCQALuYw=
@@ -1163,24 +1163,7 @@
     eslint "^4.19.1"
     eslint-plugin-vue "^4.7.1"
 
-"@vue/cli-service-global@^3.7.0":
-  version "3.8.0"
-  resolved "https://registry.npm.taobao.org/@vue/cli-service-global/download/@vue/cli-service-global-3.8.0.tgz#3c9c3af71bd65faee728b48c0d1cc3a0e71a0a7e"
-  integrity sha1-PJw69xvWX67nKLSMDRzDoOcaCn4=
-  dependencies:
-    "@vue/babel-preset-app" "^3.8.0"
-    "@vue/cli-plugin-babel" "^3.8.0"
-    "@vue/cli-plugin-eslint" "^3.8.0"
-    "@vue/cli-service" "^3.8.0"
-    babel-eslint "^10.0.1"
-    chalk "^2.4.2"
-    eslint "^4.19.1"
-    eslint-plugin-vue "^4.7.1"
-    resolve "^1.10.0"
-    vue "^2.6.10"
-    vue-template-compiler "^2.6.10"
-
-"@vue/cli-service@^3.7.0", "@vue/cli-service@^3.8.0":
+"@vue/cli-service@^3.7.0":
   version "3.8.0"
   resolved "https://registry.npm.taobao.org/@vue/cli-service/download/@vue/cli-service-3.8.0.tgz#47eaa169a7bd96522c1a0df89214f1afee843cd6"
   integrity sha1-R+qhaae9llIsGg34khTxr+6EPNY=
@@ -3616,6 +3599,13 @@ decompress@^4.0.0:
     make-dir "^1.0.0"
     pify "^2.3.0"
     strip-dirs "^2.0.0"
+
+deep-eql@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/deep-eql/download/deep-eql-4.0.0.tgz#c70af2713a4e18d9c2c1203ff9d11abbd51c8fbd"
+  integrity sha1-xwrycTpOGNnCwSA/+dEau9Ucj70=
+  dependencies:
+    type-detect "^4.0.0"
 
 deep-equal@^1.0.1:
   version "1.0.1"
@@ -9708,6 +9698,11 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
+type-detect@^4.0.0:
+  version "4.0.8"
+  resolved "https://registry.npm.taobao.org/type-detect/download/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
+  integrity sha1-dkb7XxiHHPu3dJ5pvTmmOI63RQw=
+
 type-fest@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npm.taobao.org/type-fest/download/type-fest-0.4.1.tgz#8bdf77743385d8a4f13ba95f610f5ccd68c728f8"
@@ -10083,7 +10078,7 @@ vue-style-loader@^4.1.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.5.21, vue-template-compiler@^2.6.10:
+vue-template-compiler@^2.5.21:
   version "2.6.10"
   resolved "https://registry.npm.taobao.org/vue-template-compiler/download/vue-template-compiler-2.6.10.tgz#323b4f3495f04faa3503337a82f5d6507799c9cc"
   integrity sha1-MjtPNJXwT6o1AzN6gvXWUHeZycw=

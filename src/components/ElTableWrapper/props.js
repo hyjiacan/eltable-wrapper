@@ -132,6 +132,13 @@ const props = {
     type: String,
     default: 'list'
   },
+  /**
+   * 是否在ajax参数改变时自动重新加载数据
+   */
+  loadWhenParamsChange: {
+    type: Boolean,
+    default: false
+  },
   // AJAX END===========================================================
 
   // 分页 BEGIN======================================================
