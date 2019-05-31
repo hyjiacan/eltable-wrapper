@@ -115,7 +115,12 @@ export default {
 |ajax-params|Object|-|向服务器请求数据的参数|
 |response-handler|Function|-|设置当服务器返回数据后，预处理函数，处理后的数据通过返回值提交|
 |auto-load|Boolean|true|在使用服务器数据源时，是否在挂载后自动加载数据|
+|check-params|Function|-|在组件向服务器发起请求前，可以通过此函数检查参数是否正确，将新的参数作为返回值|
 |load-when-params-change|Boolean|false|是否在ajax参数改变时自动重新加载数据|
+|loading|Boolean|false|是否显示loading状态|
+|loading-text|Boolean|false|显示loading状态时的文本|
+|loading-icon|Boolean|false|显示loading状态时的图标|
+|loading-color|Boolean|false|显示loading状态时的背景色|
 |param-index|String|pageIndex|向服务器发送请求时，页码参数名|
 |param-size|String|pageSize|向服务器发送请求时，数据量参数名|
 |total-field|String|total|服务器分页时，返回数据中的数据总量字段名称|

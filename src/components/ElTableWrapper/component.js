@@ -19,21 +19,24 @@ const component = {
         this.pager.size = parseInt(this.pageSize)
       }
     },
+    _throwError (msg) {
+      throw new Warn(`ElTableWrapper: ${msg}`)
+    },
     /**
      * 检查传入的属性是否合法
      * @private
      */
     _checkProps () {
       if (isNaN(this.index)) {
-        console.warn('ElTableWrapper: Invalid value for property "index", numeric required')
+        this._throwError('Invalid value for property "index", numeric required')
       }
       if (this.index < 1) {
-        console.warn('ElTableWrapper: Invalid value for property "index", expected equals or great than "1"')
+        this._throwError('Invalid value for property "index", expected equals or great than "1"')
       }
       // 检查pager-position
       let available = ['top', 'bottom', 'both']
       if (available.indexOf(this.pagerPosition) === -1) {
-        console.warn('ElTableWrapper: Invalid value for property "pager-position", available are: ' + available.join(','))
+        this._throwError('Invalid value for property "pager-position", available are: ' + available.join(','))
       }
       if (this.source === 'l') {
         // 本地数据
@@ -41,11 +44,11 @@ const component = {
       }
       // 使用远程数据时，必须指定 dataLoader
       if (!this.ajax) {
-        console.warn('ElTableWrapper: Property "ajax" must be specified while source is not "l"(local)')
+        this._throwError('Property "ajax" must be specified while source is not "l"(local)')
       }
       // 使用远程数据时，必须指定 url
       if (!this.ajaxUrl) {
-        console.warn('ElTableWrapper: Property "ajax-url" must be specified while source is not "l"(local)')
+        this._throwError('Property "ajax-url" must be specified while source is not "l"(local)')
       }
     },
     _loadRemoteData () {
@@ -59,7 +62,7 @@ const component = {
         return
       }
       // eslint-disable-next-line
-      console.warn('ElTableWrapper: "load" method not allowed while source is "l"(local)')
+      this._throwError('"load" method not allowed while source is "l"(local)')
     },
     /**
      * 发送 ajax 请求
@@ -84,7 +87,7 @@ const component = {
       })
       this.data.loading = true
       this.$emit('update:loading', true)
-      this._sendAjax(p).then(data => {
+      this._sendAjax(this._invokeCheckParams(p)).then(data => {
         data = this._invokeResponseHandler(data)
         if (data.length <= this.incSize) {
           this.append(data)
@@ -125,7 +128,7 @@ const component = {
       })
       this.data.loading = true
       this.$emit('update:loading', true)
-      this._sendAjax(p).then(data => {
+      this._sendAjax(this._invokeCheckParams(p)).then(data => {
         data = this._invokeResponseHandler(data)
         data.size = data[this.totalField]
         this.data.view = this.data.cache = data[this.listField]
@@ -142,6 +145,12 @@ const component = {
         return this.responseHandler(data)
       }
       return data
+    },
+    _invokeCheckParams (param) {
+      if (this.checkParams) {
+        return this.checkParams(param)
+      }
+      return param
     },
     _getLastId () {
       let data = this.data.extra
