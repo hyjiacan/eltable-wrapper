@@ -42,8 +42,17 @@ const data = () => {
       ignore: false
     },
     pager: {
+      /**
+       * 每页显示的数据量
+       */
       size: 10,
+      /**
+       * 页码
+       */
       index: 1,
+      /**
+       * 总页数
+       */
       count: 0,
       indexChanged: false
     }

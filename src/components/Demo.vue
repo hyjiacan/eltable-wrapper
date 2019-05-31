@@ -21,12 +21,6 @@
           {{row.remark}}xxx
         </template>
       </el-table-column>
-      <div slot="pagerPrepend">
-        prepend content
-      </div>
-      <div slot="pagerAppend">
-        append content
-      </div>
     </el-table-wrapper>
   </div>
 </template>
@@ -63,7 +57,6 @@ export default {
   mounted () {
     setTimeout(() => {
       this.$refs.table.deselect(this.cache[2])
-      console.info(this.$refs.table.getSelection())
     }, 3000)
   }
 }

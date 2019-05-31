@@ -1,11 +1,16 @@
 <template>
   <div class="el-table-wrapper-pager">
-    <div class="el-table-wrapper-pager-prepend" v-if="this.$slots.pagerPrepend">
-      <slot name="pagerPrepend"></slot>
+    <div class="el-table-wrapper-pager-prepend">
+      <slot name="pagerPrepend" :data="slotData"></slot>
     </div>
     <template v-if="parent.showPagerSummary">
-      <span class="el-table-wrapper-pager-summary" v-if="parent.source === 'i' && parent.data.extra">已加载 {{parent.data.size}} 条数据</span>
-      <span class="el-table-wrapper-pager-summary" v-else>共 {{parent.data.size}} 条数据</span>
+      <span class="el-table-wrapper-pager-summary">
+        <slot name="pagerSummary" :data="slotData">
+          <template v-if="parent.loading">正在加载...</template>
+          <template v-else-if="parent.source === 'i' && parent.data.extra">已加载 {{parent.data.size}} 条数据</template>
+          <template v-else>共 {{parent.data.size}} 条数据</template>
+        </slot>
+      </span>
     </template>
     <el-pagination
       :page-size="parent.pager.size"
@@ -24,8 +29,9 @@
       @current-change="parent.onPageChanged"
       @size-change="parent.onSizeChanged">
     </el-pagination>
-    <div class="el-table-wrapper-pager-append" v-if="this.$slots.pagerAppend">
-      <slot name="pagerAppend"></slot>
+    <div class="el-table-wrapper-pager-append">
+      <slot name="pagerAppend" :data="slotData">
+      </slot>
     </div>
   </div>
 </template>
@@ -33,7 +39,21 @@
 <script>
 export default {
   name: 'Pager',
-  inject: ['parent']
+  props: {
+    position: {
+      type: String,
+      required: true
+    }
+  },
+  inject: ['parent'],
+  computed: {
+    slotData () {
+      return {
+        ...this.parent.slotData,
+        position: this.position
+      }
+    }
+  }
 }
 </script>
 

@@ -3,7 +3,13 @@
  */
 
 const methods = {
-  load () {
+  /**
+   * 主动加载远程数据，一般发生在查询参数发生变化的时候
+   * @param clear 是否清空数据以及重置分页(调用 clear 方法)
+   * @return {methods}
+   */
+  load (clear = true) {
+    this.clear()
     this._loadRemoteData()
     return this
   },

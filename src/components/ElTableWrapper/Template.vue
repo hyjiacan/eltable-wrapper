@@ -2,7 +2,7 @@
   <div class="el-table-wrapper" :class="wrapperClass" v-loading="data.loading">
     <div class="el-table-wrapper-header" :style="headerStyle" v-if="headerVisible">
       <div class="el-table-wrapper-header-text">
-        <slot name="header" :selected="selection.cache.length">
+        <slot name="header" :data="slotData">
           <template v-if="isMultipleSelection">
             <template v-if="selection.cache.length">
               已选择 {{selection.cache.length}} 项
@@ -11,9 +11,10 @@
           </template>
         </slot>
       </div>
-      <pager v-show="!pDisabled && pagerPosition !== 'bottom'">
-        <slot name="pagerPrepend" slot="pagerPrepend"></slot>
-        <slot name="pagerAppend" slot="pagerAppend"></slot>
+      <pager position="top" v-show="!pDisabled && pagerPosition !== 'bottom'">
+        <slot name="pagerPrepend" :data="data" slot="pagerPrepend" slot-scope="{data}"></slot>
+        <slot name="pagerSummary" :data="data" slot="pagerSummary" slot-scope="{data}"></slot>
+        <slot name="pagerAppend" :data="data" slot="pagerAppend" slot-scope="{data}"></slot>
       </pager>
     </div>
     <div class="el-table-wrapper-content" :style="contentStyle">
@@ -77,9 +78,9 @@
       </el-table>
     </div>
     <div class="el-table-wrapper-footer" :style="footerStyle"
-         v-if="(!pDisabled && pagerPosition !== 'top') || $slots.footer">
+         v-if="(!pDisabled && pagerPosition !== 'top')">
       <div class="el-table-wrapper-footer-text">
-        <slot name="footer" :selected="selection.cache.length">
+        <slot name="footer" :data="slotData">
           <template v-if="isMultipleSelection">
             <template v-if="selection.cache.length">
               已选择 {{selection.cache.length}} 项
@@ -88,9 +89,10 @@
           </template>
         </slot>
       </div>
-      <pager v-show="!pDisabled && pagerPosition !== 'top'">
-        <slot name="pagerPrepend" slot="pagerPrepend"></slot>
-        <slot name="pagerAppend" slot="pagerAppend"></slot>
+      <pager position="bottom" v-show="!pDisabled && pagerPosition !== 'top'">
+        <slot name="pagerPrepend" :data="data" slot="pagerPrepend" slot-scope="{data}"></slot>
+        <slot name="pagerSummary" :data="data" slot="pagerSummary" slot-scope="{data}"></slot>
+        <slot name="pagerAppend" :data="data" slot="pagerAppend" slot-scope="{data}"></slot>
       </pager>
     </div>
   </div>

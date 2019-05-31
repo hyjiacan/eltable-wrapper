@@ -288,6 +288,16 @@ const component = {
           node.componentOptions.propsData.type === 'selection'
       })
       return !!selectionCol.length || this.multiSelect
+    },
+    slotData () {
+      let i = this
+      return {
+        pageIndex: i.pager.index,
+        pageCount: i.pager.count,
+        pageSize: i.pager.size,
+        dataSize: i.data.size,
+        selected: i.selection.cache.length
+      }
     }
   }
 }

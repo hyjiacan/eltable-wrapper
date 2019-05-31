@@ -155,7 +155,7 @@ Vue.use(ElTableWrapper, defaults)
 
 |名称|参数|返回值|描述|
 |---|---|---|---|
-|load|-|this|在使用服务器数据源时，调用此方法以从服务器加载数据|
+|load|clear=true: Boolean|this|在使用服务器数据源时，调用此方法以从服务器加载数据|
 |clear|-|this|清空数据并重置分页|
 |append|data: Array/Object|this|向表格尾追加数据项|
 |prepend|data: Array/Object|this|向表格头追加数据项|
@@ -199,11 +199,43 @@ Vue.use(ElTableWrapper, defaults)
 
 |名称|数据|描述|
 |---|---|---|
-|header|-|可选的表格顶部插槽|
+|header|data|可选的表格顶部插槽|
 |default|-|`ElTable` 的列集合，用法与 `ElTable` 的默认插槽相同|
 |empty|-|`ElTable` 的 `empty` 插槽|
 |append|-|`ElTable` 的 `append` 插槽|
-|pagerPrepend|-|分页插槽，默认放在分页左侧|
-|pagerAppend|-|分页插槽，默认放在分页右侧|
-|pagerSummary|-|自定义的分页信息统计|
-|footer|selected: Number|分页左侧的文字，`selected`为选中项的数量|
+|pagerPrepend|data|分页插槽，默认放在分页左侧|
+|pagerAppend|data|分页插槽，默认放在分页右侧|
+|pagerSummary|data|自定义的分页信息统计|
+|footer|data|分页左侧的文字|
+
+注:
+ 
+`header`, `footer` 有相同的作用域数据:
+
+```javascript
+const data = {
+    // 页码 
+    pageIndex: Number,
+    // 总页数
+    pageCount: Number,
+    // 每页的数据量
+    pageSize: Number,
+    // 总数据量
+    dataSize: Number,
+    // 选中数量
+    selected: Number
+}
+```
+
+`pagerPrepend`, `pagerSummary`, `pagerAppend` 三个插槽有相同的作用域数据:
+
+```javascript
+const data = {
+    pageIndex: Number,
+    pageCount: Number,
+    pageSize: Number,
+    dataSize: Number,
+    selected: Number,
+    position: String['top', 'bottom']
+}
+```
