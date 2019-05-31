@@ -1,5 +1,10 @@
 <template>
-  <div class="el-table-wrapper" :class="wrapperClass" v-loading="data.loading">
+  <div class="el-table-wrapper" :class="wrapperClass"
+       v-loading="data.loading"
+       :element-loading-text="loadingText"
+       :element-loading-spinner="loadingIcon"
+       :element-loading-background="loadingColor"
+  >
     <div class="el-table-wrapper-header" :style="headerStyle" v-if="headerVisible">
       <div class="el-table-wrapper-header-text">
         <slot name="header" :data="slotData">

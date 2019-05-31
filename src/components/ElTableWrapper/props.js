@@ -188,6 +188,24 @@ const props = {
     type: [String, Array, Function]
   },
   // 增量 END======================================================
+  // Loading BEGIN======================================================
+  loading: {
+    type: Boolean,
+    default: false
+  },
+  loadingText: {
+    type: String,
+    default: 'Loading...'
+  },
+  loadingIcon: {
+    type: String,
+    default: 'el-icon-loading'
+  },
+  loadingColor: {
+    type: String,
+    default: 'rgba(0, 0, 0, 0.8)'
+  },
+  // Loading END======================================================
 
   // ElTable 原生属性 BEGIN =======================================
   tMaxHeight: {

@@ -1,4 +1,4 @@
-import eql from 'deep-eql'
+import equal from 'deep-equal'
 import props from './props'
 import methods from './methods'
 import handlers from './handlers'
@@ -83,6 +83,7 @@ const component = {
         [this.paramSize]: this.incSize
       })
       this.data.loading = true
+      this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
         data = this._invokeResponseHandler(data)
         if (data.length <= this.incSize) {
@@ -109,6 +110,7 @@ const component = {
         this.$emit('ajax-error', e)
       }).finally(() => {
         this.data.loading = false
+        this.$emit('update:loading', false)
       })
     },
     /**
@@ -122,6 +124,7 @@ const component = {
         [this.paramSize]: this.pager.size
       })
       this.data.loading = true
+      this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
         data = this._invokeResponseHandler(data)
         data.size = data[this.totalField]
@@ -131,6 +134,7 @@ const component = {
         this.$emit('ajax-error', e)
       }).finally(() => {
         this.data.loading = false
+        this.$emit('update:loading', false)
       })
     },
     _invokeResponseHandler (data) {
@@ -202,13 +206,16 @@ const component = {
     },
     ajaxParams (v) {
       // 检查两个对象是否相同
-      if (this.loadWhenParamsChange && !eql(this._ajaxParamsBuffer, v)) {
+      if (this.loadWhenParamsChange && !equal(this._ajaxParamsBuffer, v)) {
         this.load()
       }
 
       this._ajaxParamsBuffer = {
         ...this.ajaxParams
       }
+    },
+    loading (v) {
+      this.data.loading = v
     }
   },
   mounted () {
