@@ -115,7 +115,7 @@ export default {
 |ajax-params|Object|-|向服务器请求数据的参数|
 |response-handler|Function|-|设置当服务器返回数据后，预处理函数，处理后的数据通过返回值提交|
 |auto-load|Boolean|true|在使用服务器数据源时，是否在挂载后自动加载数据|
-|check-params|Function|-|在组件向服务器发起请求前，可以通过此函数检查参数是否正确，将新的参数作为返回值|
+|check-params|Function|-|在组件向服务器发起请求前，可以通过此函数检查参数是否正确，将新的参数作为返回值，返回`false`以阻止继续执行|
 |load-when-params-change|Boolean|false|是否在ajax参数改变时自动重新加载数据|
 |loading|Boolean|false|是否显示loading状态|
 |loading-text|Boolean|false|显示loading状态时的文本|
@@ -183,6 +183,8 @@ Vue.use(ElTableWrapper, defaults)
 |名称|参数|描述|
 |---|---|---|
 |ajax-error|{data, message, response}|加载jax数据失败的事件|
+|size-change|size: Number|表格每页显示的数据量变化|
+|index-change|index: Number|表格的页码变化|
 |select|selected: Object, prevSelected: Object|在单选时，行被点击后触发|
 |selection-change|{selection: Array, type: String, changed: Array, allSelected: Boolean}|多选时，选中或取消选中行时触发；当没有数据项时，`allSelected`始终为`false`|
 |cell-mouse-enter|-|ElTable 事件|

@@ -85,9 +85,13 @@ const component = {
         [this.paramInc]: this._getLastId(),
         [this.paramSize]: this.incSize
       })
+      p = this._invokeCheckParams(p)
+      if (p === false) {
+        return
+      }
       this.data.loading = true
       this.$emit('update:loading', true)
-      this._sendAjax(this._invokeCheckParams(p)).then(data => {
+      this._sendAjax(p).then(data => {
         data = this._invokeResponseHandler(data)
         if (data.length <= this.incSize) {
           this.append(data)
@@ -123,12 +127,16 @@ const component = {
     _loadPagedData () {
       // 这么写以避免搞掉原始参数
       let p = Object.assign({}, this.ajaxParams, {
-        [this.paramIndex]: this.data.extra,
+        [this.paramIndex]: this.pager.index - 1,
         [this.paramSize]: this.pager.size
       })
+      p = this._invokeCheckParams(p)
+      if (p === false) {
+        return
+      }
       this.data.loading = true
       this.$emit('update:loading', true)
-      this._sendAjax(this._invokeCheckParams(p)).then(data => {
+      this._sendAjax(p).then(data => {
         data = this._invokeResponseHandler(data)
         data.size = data[this.totalField]
         this.data.view = this.data.cache = data[this.listField]

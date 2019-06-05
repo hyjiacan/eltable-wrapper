@@ -23,6 +23,7 @@ const handlers = {
     this.resetScroll()
     this.pager.index = index
     this.$emit('update:index', index)
+    this.$emit('index-change', index)
   },
   onSizeChanged (size) {
     if (this.pager.size === size) {
@@ -32,6 +33,7 @@ const handlers = {
     this.pager.size = size
     this._updatePageCount()
     this.$emit('update:size', size)
+    this.$emit('size-change', size)
   },
   onTableCurrentRowChanged (selected, prev) {
     if (this.selection.ignore) {
