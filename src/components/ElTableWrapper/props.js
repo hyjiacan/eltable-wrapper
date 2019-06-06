@@ -209,7 +209,7 @@ const props = {
   },
   loadingColor: {
     type: String,
-    default: 'rgba(0, 0, 0, 0.8)'
+    default: 'rgba(249, 249, 249, 0.9)'
   },
   // Loading END======================================================
 
