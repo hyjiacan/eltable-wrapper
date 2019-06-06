@@ -11,7 +11,7 @@ const handlers = {
   },
   onPageChanged (index) {
     this.pager.indexChanged = true
-    if (this.data.extra && this.source === 'i' && index === this.pager.count) {
+    if (this.data.extra && this.type === 'i' && index === this.pager.count) {
       // 当显示到最后一页时，加载更多数据
       this.$nextTick(() => {
         this._loadIncData()
@@ -23,7 +23,10 @@ const handlers = {
     this.resetScroll()
     this.pager.index = index
     this.$emit('update:index', index)
-    this.$emit('index-change', index)
+    this.$emit('page-index-change', index)
+    if (this.type === 's') {
+      this._loadPagedData()
+    }
   },
   onSizeChanged (size) {
     if (this.pager.size === size) {
@@ -33,7 +36,7 @@ const handlers = {
     this.pager.size = size
     this._updatePageCount()
     this.$emit('update:size', size)
-    this.$emit('size-change', size)
+    this.$emit('page-size-change', size)
   },
   onTableCurrentRowChanged (selected, prev) {
     if (this.selection.ignore) {

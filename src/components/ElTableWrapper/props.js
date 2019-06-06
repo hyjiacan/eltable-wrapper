@@ -1,9 +1,9 @@
 const props = {
   // 通用 BEGIN===========================================================
   /**
-   * 数据源类型，可选值: l(local), i(increment), s(server)
+   * 数据分页类型，可选值: l(local), i(increment), s(server)
    */
-  source: {
+  type: {
     type: String,
     default: 's'
   },
@@ -62,7 +62,7 @@ const props = {
   /**
    * 指示表格是否支持多选，当表格列中指定了 type="selection" 时，会覆盖此值
    */
-  multiSelect: {
+  multiSelection: {
     type: Boolean,
     default: false
   },
@@ -78,20 +78,20 @@ const props = {
   /**
    * 向服务器请求数据的url
    */
-  ajaxUrl: {
+  url: {
     type: String
   },
   /**
    * 向服务器请求数据的method
    */
-  ajaxMethod: {
+  method: {
     type: String,
     default: 'get'
   },
   /**
    * 向服务器请求数据的参数
    */
-  ajaxParams: {
+  params: {
     type: Object
   },
   responseHandler: {

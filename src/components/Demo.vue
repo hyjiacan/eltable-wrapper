@@ -1,9 +1,7 @@
 <template>
   <div class="hello">
     <el-table-wrapper
-      :table-options="{}"
-      ajax-url="mock/data.json"
-      inc-id="id"
+      url="mock/data.json"
       :ajax="ajax"
       pager-position="both"
       @select="onSelect"

@@ -15,7 +15,7 @@ Vue.use(ElTableWrapper, {
   size: 10,
   incSize: 80,
   autoHeight: false,
-  source: 'i',
+  type: 'i',
   pLayout: 'sizes, prev, pager, next'
 })
 

@@ -28,6 +28,19 @@ const methods = {
     return this
   },
   /**
+   * 获取数据信息
+   * @return {number}
+   */
+  info () {
+    return {
+      pageIndex: this.pager.index,
+      pageCount: this.pager.count,
+      pageSize: this.pager.size,
+      dataSize: this.data.size,
+      selected: this.selection.cache.length
+    }
+  },
+  /**
    * 向表格尾追加数据项
    * @param row
    */
@@ -131,7 +144,7 @@ const methods = {
   getDataId (row, idField) {
     idField = idField || this.idField
     if (typeof idField === 'function') {
-      return '' + idField(row)
+      return idField(row)
     }
     if (!Array.isArray(idField)) {
       return '' + row[idField]
@@ -140,7 +153,7 @@ const methods = {
     idField.forEach(field => {
       temp = temp[field]
     })
-    return '' + temp
+    return temp
   },
   /**
    * 选中指定行

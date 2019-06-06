@@ -9,6 +9,9 @@ const component = {
   data,
   methods: {
     __init () {
+      this._ajaxParamsBuffer = {
+        ...this.params
+      }
       if (this.index) {
         this.pager.index = parseInt(this.index)
         if (this.pager.index < 1 || isNaN(this.pager.index)) {
@@ -38,31 +41,31 @@ const component = {
       if (available.indexOf(this.pagerPosition) === -1) {
         this._throwError('Invalid value for property "pager-position", available are: ' + available.join(','))
       }
-      if (this.source === 'l') {
+      if (this.type === 'l') {
         // 本地数据
         return
       }
       // 使用远程数据时，必须指定 dataLoader
       if (!this.ajax) {
-        this._throwError('Property "ajax" must be specified while source is not "l"(local)')
+        this._throwError('Property "ajax" must be specified while type is not "l"(local)')
       }
       // 使用远程数据时，必须指定 url
-      if (!this.ajaxUrl) {
-        this._throwError('Property "ajax-url" must be specified while source is not "l"(local)')
+      if (!this.url) {
+        this._throwError('Property "url" must be specified while type is not "l"(local)')
       }
     },
     _loadRemoteData () {
-      if (this.source === 'i') {
+      if (this.type === 'i') {
         this._loadIncData()
         return
       }
 
-      if (this.source === 's') {
+      if (this.type === 's') {
         this._loadPagedData()
         return
       }
       // eslint-disable-next-line
-      this._throwError('"load" method not allowed while source is "l"(local)')
+      this._throwError('"load" method not allowed while type is "l"(local)')
     },
     /**
      * 发送 ajax 请求
@@ -70,8 +73,8 @@ const component = {
      */
     _sendAjax (params) {
       return this.ajax({
-        url: this.ajaxUrl,
-        method: this.ajaxMethod,
+        url: this.url,
+        method: this.method,
         [this.ajaxParamsName]: params
       })
     },
@@ -81,10 +84,11 @@ const component = {
      */
     _loadIncData () {
       // 这么写以避免搞掉原始参数
-      let p = Object.assign({}, this.ajaxParams, {
+      let p = {
+        ...this.params,
         [this.paramInc]: this._getLastId(),
         [this.paramSize]: this.incSize
-      })
+      }
       p = this._invokeCheckParams(p)
       if (p === false) {
         return
@@ -107,7 +111,7 @@ const component = {
           return
         }
         // 渲染后触发一次分页事件
-        if (this.source === 'i') {
+        if (this.type === 'i') {
           // 当只有一页数据时，加载更多数据
           this.$nextTick(() => {
             this._loadIncData()
@@ -126,10 +130,11 @@ const component = {
      */
     _loadPagedData () {
       // 这么写以避免搞掉原始参数
-      let p = Object.assign({}, this.ajaxParams, {
+      let p = {
+        ...this.params,
         [this.paramIndex]: this.pager.index - 1,
         [this.paramSize]: this.pager.size
-      })
+      }
       p = this._invokeCheckParams(p)
       if (p === false) {
         return
@@ -138,8 +143,8 @@ const component = {
       this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
         data = this._invokeResponseHandler(data)
-        data.size = data[this.totalField]
-        this.data.view = this.data.cache = data[this.listField]
+        this.data.size = data[this.totalField]
+        this.data.view = this.data.cache = data[this.listField] || []
         this._updatePageCount()
       }).catch(e => {
         this.$emit('ajax-error', e)
@@ -169,7 +174,7 @@ const component = {
     },
     _updatePageCount () {
       let length = 0
-      switch (this.source) {
+      switch (this.type) {
         case 's':
           length = this.data.size
           break
@@ -182,6 +187,7 @@ const component = {
         this.pager.count = 0
       }
       this.pager.count = Math.ceil(length / this.pager.size)
+      this.$emit('data-size-change', length)
     },
     _updateSelection () {
       if (!this.selection.cache.length) {
@@ -221,14 +227,14 @@ const component = {
     currentData () {
       this._updateSelection()
     },
-    ajaxParams (v) {
+    params (v) {
       // 检查两个对象是否相同
       if (this.loadWhenParamsChange && !equal(this._ajaxParamsBuffer, v)) {
         this.load()
       }
 
       this._ajaxParamsBuffer = {
-        ...this.ajaxParams
+        ...this.params
       }
     },
     loading (v) {
@@ -238,7 +244,7 @@ const component = {
   mounted () {
     this.__init()
     this._checkProps()
-    if (this.source !== 'l' && this.autoLoad) {
+    if (this.type !== 'l' && this.autoLoad) {
       this._loadRemoteData()
     }
   },
@@ -294,6 +300,10 @@ const component = {
       if (this.pager.index > this.pager.count) {
         this.pager.index = this.pager.count
       }
+      if (this.type === 's') {
+        // 服务器分页时，直接返回数据
+        return this.data.view
+      }
       let from = (this.pager.index - 1) * this.pager.size
       return this.data.view.slice(from, from + this.pager.size)
     },
@@ -314,15 +324,15 @@ const component = {
     },
     isMultipleSelection () {
       if (!this.$slots.default) {
-        return this.multiSelect
+        return this.multiSelection
       }
       // 循环列 查找多选列
-      let selectionCol = this.$slots.default.filter(node => {
-        return node.componentOptions &&
-          node.componentOptions.propsData &&
-          node.componentOptions.propsData.type === 'selection'
+      let selectionCol = this.$slots.default.every(node => {
+        return !node.componentOptions ||
+          !node.componentOptions.propsData ||
+          node.componentOptions.propsData.type !== 'selection'
       })
-      return !!selectionCol.length || this.multiSelect
+      return !!selectionCol.length || this.multiSelection
     },
     slotData () {
       let i = this
