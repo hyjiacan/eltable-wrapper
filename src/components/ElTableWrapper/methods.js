@@ -147,7 +147,7 @@ const methods = {
       return idField(row)
     }
     if (!Array.isArray(idField)) {
-      return '' + row[idField]
+      return row[idField]
     }
     let temp = row
     idField.forEach(field => {

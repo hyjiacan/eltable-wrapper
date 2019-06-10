@@ -9,7 +9,7 @@ const LOCK = false
 if (LOCK) {
   console.info('version locked: ' + pkg.version)
   process.exit()
-}
+}''
 
 let temp = pkg.version.split('.')
 let last = temp.pop()
