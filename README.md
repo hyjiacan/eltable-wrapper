@@ -81,8 +81,6 @@ const defaults = {
 Vue.use(ElTableWrapper, defaults)
 ```
 
-> 设置默认值时，属性名称需要使用 **驼峰命名法**，使用 `-` 连接时无法识别
-
 ### 公共属性
 
 |名称|类型|默认值|描述|

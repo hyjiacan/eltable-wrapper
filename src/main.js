@@ -4,7 +4,7 @@ import App from './App.vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import ElTableWrapper from './components/ElTableWrapper'
+import ElTableWrapper from './components'
 
 Vue.config.productionTip = false
 
