@@ -18,7 +18,10 @@
   "license": "MIT",
   "files": [
     "lib",
-    "src"
+    "src",
+    "README.md",
+    "OPTIONS.md",
+    "PAGINATION.md"
   ],
   "bugs": {
     "url": "https://github.com/hyjiacan/eltable-wrapper/issues"
@@ -32,7 +35,6 @@
     "lint": "npx vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "deep-equal": "^1.0.1",
     "element-ui": "^2.8.2",
@@ -44,6 +46,7 @@
     "@vue/cli-plugin-eslint": "^3.7.0",
     "@vue/cli-service": "^3.7.0",
     "@vue/eslint-config-standard": "^4.0.0",
+    "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
