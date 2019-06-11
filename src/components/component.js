@@ -228,6 +228,9 @@ const component = {
       this._updateSelection()
     },
     params (v) {
+      if (this.type === 'l') {
+        return
+      }
       // 检查两个对象是否相同
       if (this.loadWhenParamsChange && !equal(this._ajaxParamsBuffer, v)) {
         this.load()
