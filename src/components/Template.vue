@@ -9,8 +9,8 @@
       <div class="el-table-wrapper-header-text">
         <slot name="header" :data="slotData">
           <template v-if="isMultipleSelection">
-            <template v-if="selection.cache.length">
-              已选择 {{selection.cache.length}} 项
+            <template v-if="selectionData.cache.length">
+              已选择 {{selectionData.cache.length}} 项
             </template>
             <template v-else>未选择项</template>
           </template>
@@ -26,7 +26,7 @@
       <el-table
         style="width: 100%"
         height="100%"
-        highlight-current-row
+        :highlight-current-row="selection === 'single'"
         :data="currentData"
         @current-change="onTableCurrentRowChanged"
         @selection-change="onTableSelectionChanged"
@@ -86,8 +86,8 @@
       <div class="el-table-wrapper-footer-text">
         <slot name="footer" :data="slotData">
           <template v-if="isMultipleSelection">
-            <template v-if="selection.cache.length">
-              已选择 {{selection.cache.length}} 项
+            <template v-if="selectionData.cache.length">
+              已选择 {{selectionData.cache.length}} 项
             </template>
             <template v-else>未选择项</template>
           </template>

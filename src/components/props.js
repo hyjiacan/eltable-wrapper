@@ -60,11 +60,10 @@ const props = {
     default: ''
   },
   /**
-   * 指示表格是否支持多选，当表格列中指定了 type="selection" 时，会覆盖此值
+   * 指示表格选择模式，可选值为: 空, single, multiple，当表格列中指定了 type="selectionData" 时，会覆盖此值为 multiple
    */
-  multiSelection: {
-    type: Boolean,
-    default: false
+  selection: {
+    type: String
   },
   // 通用 END===========================================================
 

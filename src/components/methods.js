@@ -17,14 +17,16 @@ const methods = {
    * 清空数据，并重置分页
    */
   clear () {
-    this.data.view = this.data.cache = []
+    this.data.cache = []
+    this.data.view = []
     this.data.extra = null
     this.data.size = 0
     this.pager.index = 1
+    this.pager.size = 0
     this.pager.count = 0
-    this.selection.cache = []
-    this.selection.all = {}
-    this.selection.current = {}
+    this.selectionData.cache = []
+    this.selectionData.all = {}
+    this.selectionData.current = {}
     return this
   },
   /**
@@ -37,7 +39,7 @@ const methods = {
       pageCount: this.pager.count,
       pageSize: this.pager.size,
       dataSize: this.data.size,
-      selected: this.selection.cache.length
+      selected: this.selectionData.cache.length
     }
   },
   /**
@@ -98,8 +100,8 @@ const methods = {
       let id = this.getDataId(row)
       let idx = this.data.cache.findIndex(row => this.getDataId(row) === id)
       this.data.cache.splice(idx, 1)
-      idx = this.selection.cache.findIndex(row => this.getDataId(row) === id)
-      this.selection.cache.splice(idx, 1)
+      idx = this.selectionData.cache.findIndex(row => this.getDataId(row) === id)
+      this.selectionData.cache.splice(idx, 1)
     })
     this.data.size = this.data.cache.length
     this.pager.count = Math.ceil(this.data.size / this.pager.size)
@@ -142,6 +144,9 @@ const methods = {
    * @return {String}
    */
   getDataId (row, idField) {
+    if (!row) {
+      return undefined
+    }
     idField = idField || this.idField
     if (typeof idField === 'function') {
       return idField(row)
@@ -160,13 +165,13 @@ const methods = {
    * @param rows
    */
   select (rows) {
-    let all = this.selection.all
-    let current = this.selection.current
-    let cache = this.selection.cache
+    let all = this.selectionData.all
+    let current = this.selectionData.current
+    let cache = this.selectionData.cache
     // 单选
     if (!this.isMultipleSelection) {
       let id = this.getDataId(rows)
-      this.selection.all = this.selection.current = {
+      this.selectionData.all = this.selectionData.current = {
         [id]: rows
       }
       this._updateSelection()
@@ -193,7 +198,7 @@ const methods = {
    */
   selectAll () {
     if (!this.isMultipleSelection) {
-      console.warn('ElTableWrapper: method "selectAll" only allowed for multiple selection')
+      console.warn('ElTableWrapper: method "selectAll" only allowed for multiple selectionData')
       return []
     }
     let data = this.advanceSelection ? this.data.cache : this.currentData
@@ -206,18 +211,18 @@ const methods = {
    */
   deselect (rows) {
     if (!this.isMultipleSelection) {
-      this.selection.all = this.selection.current = {}
-      this.selection.cache = []
+      this.selectionData.all = this.selectionData.current = {}
+      this.selectionData.cache = []
       this._updateSelection()
       return
     }
     if (!Array.isArray(rows)) {
       rows = [rows]
     }
-    let all = this.selection.all
-    let current = this.selection.current
-    let cache = this.selection.cache
-    this.selection.ignore = true
+    let all = this.selectionData.all
+    let current = this.selectionData.current
+    let cache = this.selectionData.cache
+    this.selectionData.ignore = true
     rows.forEach(row => {
       let id = this.getDataId(row)
       if (all.hasOwnProperty(id)) {
@@ -228,7 +233,7 @@ const methods = {
       }
       this.$refs.table.toggleRowSelection(row, false)
     })
-    this.selection.ignore = false
+    this.selectionData.ignore = false
     return this
   },
   /**
@@ -237,7 +242,7 @@ const methods = {
    */
   deselectAll () {
     if (!this.isMultipleSelection) {
-      console.warn('ElTableWrapper: method "deselectAll" only allowed for multiple selection')
+      console.warn('ElTableWrapper: method "deselectAll" only allowed for multiple selectionData')
       return []
     }
     let data = this.advanceSelection ? this.data.cache : this.currentData
@@ -250,15 +255,15 @@ const methods = {
    */
   getSelection () {
     if (this.isMultipleSelection) {
-      return [].concat(this.selection.cache)
+      return [].concat(this.selectionData.cache)
     }
-    return this.selection.cache[0]
+    return this.selectionData.cache[0]
   },
   /**
    * 清除所有选中项
    */
   clearSelection () {
-    if (!this.selection.cache.length) {
+    if (!this.selectionData.cache.length) {
       return this
     }
     if (this.isMultipleSelection) {

@@ -39,7 +39,11 @@ const handlers = {
     this.$emit('page-size-change', size)
   },
   onTableCurrentRowChanged (selected, prev) {
-    if (this.selection.ignore) {
+    // 未启用单选
+    if (this.selection !== 'single') {
+      return
+    }
+    if (this.selectionData.ignore) {
       // 忽略由程序触发的事件
       return
     }
@@ -48,34 +52,38 @@ const handlers = {
       return
     }
     if (this.pager.indexChanged) {
-      this.selection.current = {}
+      this.selectionData.current = {}
       this.pager.indexChanged = false
       // 高级选择时，切换页面不触发取消选择事件
-      if (this.advanceSelection && this.selection.cache.length) {
+      if (this.advanceSelection && this.selectionData.cache.length) {
         return
       }
 
       // 如果没有开启高级选择模式，那么在切换页面时，清空选中项
-      this.selection.cache = []
-      this.selection.all = {}
+      this.selectionData.cache = []
+      this.selectionData.all = {}
     }
     // 单选模式
-    this.selection.all = this.selection.current = {
+    this.selectionData.all = this.selectionData.current = {
       [this.getDataId(selected)]: selected
     }
-    this.selection.cache = [selected]
+    this.selectionData.cache = [selected]
     this.$emit('select', selected, prev)
   },
   onTableSelectionChanged (selection) {
-    if (this.selection.ignore) {
+    // 未启用多选
+    if (!this.isMultipleSelection) {
+      return
+    }
+    if (this.selectionData.ignore) {
       // 忽略由程序触发的事件
       return
     }
     // 是取消选中项(deselect)了还是选中项(select)了
-    let currentPageSelectedLength = Object.keys(this.selection.current).length
+    let currentPageSelectedLength = Object.keys(this.selectionData.current).length
     let type = currentPageSelectedLength < selection.length ? 'select' : 'deselect'
     if (this.pager.indexChanged) {
-      this.selection.current = {}
+      this.selectionData.current = {}
       this.pager.indexChanged = false
       // 高级选择时，切换页面不触发取消选择事件
       if (this.advanceSelection) {
@@ -86,14 +94,14 @@ const handlers = {
         }
       } else {
         // 如果没有开启高级选择模式，那么在切换页面时，清空选中项
-        this.selection.cache = []
-        this.selection.all = {}
+        this.selectionData.cache = []
+        this.selectionData.all = {}
       }
     }
 
     let items = []
-    let current = this.selection.current
-    let all = this.selection.all
+    let current = this.selectionData.current
+    let all = this.selectionData.all
     if (type === 'select') {
       // 需要找出新选中的项
       selection.forEach(row => {
@@ -110,7 +118,7 @@ const handlers = {
         items.push(row)
       })
       // 更新选中集合
-      this.selection.cache = this.selection.cache.concat(items)
+      this.selectionData.cache = this.selectionData.cache.concat(items)
     } else {
       // 需要找出取消选中的项
       // 找到一项，删除一项，最后剩下的就是被取消选中的项了
@@ -131,8 +139,8 @@ const handlers = {
         delete current[id]
         delete all[id]
         // 更新选中集合
-        let idx = this.selection.cache.findIndex(row => this.getDataId(row) === id)
-        this.selection.cache.splice(idx, 1)
+        let idx = this.selectionData.cache.findIndex(row => this.getDataId(row) === id)
+        this.selectionData.cache.splice(idx, 1)
       }
     }
     if (!items.length) {
@@ -140,10 +148,10 @@ const handlers = {
       return
     }
     // 是否选择了所有数据项
-    let allSelected = this.selection.cache.length > 0 && this.selection.cache.length === this.data.cache.length
+    let allSelected = this.selectionData.cache.length > 0 && this.selectionData.cache.length === this.data.cache.length
     // 触发事件
     this.$emit('selection-change', {
-      selection: [].concat(this.selection.cache),
+      selection: [].concat(this.selectionData.cache),
       type,
       changed: items,
       allSelected

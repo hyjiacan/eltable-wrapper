@@ -26,7 +26,7 @@ const data = () => {
     /**
      * 选中数据的存放
      */
-    selection: {
+    selectionData: {
       /**
        * 当前页选中的数据集合
        */

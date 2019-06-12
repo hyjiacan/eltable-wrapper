@@ -190,13 +190,13 @@ const component = {
       this.$emit('data-size-change', length)
     },
     _updateSelection () {
-      if (!this.selection.cache.length) {
+      if (!this.selectionData.cache.length) {
         return
       }
-      this.selection.ignore = true
+      this.selectionData.ignore = true
       this.$nextTick(() => {
         // 设置选中项
-        let cache = this.selection.cache
+        let cache = this.selectionData.cache
         if (this.isMultipleSelection) {
           cache.forEach(row => {
             this.$refs.table.toggleRowSelection(row, true)
@@ -210,7 +210,7 @@ const component = {
           }
         }
         this.$nextTick(() => {
-          this.selection.ignore = false
+          this.selectionData.ignore = false
         })
       })
     },
@@ -327,7 +327,7 @@ const component = {
     },
     isMultipleSelection () {
       if (!this.$slots.default) {
-        return this.multiSelection
+        return this.selection === 'multiple'
       }
       // 循环列 查找多选列
       let selectionCol = this.$slots.default.every(node => {
@@ -335,7 +335,7 @@ const component = {
           !node.componentOptions.propsData ||
           node.componentOptions.propsData.type !== 'selection'
       })
-      return !!selectionCol.length || this.multiSelection
+      return !selectionCol || this.selection === 'multiple'
     },
     slotData () {
       let i = this
@@ -344,7 +344,7 @@ const component = {
         pageCount: i.pager.count,
         pageSize: i.pager.size,
         dataSize: i.data.size,
-        selected: i.selection.cache.length
+        selected: i.selectionData.cache.length
       }
     }
   }
