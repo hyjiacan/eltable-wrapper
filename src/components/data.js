@@ -20,7 +20,7 @@ const data = () => {
       /**
        * 所有缓存的数据量
        */
-      size: 0,
+      count: 0,
       loading: false
     },
     /**

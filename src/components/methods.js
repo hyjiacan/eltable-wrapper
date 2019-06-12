@@ -20,9 +20,8 @@ const methods = {
     this.data.cache = []
     this.data.view = []
     this.data.extra = null
-    this.data.size = 0
+    this.data.count = 0
     this.pager.index = 1
-    this.pager.size = 0
     this.pager.count = 0
     this.selectionData.cache = []
     this.selectionData.all = {}
@@ -38,7 +37,7 @@ const methods = {
       pageIndex: this.pager.index,
       pageCount: this.pager.count,
       pageSize: this.pager.size,
-      dataSize: this.data.size,
+      dataSize: this.data.count,
       selected: this.selectionData.cache.length
     }
   },
@@ -52,8 +51,8 @@ const methods = {
     } else {
       this.data.cache.push(row)
     }
-    this.data.size = this.data.cache.length
-    this.pager.count = Math.ceil(this.data.size / this.pager.size)
+    this.data.count = this.data.cache.length
+    this.pager.count = Math.ceil(this.data.count / this.pager.size)
     this.data.view = this.data.cache
     return this
   },
@@ -67,8 +66,8 @@ const methods = {
     } else {
       this.data.cache.unshift(row)
     }
-    this.data.size = this.data.cache.length
-    this.pager.count = Math.ceil(this.data.size / this.pager.size)
+    this.data.count = this.data.cache.length
+    this.pager.count = Math.ceil(this.data.count / this.pager.size)
     this.data.view = this.data.cache
     return this
   },
@@ -83,8 +82,8 @@ const methods = {
     } else {
       this.data.cache.splice(index, 0, row)
     }
-    this.data.size = this.data.cache.length
-    this.pager.count = Math.ceil(this.data.size / this.pager.size)
+    this.data.count = this.data.cache.length
+    this.pager.count = Math.ceil(this.data.count / this.pager.size)
     this.data.view = this.data.cache
     return this
   },
@@ -103,8 +102,8 @@ const methods = {
       idx = this.selectionData.cache.findIndex(row => this.getDataId(row) === id)
       this.selectionData.cache.splice(idx, 1)
     })
-    this.data.size = this.data.cache.length
-    this.pager.count = Math.ceil(this.data.size / this.pager.size)
+    this.data.count = this.data.cache.length
+    this.pager.count = Math.ceil(this.data.count / this.pager.size)
     this.data.view = this.data.cache
     return this
   },

@@ -7,8 +7,8 @@
       <span class="el-table-wrapper-pager-summary">
         <slot name="pagerSummary" :data="slotData">
           <template v-if="parent.loading">正在加载...</template>
-          <template v-else-if="parent.type === 'i' && parent.data.extra">已加载 {{parent.data.size}} 条数据</template>
-          <template v-else>共 {{parent.data.size}} 条数据</template>
+          <template v-else-if="parent.type === 'i' && parent.data.extra">已加载 {{parent.data.count}} 条数据</template>
+          <template v-else>共 {{parent.data.count}} 条数据</template>
         </slot>
       </span>
     </template>

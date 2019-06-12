@@ -143,7 +143,7 @@ const component = {
       this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
         data = this._invokeResponseHandler(data)
-        this.data.size = data[this.totalField]
+        this.data.count = data[this.totalField]
         this.data.view = this.data.cache = data[this.listField] || []
         this._updatePageCount()
       }).catch(e => {
@@ -176,7 +176,7 @@ const component = {
       let length = 0
       switch (this.type) {
         case 's':
-          length = this.data.size
+          length = this.data.count
           break
         case 'i':
         case 'l':
@@ -343,7 +343,7 @@ const component = {
         pageIndex: i.pager.index,
         pageCount: i.pager.count,
         pageSize: i.pager.size,
-        dataSize: i.data.size,
+        dataSize: i.data.count,
         selected: i.selectionData.cache.length
       }
     }
