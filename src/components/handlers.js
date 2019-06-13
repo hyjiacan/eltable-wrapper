@@ -32,11 +32,17 @@ const handlers = {
     if (this.pager.size === size) {
       return
     }
+    this.$emit('update:size', size)
+    this.$emit('page-size-change', size)
+
+    if (this.type === 's') {
+      // 服务器分页时需要重新加载数据
+      this.load()
+      return
+    }
     this.resetScroll()
     this.pager.size = size
     this._updatePageCount()
-    this.$emit('update:size', size)
-    this.$emit('page-size-change', size)
   },
   onTableCurrentRowChanged (selected, prev) {
     // 未启用单选

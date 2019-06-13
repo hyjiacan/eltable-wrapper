@@ -9,7 +9,10 @@ const methods = {
    * @return {methods}
    */
   load (clear = true) {
-    this.clear()
+    if (clear) {
+      this.clear()
+    }
+    this.resetScroll()
     this._loadRemoteData()
     return this
   },

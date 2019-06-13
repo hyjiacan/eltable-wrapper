@@ -304,7 +304,7 @@ const component = {
         this.pager.index = this.pager.count
       }
       if (this.type === 's') {
-        // 服务器分页时，直接返回数据
+        // 服务器分页时，重新加载数据
         return this.data.view
       }
       let from = (this.pager.index - 1) * this.pager.size
