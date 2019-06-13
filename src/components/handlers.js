@@ -35,14 +35,14 @@ const handlers = {
     this.$emit('update:size', size)
     this.$emit('page-size-change', size)
 
-    if (this.type === 's') {
-      // 服务器分页时需要重新加载数据
-      this.load()
-      return
-    }
     this.resetScroll()
     this.pager.size = size
     this._updatePageCount()
+
+    if (this.type === 's') {
+      // 服务器分页时需要重新加载数据
+      this.load()
+    }
   },
   onTableCurrentRowChanged (selected, prev) {
     // 未启用单选
