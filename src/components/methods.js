@@ -154,10 +154,16 @@ const methods = {
       return idField(row)
     }
     if (!Array.isArray(idField)) {
+      if (!row.hasOwnProperty(idField)) {
+        this._throwError(`Field "${idField}" not found in data row, a valid "id-field" property is expected`)
+      }
       return row[idField]
     }
     let temp = row
     idField.forEach(field => {
+      if (!temp.hasOwnProperty(field)) {
+        this._throwError(`Field "${idField.join('.')}" not found in data row, a valid "id-field" property is expected`)
+      }
       temp = temp[field]
     })
     return temp

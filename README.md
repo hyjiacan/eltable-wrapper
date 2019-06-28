@@ -186,7 +186,7 @@ const data = {
 
 |名称|参数|描述|
 |---|---|---|
-|ajax-error|{data, message, response}|加载jax数据失败的事件|
+|ajax-error|{data, message, response}|加载ajax数据失败的事件|
 |data-size-change|size: Number|表格数据量变化|
 |page-size-change|size: Number|表格每页显示的数据量变化|
 |page-index-change|index: Number|表格的页码变化|

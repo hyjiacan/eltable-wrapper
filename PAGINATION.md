@@ -91,6 +91,6 @@ export default {
 }
 ```
 - `list` 数据列表放在这个字段上，此参数名可以通过属性`list-field`指定
-- `total` 数据总量放在这个字段上，此参数名可以通过属性`total-list`指定
+- `total` 数据总量放在这个字段上，此参数名可以通过属性`total-field`指定
 
 如果返回的结构不是这样的，那么就需要通过指定`response-handler`来对响应的数据进行预处理
