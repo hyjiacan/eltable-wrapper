@@ -26,7 +26,7 @@
       <el-table
         style="width: 100%"
         height="100%"
-        :highlight-current-row="selection === 'single'"
+        :highlight-current-row="tHighlightCurrentRow || selection === 'single'"
         :data="currentData"
         @current-change="onTableCurrentRowChanged"
         @selection-change="onTableSelectionChanged"

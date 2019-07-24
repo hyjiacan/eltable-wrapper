@@ -301,6 +301,10 @@ const props = {
   tSpanMethod: {
     type: Function
   },
+  tHighlightCurrentRow: {
+    type: Boolean,
+    default: false
+  },
   tSelectOnIndeterminate: {
     type: Boolean,
     default: true

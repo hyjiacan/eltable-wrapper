@@ -7,6 +7,8 @@
       @select="onSelect"
       @selection-change="selectionChanged"
       @select-all="selectionChanged"
+      t-row-class-name="customize-row-class"
+      t-highlight-current-row
       advance-selection
       ref="table"
     >
@@ -46,9 +48,11 @@ export default {
       })
     },
     onSelect (selection, prev) {
+      // eslint-disable-next-line
       console.log(selection, prev)
     },
     selectionChanged (e) {
+      // eslint-disable-next-line
       console.log(e.selection, e.type, e.changed, e.allSelected)
     }
   },
@@ -61,8 +65,21 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="less" scoped>
 .hello {
   height: 100%;
+}
+</style>
+<style lang="less">
+.customize-row-class {
+  border: 1px solid green;
+
+  &:hover {
+    color: #5daf34;
+  }
+
+  &.current-row {
+    color: orangered;
+  }
 }
 </style>

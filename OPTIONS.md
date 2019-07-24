@@ -22,9 +22,10 @@
 - row-key
 - empty-text
 - default-expand-all
+- highlight-current-row
 - expand-row-keys
 - default-sort
-- tooltip-effect
+- tooltip-effecthigh
 - show-summary
 - sum-text
 - summary-method
