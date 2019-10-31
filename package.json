@@ -1,11 +1,14 @@
 {
   "name": "@hyjiacan/eltable-wrapper",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "main": "lib/eltable-wrapper.common.js",
   "description": "Wrap component `ElTable` and `ElPagination` for `element-ui`",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hyjiacan/eltable-wrapper.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "vue",
@@ -18,6 +21,7 @@
   "license": "MIT",
   "files": [
     "lib",
+    "src",
     "README.md",
     "OPTIONS.md",
     "PAGINATION.md"
@@ -28,14 +32,16 @@
   "homepage": "https://hyjiacan.github.io/eltable-wrapper/",
   "scripts": {
     "serve": "npx vue-cli-service serve",
-    "build": "node version.js & npx vue-cli-service build --target lib --dest=lib --formats=commonjs --name eltable-wrapper src/components/index.js",
+    "build": "npx vue-cli-service build --target lib --dest=lib --formats=commonjs --name eltable-wrapper src/components/index.js",
     "build:docs": "npx vue-cli-service build --dest=docs",
-    "release": "yarn run lint & yarn run build & yarn run build:docs",
+    "release": "yarn run lint & yarn run build & yarn run build:docs & node version.js",
     "lint": "npx vue-cli-service lint"
   },
   "dependencies": {
+    "deep-equal": "^1.0.1"
+  },
+  "peerDependencies": {
     "core-js": "^2.6.5",
-    "deep-equal": "^1.0.1",
     "element-ui": "^2.8.2",
     "vue": "^2.6.10"
   },

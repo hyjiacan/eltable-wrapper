@@ -141,6 +141,11 @@ Vue.use(ElTableWrapper, defaults)
 |total-field|String|total|服务器分页时，返回数据中的数据总量字段名称|
 |list-field|String|list|服务器分页时，返回数据中的数据列表字段名称|
 
+#### 本地分页特有属性
+
+|名称|类型|默认值|描述|
+|---|---|---|---|
+|local-data|Array|-|本地分页时，设置本地数据。当此值变化时，本地数据会清空，然后再重新渲染|
 
 ## 方法
 

@@ -214,6 +214,13 @@ const component = {
         })
       })
     },
+    _updateLocalData (data) {
+      // 更新时，先清空数据
+      this.clear()
+      if (data && data.length) {
+        this.append(this.localData)
+      }
+    },
     ...handlers,
     ...methods
   },
@@ -242,12 +249,17 @@ const component = {
     },
     loading (v) {
       this.data.loading = v
+    },
+    localData (data) {
+      this._updateLocalData(data)
     }
   },
   mounted () {
     this.__init()
     this._checkProps()
-    if (this.type !== 'l' && this.autoLoad) {
+    if (this.type === 'l') {
+      this._updateLocalData(this.localData)
+    } else if (this.autoLoad) {
       this._loadRemoteData()
     }
   },
@@ -267,9 +279,13 @@ const component = {
       return cls
     },
     headerStyle () {
-      return {
+      let style = {
         height: this.headerVisible ? `${parseFloat(this.headerSize)}px` : 0
       }
+      if (this.tBorder) {
+        style.borderBottomWidth = 0
+      }
+      return style
     },
     contentStyle () {
       return {

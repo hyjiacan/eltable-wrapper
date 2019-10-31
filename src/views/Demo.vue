@@ -1,27 +1,50 @@
 <template>
   <div class="hello">
-    <el-table-wrapper
-      url="mock/data.json"
-      :ajax="ajax"
-      pager-position="both"
-      @select="onSelect"
-      @selection-change="selectionChanged"
-      @select-all="selectionChanged"
-      t-row-class-name="customize-row-class"
-      t-highlight-current-row
-      advance-selection
-      ref="table"
-    >
-      <el-table-column type="selection" prop="checked"></el-table-column>
-      <el-table-column label="ID" prop="id"></el-table-column>
-      <el-table-column label="Name" prop="name"></el-table-column>
-      <el-table-column label="Dept." prop="dept"></el-table-column>
-      <el-table-column label="Remark">
-        <template slot-scope="{row}">
-          {{row.remark}}xxx
-        </template>
-      </el-table-column>
-    </el-table-wrapper>
+    <el-tabs>
+      <el-tab-pane label="本地数据">
+        <el-table-wrapper
+          type="l"
+          :local-data="localData"
+          pager-position="both"
+          t-row-class-name="customize-row-class"
+          t-highlight-current-row
+        >
+          <el-table-column type="selection" prop="checked"></el-table-column>
+          <el-table-column label="ID" prop="id"></el-table-column>
+          <el-table-column label="Name" prop="name"></el-table-column>
+          <el-table-column label="Dept." prop="dept"></el-table-column>
+          <el-table-column label="Remark">
+            <template slot-scope="{row}">
+              {{row.remark}}xxx
+            </template>
+          </el-table-column>
+        </el-table-wrapper>
+      </el-tab-pane>
+      <el-tab-pane label="远程数据">
+        <el-table-wrapper
+          url="mock/data.json"
+          :ajax="ajax"
+          pager-position="both"
+          @select="onSelect"
+          @selection-change="selectionChanged"
+          @select-all="selectionChanged"
+          t-row-class-name="customize-row-class"
+          t-highlight-current-row
+          advance-selection
+          ref="table"
+        >
+          <el-table-column type="selection" prop="checked"></el-table-column>
+          <el-table-column label="ID" prop="id"></el-table-column>
+          <el-table-column label="Name" prop="name"></el-table-column>
+          <el-table-column label="Dept." prop="dept"></el-table-column>
+          <el-table-column label="Remark">
+            <template slot-scope="{row}">
+              {{row.remark}}xxx
+            </template>
+          </el-table-column>
+        </el-table-wrapper>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -32,7 +55,8 @@ export default {
   name: 'Demo',
   data () {
     return {
-      cache: []
+      cache: [],
+      localData: []
     }
   },
   methods: {
@@ -57,6 +81,17 @@ export default {
     }
   },
   mounted () {
+    let data = []
+
+    for (let i = 0; i < 99; i++) {
+      data.push({
+        id: i,
+        name: 'name' + i,
+        dept: 'dept' + i,
+        remark: 'remark' + i
+      })
+    }
+    this.localData = data
     setTimeout(() => {
       this.$refs.table.deselect(this.cache[2])
     }, 3000)
@@ -80,6 +115,24 @@ export default {
 
   &.current-row {
     color: orangered;
+  }
+}
+
+.el-tabs {
+  height: 100%;
+  position: relative;
+  padding-top: 40px;
+  box-sizing: border-box;
+
+  .el-tabs__header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+  }
+
+  .el-tabs__content, .el-tab-pane {
+    height: 100%;
   }
 }
 </style>
