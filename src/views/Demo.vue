@@ -5,17 +5,18 @@
         <el-table-wrapper
           type="l"
           :local-data="localData"
+          selection="single"
           pager-position="both"
           t-row-class-name="customize-row-class"
           t-highlight-current-row
+          @select="onSelect"
         >
-          <el-table-column type="selection" prop="checked"></el-table-column>
           <el-table-column label="ID" prop="id"></el-table-column>
           <el-table-column label="Name" prop="name"></el-table-column>
           <el-table-column label="Dept." prop="dept"></el-table-column>
           <el-table-column label="Remark">
             <template slot-scope="{row}">
-              {{row.remark}}xxx
+              {{row.remark}}
             </template>
           </el-table-column>
         </el-table-wrapper>
@@ -39,7 +40,7 @@
           <el-table-column label="Dept." prop="dept"></el-table-column>
           <el-table-column label="Remark">
             <template slot-scope="{row}">
-              {{row.remark}}xxx
+              {{row.remark}}
             </template>
           </el-table-column>
         </el-table-wrapper>
@@ -49,7 +50,7 @@
 </template>
 
 <script>
-import axios from 'axios/index'
+import axios from 'axios'
 
 export default {
   name: 'Demo',

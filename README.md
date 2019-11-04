@@ -9,7 +9,7 @@
 ## 安装
 
 ```bash
-npm istall @hyjiacan/eltable-wrapper
+npm install @hyjiacan/eltable-wrapper
 ```
 或
 ```bash
@@ -91,7 +91,7 @@ Vue.use(ElTableWrapper, defaults)
 |pager-position|String|bottom|分页条位置，可选值为 `bottom` `top` `both`|
 |header-size|String/Number|48|`header` 高度，单位为`px`|
 |footer-size|String/Number|40|`footer` 高度，单位为`px`|
-|selection|String|-|指示表格选择模式，可选值为: 空, `single`, `multiple`，当表格列中指定了 `type="selection"` 时，会覆盖此值为 `multiple`|
+|selection|String|-|指示表格选择模式，可选值为: 空, `single`, `multiple`，需要启用单选时，需要指定值为`single`，当表格列中指定了 `type="selection"` 时，会覆盖此值为 `multiple`|
 |advance-selection|Boolean|false|是否启用高级选择，启用时支持跨页页面选择|
 |id-field|String/Array/Function|id|数据项的标识字段，若标识不在顶层，则使用数组传递，也可以传入一个函数，函数接收一个行对象，函数的返回值将作为标识|
 |size|String/Number|10|每页显示的数据量|
