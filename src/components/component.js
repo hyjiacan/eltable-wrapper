@@ -251,7 +251,7 @@ const component = {
           return
         }
         // 检查两个对象是否相同
-        this._ajaxParamsDiff = diff(this._ajaxParamsBuffer, v)
+        this._ajaxParamsDiff = diff(this._ajaxParamsBuffer, v) || []
         if (this.loadWhenParamsChange && this._ajaxParamsDiff.length) {
           this.load()
         }
