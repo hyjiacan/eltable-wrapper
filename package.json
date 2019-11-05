@@ -1,6 +1,6 @@
 {
   "name": "@hyjiacan/eltable-wrapper",
-  "version": "0.6.10",
+  "version": "0.6.12",
   "main": "lib/eltable-wrapper.common.js",
   "description": "Wrap component `ElTable` and `ElPagination` for `element-ui`",
   "repository": {
@@ -39,7 +39,7 @@
     "test": "npx vue-cli-service lint & npx vue-cli-service build"
   },
   "dependencies": {
-    "deep-equal": "^1.0.1"
+    "deep-diff": "^1.0.2"
   },
   "devDependencies": {
     "@vue/cli": "^3.7.0",

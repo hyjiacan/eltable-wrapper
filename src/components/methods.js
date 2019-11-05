@@ -9,11 +9,22 @@ const methods = {
    * @return {methods}
    */
   load (clear = true) {
-    if (clear) {
-      this.clear()
-    }
-    this.resetScroll()
-    this._loadRemoteData()
+    clearTimeout(this._ajaxHandle)
+    this._ajaxHandle = setTimeout(() => {
+      this._loadRemoteData(() => {
+        if (clear) {
+          this.clear()
+        }
+        this.resetScroll()
+      })
+    }, this.ajaxDelay)
+    return this
+  },
+  /**
+   * 取消尚未执行的ajax请求
+   */
+  cancel () {
+    clearTimeout(this._ajaxHandle)
     return this
   },
   /**

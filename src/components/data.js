@@ -21,7 +21,8 @@ const data = () => {
        * 所有缓存的数据量
        */
       count: 0,
-      loading: false
+      loading: false,
+      _ajaxHandle: -1
     },
     /**
      * 选中数据的存放
@@ -56,7 +57,8 @@ const data = () => {
       count: 0,
       indexChanged: false
     },
-    _ajaxParamsBuffer: null
+    _ajaxParamsBuffer: null,
+    _ajaxParamsDiff: []
   }
 }
 

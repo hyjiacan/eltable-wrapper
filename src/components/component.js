@@ -1,11 +1,9 @@
-import equal from 'deep-equal'
-import props from './props'
+import diff from 'deep-diff'
 import methods from './methods'
 import handlers from './handlers'
 import data from './data'
 
 const component = {
-  props,
   data,
   methods: {
     __init () {
@@ -54,14 +52,19 @@ const component = {
         this._throwError('Property "url" must be specified while type is not "l"(local)')
       }
     },
-    _loadRemoteData () {
+    /**
+     *
+     * @param {Function} beforeSend 发送前的处理函数
+     * @private
+     */
+    _loadRemoteData (beforeSend) {
       if (this.type === 'i') {
-        this._loadIncData()
+        this._loadIncData(beforeSend)
         return
       }
 
       if (this.type === 's') {
-        this._loadPagedData()
+        this._loadPagedData(beforeSend)
         return
       }
       // eslint-disable-next-line
@@ -82,7 +85,7 @@ const component = {
      * 加载服务器返回的增量数据
      * @private
      */
-    _loadIncData () {
+    _loadIncData (beforeSend) {
       // 这么写以避免搞掉原始参数
       let p = {
         ...this.params,
@@ -93,6 +96,7 @@ const component = {
       if (p === false) {
         return
       }
+      beforeSend()
       this.data.loading = true
       this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
@@ -128,7 +132,7 @@ const component = {
      * 加载服务器分页好的数据
      * @private
      */
-    _loadPagedData () {
+    _loadPagedData (beforeSend) {
       // 这么写以避免搞掉原始参数
       let p = {
         ...this.params,
@@ -139,6 +143,7 @@ const component = {
       if (p === false) {
         return
       }
+      beforeSend()
       this.data.loading = true
       this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
@@ -161,7 +166,12 @@ const component = {
     },
     _invokeCheckParams (param) {
       if (this.checkParams) {
-        return this.checkParams(param)
+        let paramsDiff = this._ajaxParamsDiff || []
+        if (paramsDiff.length) {
+          // 重置变化的参数
+          this._ajaxParamsDiff = []
+        }
+        return this.checkParams(param, paramsDiff)
       }
       return param
     },
@@ -241,12 +251,14 @@ const component = {
           return
         }
         // 检查两个对象是否相同
-        if (this.loadWhenParamsChange && !equal(this._ajaxParamsBuffer, v)) {
+        this._ajaxParamsDiff = diff(this._ajaxParamsBuffer, v)
+        if (this.loadWhenParamsChange && this._ajaxParamsDiff.length) {
           this.load()
         }
-
-        this._ajaxParamsBuffer = {
-          ...this.params
+        if (this._ajaxParamsDiff.length) {
+          this._ajaxParamsBuffer = {
+            ...this.params
+          }
         }
       }
     },
@@ -263,7 +275,8 @@ const component = {
     if (this.type === 'l') {
       this._updateLocalData(this.localData)
     } else if (this.autoLoad) {
-      this._loadRemoteData()
+      this._loadRemoteData(() => {
+      })
     }
   },
   computed: {

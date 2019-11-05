@@ -112,16 +112,21 @@ Vue.use(ElTableWrapper, defaults)
 |ajax|function|-|向服务器发送ajax请求的方法，需要返回一个 `Promise`对象。当 `type` 为`i` 或 `s` 时是必须的|
 |url|String|-|向服务器请求数据的url|
 |method|String|get|向服务器请求数据的method|
+|ajax-delay|Number|500|发送ajax请求的延时，单位为毫秒，设置此值以降低请求被频繁触发|
 |params|Object|-|向服务器请求数据的参数|
 |param-size|String|pageSize|向服务器发送请求时，数据量参数名|
 |response-handler|Function|-|设置当服务器返回数据后，预处理函数，处理后的数据通过返回值提交|
 |auto-load|Boolean|true|在使用服务器数据源时，是否在挂载后自动加载数据|
-|check-params|Function|-|在组件向服务器发起请求前，可以通过此函数检查参数是否正确，将新的参数作为返回值，返回`false`以阻止继续执行|
+|check-params|Function(params [,changed])|-|在组件向服务器发起请求前，可以通过此函数检查参数是否正确，将新的参数作为返回值，返回`false`以阻止继续执行|
 |load-when-params-change|Boolean|false|是否在ajax参数改变时自动重新加载数据(此时会监听`params`变化)|
 |loading|Boolean|false|是否显示loading状态|
 |loading-text|Boolean|false|显示loading状态时的文本|
 |loading-icon|Boolean|false|显示loading状态时的图标|
 |loading-color|Boolean|false|显示loading状态时的背景色|
+
+> `check-params` 的第二个参数，仅在`params`改变时，自动重新请求时有效，其描述了参数的变化，更多信息参考 [deep-diff](https://github.com/flitbit/diff)
+> 可以在`check-params`中通过判断`changed`的值，以阻止某些参数变化时自动重新加载
+
 
 #### 增量分页特有属性
 
@@ -153,6 +158,7 @@ Vue.use(ElTableWrapper, defaults)
 |---|---|---|---|
 |load|clear=true: Boolean|this|在使用服务器数据源时，调用此方法以从服务器加载数据|
 |clear|-|this|清空数据并重置分页|
+|cancel|-|this|取消尚未执行的ajax请求|
 |info|-|Object(返回值见下方)|获取数据信息|
 |append|data: Array/Object|this|向表格尾追加数据项|
 |prepend|data: Array/Object|this|向表格头追加数据项|
