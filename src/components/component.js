@@ -234,17 +234,20 @@ const component = {
     currentData () {
       this._updateSelection()
     },
-    params (v) {
-      if (this.type === 'l') {
-        return
-      }
-      // 检查两个对象是否相同
-      if (this.loadWhenParamsChange && !equal(this._ajaxParamsBuffer, v)) {
-        this.load()
-      }
+    params: {
+      deep: true,
+      handler (v) {
+        if (this.type === 'l') {
+          return
+        }
+        // 检查两个对象是否相同
+        if (this.loadWhenParamsChange && !equal(this._ajaxParamsBuffer, v)) {
+          this.load()
+        }
 
-      this._ajaxParamsBuffer = {
-        ...this.params
+        this._ajaxParamsBuffer = {
+          ...this.params
+        }
       }
     },
     loading (v) {
