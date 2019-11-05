@@ -1,0 +1,11 @@
+language: node_js
+script: npm run test
+node_js: node
+deploy:
+  provider: npm
+  email: hyjiacan@163.com
+  api_key:
+    secure: cwCYOdbcjEkKs0At3xDHuxMLD4M9dYtIZk/jVvoaba51U+YWivUDxrU2EfOwTwTIcwpxLuqTVl/pAuGEeTrN4EJhFvGfmniBRI4l+LecKu/NZsRJRW7PCnATjTQQPyw9vfdpT9ox0KCh2xVa+PpP3XxIUnICvuT9ycW6MOdwp9RsSkKR3Wzp/upSL/INbgyVoyRy2HiVneg9GvUb7xvr65qfa6FWvr4vQ52kKjpdXNNm4AdRSDpe8IcdgFLJHemEbn9TLeDTVYuHdigQBkwak/x0FI5ChF3p7TOglvGIqKuh4LS1gn+uqfkxcmBxgmlQIr6htUkjlm3wcETppfUOka01fci6K6SxyKsmQ9gwEiFPG94MR1VqIEu3Hew2W2flYB8QwJf1bTBkK3BA1RXyl8pAbqVmNJZfM2Pl/Rkc28+iqCrXtSldEJ02E5F/9XkA9/7TbJqzWQeB/a0gF6LFHFYhVaSgNSbazd7aK42x6QNlqTQZHenyBCLhsx+jaxpEHUr7YpkCrKSNtfUC+X1aSL3q/gyNdWiwz3O6KKWW6Hh8ZXDKUF6EK7tEUAtUlf5XKzowGNn0I28Zimw8yWqlumnq0hi08hcxipDu8aezruDm8ZsZZIvMmyQikxicW6+17XtDd3PiyHat2kUsfjvFfugqA+HAxfrrQF07VaeZtp8=
+  on:
+    tags: true
+    repo: hyjiacan/eltable-wrapper
