@@ -124,7 +124,8 @@ Vue.use(ElTableWrapper, defaults)
 |loading-icon|Boolean|false|显示loading状态时的图标|
 |loading-color|Boolean|false|显示loading状态时的背景色|
 
-> `check-params` 的第二个参数，仅在`params`改变时，自动重新请求时有效，其描述了参数的变化，更多信息参考 [deep-diff](https://github.com/flitbit/diff)
+> `check-params` 的第二个参数，仅在`params`改变时，自动重新请求时有效，其描述了参数的变化，
+> 更多信息参考 [deep-diff](https://github.com/flitbit/diff)。
 > 可以在`check-params`中通过判断`changed`的值，以阻止某些参数变化时自动重新加载
 
 

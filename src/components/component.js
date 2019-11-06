@@ -96,7 +96,9 @@ const component = {
       if (p === false) {
         return
       }
-      beforeSend()
+      if (beforeSend) {
+        beforeSend()
+      }
       this.data.loading = true
       this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
@@ -143,7 +145,9 @@ const component = {
       if (p === false) {
         return
       }
-      beforeSend()
+      if (beforeSend) {
+        beforeSend()
+      }
       this.data.loading = true
       this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
@@ -275,8 +279,7 @@ const component = {
     if (this.type === 'l') {
       this._updateLocalData(this.localData)
     } else if (this.autoLoad) {
-      this._loadRemoteData(() => {
-      })
+      this._loadRemoteData()
     }
   },
   computed: {
