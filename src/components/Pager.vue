@@ -1,33 +1,33 @@
 <template>
   <div class="el-table-wrapper-pager">
     <div class="el-table-wrapper-pager-prepend">
-      <slot name="pagerPrepend" :data="slotData"></slot>
+      <slot name="pagerPrepend" :data="slotData"/>
     </div>
-    <template v-if="parent.showPagerSummary">
+    <template v-if="eltableRoot.showPagerSummary">
       <span class="el-table-wrapper-pager-summary">
         <slot name="pagerSummary" :data="slotData">
-          <template v-if="parent.loading">正在加载...</template>
-          <template v-else-if="parent.type === 'i' && parent.data.extra">已加载 {{parent.data.count}} 条数据</template>
-          <template v-else>共 {{parent.data.count}} 条数据</template>
+          <template v-if="eltableRoot.loading">正在加载...</template>
+          <template v-else-if="eltableRoot.type === 'i' && eltableRoot.data.extra">已加载 {{eltableRoot.data.count}} 条数据</template>
+          <template v-else>共 {{eltableRoot.data.count}} 条数据</template>
         </slot>
       </span>
     </template>
     <el-pagination
-      :page-size="parent.pager.size"
-      :page-count="parent.pager.count"
-      :current-page="parent.pager.index"
-      :small="parent.pSmall"
-      :background="parent.pBackground"
-      :pagerCount="parent.pPagerCount"
-      :layout="parent.pLayout"
-      :pageSizes="parent.pPageSizes"
-      :popperClass="parent.pPopperClass"
-      :prevText="parent.pPrevText"
-      :nextText="parent.pNextText"
-      :disabled="parent.pDisabled"
-      :hideOnSinglePage="parent.pHideOnSinglePage"
-      @current-change="parent.onPageChanged"
-      @size-change="parent.onSizeChanged">
+      :page-size="eltableRoot.pager.size"
+      :page-count="eltableRoot.pager.count"
+      :current-page="eltableRoot.pager.index"
+      :small="eltableRoot.pSmall"
+      :background="eltableRoot.pBackground"
+      :pagerCount="eltableRoot.pPagerCount"
+      :layout="eltableRoot.pLayout"
+      :pageSizes="eltableRoot.pPageSizes"
+      :popperClass="eltableRoot.pPopperClass"
+      :prevText="eltableRoot.pPrevText"
+      :nextText="eltableRoot.pNextText"
+      :disabled="eltableRoot.pDisabled"
+      :hideOnSinglePage="eltableRoot.pHideOnSinglePage"
+      @current-change="eltableRoot.onPageChanged"
+      @size-change="eltableRoot.onSizeChanged">
     </el-pagination>
     <div class="el-table-wrapper-pager-append">
       <slot name="pagerAppend" :data="slotData">
@@ -45,11 +45,11 @@ export default {
       required: true
     }
   },
-  inject: ['parent'],
+  inject: ['eltableRoot'],
   computed: {
     slotData () {
       return {
-        ...this.parent.slotData,
+        ...this.eltableRoot.slotData,
         position: this.position
       }
     }

@@ -17,9 +17,9 @@
         </slot>
       </div>
       <pager position="top" v-show="!pDisabled && pagerPosition !== 'bottom'">
-        <slot name="pagerPrepend" :data="data" slot="pagerPrepend" slot-scope="{data}"></slot>
-        <slot name="pagerSummary" :data="data" slot="pagerSummary" slot-scope="{data}"></slot>
-        <slot name="pagerAppend" :data="data" slot="pagerAppend" slot-scope="{data}"></slot>
+        <slot name="pagerPrepend" :data="data" slot="pagerPrepend" slot-scope="{data}"/>
+        <slot name="pagerSummary" :data="data" slot="pagerSummary" slot-scope="{data}"/>
+        <slot name="pagerAppend" :data="data" slot="pagerAppend" slot-scope="{data}"/>
       </pager>
     </div>
     <div class="el-table-wrapper-content" :style="contentStyle">
@@ -74,11 +74,11 @@
         @expand-change="onExpandChange"
         ref="table"
       >
-        <slot></slot>
+        <slot/>
         <slot name="empty" slot="empty">
           {{tEmptyText}}
         </slot>
-        <slot name="append" slot="append"></slot>
+        <slot name="append" slot="append"/>
       </el-table>
     </div>
     <div class="el-table-wrapper-footer" :style="footerStyle"
@@ -94,25 +94,31 @@
         </slot>
       </div>
       <pager position="bottom" v-show="!pDisabled && pagerPosition !== 'top'">
-        <slot name="pagerPrepend" :data="data" slot="pagerPrepend" slot-scope="{data}"></slot>
-        <slot name="pagerSummary" :data="data" slot="pagerSummary" slot-scope="{data}"></slot>
-        <slot name="pagerAppend" :data="data" slot="pagerAppend" slot-scope="{data}"></slot>
+        <slot name="pagerPrepend" :data="data" slot="pagerPrepend" slot-scope="{data}"/>
+        <slot name="pagerSummary" :data="data" slot="pagerSummary" slot-scope="{data}"/>
+        <slot name="pagerAppend" :data="data" slot="pagerAppend" slot-scope="{data}"/>
       </pager>
     </div>
   </div>
 </template>
 
 <script>
-import component from './component'
 import Pager from './Pager'
 import './index.less'
+import publicMethods from './publicMethods'
+import privateMethods from './privateMethods'
+import handlers from './handlers'
+import data from './data'
+import computed from './computed'
+import watch from './watch'
 
 export default {
   name: 'ElTableWrapper',
+  mixins: [computed, data, handlers, privateMethods, publicMethods, watch],
   components: { Pager },
   provide () {
     return {
-      parent: this
+      eltableRoot: this
     }
   },
   props: {
@@ -493,6 +499,14 @@ export default {
     }
     // ELPagination 原生属性 END ==================================
   },
-  ...component
+  mounted () {
+    this.__init()
+    this._checkProps()
+    if (this.type === 'l') {
+      this._updateLocalData(this.localData)
+    } else if (this.autoLoad) {
+      this._loadRemoteData()
+    }
+  }
 }
 </script>
