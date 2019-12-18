@@ -163,15 +163,25 @@ export default {
       return data
     },
     _invokeCheckParams (param) {
-      if (this.checkParams) {
-        let paramsDiff = this._ajaxParamsDiff || []
-        if (paramsDiff.length) {
-          // 重置变化的参数
-          this._ajaxParamsDiff = []
-        }
-        return this.checkParams(param, paramsDiff)
+      if (!this.checkParams) {
+        return param
       }
-      return param
+      let paramsDiff = this._ajaxParamsDiff || []
+      if (paramsDiff.length) {
+        // 重置变化的参数
+        this._ajaxParamsDiff = []
+      }
+      let result = this.checkParams(param, paramsDiff)
+      // 返回 false 时表示阻止执行
+      if (result === false) {
+        return false
+      }
+      // 返回 true 或 undefined 时表示使用原参数继续执行
+      if (result === true || result === undefined) {
+        return param
+      }
+      // 返回其它类型时，直接作为参数返回
+      return result
     },
     _getLastId () {
       let data = this.data.extra

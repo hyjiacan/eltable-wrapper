@@ -117,7 +117,7 @@ Vue.use(ElTableWrapper, defaults)
 |param-size|String|pageSize|向服务器发送请求时，数据量参数名|
 |response-handler|Function|-|设置当服务器返回数据后，预处理函数，处理后的数据通过返回值提交|
 |auto-load|Boolean|true|在使用服务器数据源时，是否在挂载后自动加载数据|
-|check-params|Function(params [,changed])|-|在组件向服务器发起请求前，可以通过此函数检查参数是否正确，将新的参数作为返回值，返回`false`以阻止继续执行|
+|check-params|Function(params [,changed])|-|在组件向服务器发起请求前，可以通过此函数检查参数是否正确，将新的参数作为返回值，返回`false`以阻止继续执行，返回`true`或`undefined`使用原参数继续执行|
 |load-when-params-change|Boolean|false|是否在ajax参数改变时自动重新加载数据(此时会监听`params`变化)|
 |loading|Boolean|false|是否显示loading状态|
 |loading-text|Boolean|false|显示loading状态时的文本|
