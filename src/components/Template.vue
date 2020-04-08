@@ -115,10 +115,10 @@ import watch from './watch'
 export default {
   name: 'ElTableWrapper',
   mixins: [computed, data, handlers, privateMethods, publicMethods, watch],
-  components: { Pager },
-  provide () {
+  components: {Pager},
+  provide() {
     return {
-      eltableRoot: this
+      elTableRoot: this
     }
   },
   props: {
@@ -186,6 +186,16 @@ export default {
      * 指示表格选择模式，可选值为: 空, single, multiple，当表格列中指定了 type="selectionData" 时，会覆盖此值为 multiple
      */
     selection: {
+      type: String
+    },
+    /**
+     * 是否在行被点击时切换行的选中状态（仅在多选时有效）
+     */
+    toggleOnRowClick: {
+      type: Boolean,
+      default: false
+    },
+    checkField: {
       type: String
     },
     // 通用 END===========================================================
@@ -499,7 +509,7 @@ export default {
     }
     // ELPagination 原生属性 END ==================================
   },
-  mounted () {
+  mounted() {
     this.__init()
     this._checkProps()
     if (this.type === 'l') {

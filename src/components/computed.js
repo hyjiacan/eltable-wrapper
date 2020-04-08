@@ -3,7 +3,7 @@ export default {
     /**
      * 附加的样式类
      */
-    wrapperClass () {
+    wrapperClass() {
       let cls = {
         'el-table-wrapper-auto-height': this.autoHeight,
         'el-table-wrapper-header-visible': this.headerVisible,
@@ -14,7 +14,7 @@ export default {
       }
       return cls
     },
-    headerStyle () {
+    headerStyle() {
       let style = {
         height: this.headerVisible ? `${parseFloat(this.headerSize)}px` : 0
       }
@@ -23,27 +23,27 @@ export default {
       }
       return style
     },
-    contentStyle () {
+    contentStyle() {
       return {
         top: this.headerVisible ? `${parseFloat(this.headerSize)}px` : 0,
         bottom: this.footerVisible ? `${parseFloat(this.footerSize)}px` : 0
       }
     },
-    footerStyle () {
+    footerStyle() {
       return {
         height: this.footerVisible ? `${parseFloat(this.footerSize)}px` : 0
       }
     },
-    headerVisible () {
+    headerVisible() {
       return (!this.pDisabled && this.pagerPosition !== 'bottom') || this.$slots.header
     },
-    footerVisible () {
+    footerVisible() {
       return (!this.pDisabled && this.pagerPosition !== 'top') || this.$slots.footer
     },
     /**
      * 当前页显示的数据项
      */
-    currentData () {
+    currentData() {
       if (!this.data.view.length) {
         return []
       }
@@ -62,7 +62,7 @@ export default {
       let from = (this.pager.index - 1) * this.pager.size
       return this.data.view.slice(from, from + this.pager.size)
     },
-    incIdField () {
+    incIdField() {
       if (!this.incId) {
         return null
       }
@@ -71,13 +71,13 @@ export default {
       }
       return [this.incId]
     },
-    ajaxParamsName () {
+    ajaxParamsName() {
       // 根据不同的请求设置参数: axios 用法
       // PUT POST PATCH 设置 data
       // 其它设置 params
       return /^(put|post|patch)$/.test(this.method) ? 'data' : 'params'
     },
-    isMultipleSelection () {
+    isMultipleSelection() {
       if (!this.$slots.default) {
         return this.selection === 'multiple'
       }
@@ -89,7 +89,7 @@ export default {
       })
       return !selectionCol || this.selection === 'multiple'
     },
-    slotData () {
+    slotData() {
       let i = this
       return {
         pageIndex: i.pager.index,

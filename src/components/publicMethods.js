@@ -9,7 +9,7 @@ export default {
      * @param clear 是否清空数据以及重置分页(调用 clear 方法)
      * @return {methods}
      */
-    load (clear = true) {
+    load(clear = true) {
       clearTimeout(this._ajaxHandle)
       this._ajaxHandle = setTimeout(() => {
         this._loadRemoteData(() => {
@@ -24,14 +24,14 @@ export default {
     /**
      * 取消尚未执行的ajax请求
      */
-    cancel () {
+    cancel() {
       clearTimeout(this._ajaxHandle)
       return this
     },
     /**
      * 清空数据，并重置分页
      */
-    clear () {
+    clear() {
       this.data.cache = []
       this.data.view = []
       this.data.extra = null
@@ -46,9 +46,9 @@ export default {
     },
     /**
      * 获取数据信息
-     * @return {number}
+     * @return {{pageIndex: number,pageCount: number,pageSize: number,dataSize: number,selected: number}}
      */
-    info () {
+    info() {
       return {
         pageIndex: this.pager.index,
         pageCount: this.pager.count,
@@ -61,7 +61,7 @@ export default {
      * 向表格尾追加数据项
      * @param row
      */
-    append (row) {
+    append(row) {
       if (Array.isArray(row)) {
         this.data.cache = this.data.cache.concat(row)
       } else {
@@ -76,7 +76,7 @@ export default {
      * 向表格头追加数据项
      * @param row
      */
-    prepend (row) {
+    prepend(row) {
       if (Array.isArray(row)) {
         this.data.cache = row.concat(this.data.cache)
       } else {
@@ -92,7 +92,7 @@ export default {
      * @param row 要插入的数据项或数组
      * @param index
      */
-    insert (row, index) {
+    insert(row, index) {
       if (Array.isArray(row)) {
         [].splice.apply(this.data.cache, [index, 0].concat(row))
       } else {
@@ -107,7 +107,7 @@ export default {
      * 从数据缓存中移除数据项
      * @param rows
      */
-    remove (rows) {
+    remove(rows) {
       if (!Array.isArray(rows)) {
         rows = [rows]
       }
@@ -127,7 +127,7 @@ export default {
      * 从数据缓存中更新数据项
      * @param rows
      */
-    update (rows) {
+    update(rows) {
       if (!Array.isArray(rows)) {
         rows = [rows]
       }
@@ -158,26 +158,26 @@ export default {
      * @param idField
      * @return {String}
      */
-    getDataId (row, idField) {
+    getDataId(row, idField) {
       if (!row) {
         return undefined
       }
       idField = idField || this.idField
       if (typeof idField === 'function') {
-        return idField(row)
+        return idField(row).toString()
       }
       if (!Array.isArray(idField)) {
         if (!row.hasOwnProperty(idField)) {
           this._throwError(`Field "${idField}" not found in data row, a valid "id-field" property is expected`)
         }
-        return row[idField]
+        return row[idField].toString()
       }
       let temp = row
       idField.forEach(field => {
         if (!temp.hasOwnProperty(field)) {
           this._throwError(`Field "${idField.join('.')}" not found in data row, a valid "id-field" property is expected`)
         }
-        temp = temp[field]
+        temp = temp[field].toString()
       })
       return temp
     },
@@ -185,7 +185,7 @@ export default {
      * 选中指定行
      * @param rows
      */
-    select (rows) {
+    select(rows) {
       let all = this.selectionData.all
       let current = this.selectionData.current
       let cache = this.selectionData.cache
@@ -209,15 +209,18 @@ export default {
           current[id] = row
           cache.push(row)
         }
+        if (this.checkField) {
+          row[this.checkField] = true
+        }
       })
       this._updateSelection()
       return this
     },
     /**
      * 全选，仅多选时有效
-     * @return 选中的数据项
+     * @return {[]} 选中的数据项
      */
-    selectAll () {
+    selectAll() {
       if (!this.isMultipleSelection) {
         console.warn('ElTableWrapper: method "selectAll" only allowed for multiple selectionData')
         return []
@@ -230,7 +233,7 @@ export default {
      *
      * @param rows 单选时此参数无效
      */
-    deselect (rows) {
+    deselect(rows) {
       if (!this.isMultipleSelection) {
         this.selectionData.all = this.selectionData.current = {}
         this.selectionData.cache = []
@@ -250,20 +253,25 @@ export default {
           delete all[id]
           delete current[id]
           let idx = cache.findIndex(row => this.getDataId(row) === id)
-          cache.splice(idx, 1)
+          if (idx >= 0) {
+            cache.splice(idx, 1)
+          }
         }
         this.$refs.table.toggleRowSelection(row, false)
+        if (this.checkField) {
+          row[this.checkField] = false
+        }
       })
       this.selectionData.ignore = false
       return this
     },
     /**
      * 取消全选，仅多选时有效
-     * @return 取消选中的数据项
+     * @return {[]} 取消选中的数据项
      */
-    deselectAll () {
+    deselectAll() {
       if (!this.isMultipleSelection) {
-        console.warn('ElTableWrapper: method "deselectAll" only allowed for multiple selectionData')
+        console.warn('ElTableWrapper: method "deselectAll" only allowed for multiple selection')
         return []
       }
       let data = this.advanceSelection ? this.data.cache : this.currentData
@@ -271,10 +279,83 @@ export default {
       return data
     },
     /**
+     * 切换行的选择状态，仅多选时有效
+     * @param rows
+     */
+    toggle(rows) {
+      if (!this.isMultipleSelection) {
+        console.warn('ElTableWrapper: method "toggle" only allowed for multiple selection')
+        return this
+      }
+
+      if (!rows) {
+        return this
+      }
+
+      if (!Array.isArray(rows)) {
+        rows = [rows]
+      }
+
+      // 已经选中的行
+      const cache = this.selectionData.cache
+      const current = this.selectionData.current
+      const all = this.selectionData.all
+
+      // 需要被取消选中的行
+      let removeRows = []
+
+      // 需要被新选中的行
+      const newRows = []
+
+      this.selectionData.ignore = true
+      rows.forEach(row => {
+        this.$refs.table.toggleRowSelection(row)
+        const id = this.getDataId(row)
+        if (this.selectionData.all.hasOwnProperty(id)) {
+          // 取消选中
+          delete current[id]
+          delete all[id]
+
+          const idx = cache.findIndex(row => this.getDataId(row) === id)
+          if (idx >= 0) {
+            cache.splice(idx, 1)
+          }
+          removeRows.push(row)
+        } else {
+          // 选中
+          current[id] = row
+          all[id] = row
+          cache.push(row)
+          newRows.push(row)
+        }
+      })
+      this.selectionData.ignore = false
+
+      if (removeRows.length) {
+        this.$emit('selection-change', {
+          selection: [].concat(this.selectionData.cache),
+          type: 'deselect',
+          changed: removeRows,
+          allSelected: false
+        })
+      }
+
+      if (newRows.length) {
+        this.$emit('selection-change', {
+          selection: [].concat(this.selectionData.cache),
+          type: 'select',
+          changed: removeRows,
+          allSelected: cache.length > 0 && cache.length === this.data.cache.length
+        })
+      }
+
+      return this
+    },
+    /**
      * 获取选中行
      * @return {*[]|*}
      */
-    getSelection () {
+    getSelection() {
       if (this.isMultipleSelection) {
         return [].concat(this.selectionData.cache)
       }
@@ -283,7 +364,7 @@ export default {
     /**
      * 清除所有选中项
      */
-    clearSelection () {
+    clearSelection() {
       if (!this.selectionData.cache.length) {
         return this
       }
@@ -294,19 +375,19 @@ export default {
       }
       return this
     },
-    clearSort () {
+    clearSort() {
       this.$refs.table.clearSort()
       return this
     },
-    clearFilter (columnKey) {
+    clearFilter(columnKey) {
       this.$refs.table.clearFilter(columnKey)
       return this
     },
-    doLayout () {
+    doLayout() {
       this.$refs.table.doLayout()
       return this
     },
-    sort (prop, order) {
+    sort(prop, order) {
       this.$refs.table.sort(prop, order)
       return this
     }

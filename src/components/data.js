@@ -1,5 +1,5 @@
 export default {
-  data () {
+  data() {
     return {
       /**
        * 表格数据

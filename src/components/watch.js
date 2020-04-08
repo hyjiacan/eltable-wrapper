@@ -2,18 +2,18 @@ import diff from 'deep-diff'
 
 export default {
   watch: {
-    index (v) {
+    index(v) {
       this.pager.index = v
     },
-    size (v) {
+    size(v) {
       this.pager.size = v
     },
-    currentData () {
+    currentData() {
       this._updateSelection()
     },
     params: {
       deep: true,
-      handler (v) {
+      handler(v) {
         if (this.type === 'l') {
           return
         }
@@ -29,10 +29,10 @@ export default {
         }
       }
     },
-    loading (v) {
+    loading(v) {
       this.data.loading = v
     },
-    localData (data) {
+    localData(data) {
       this._updateLocalData(data)
     }
   }

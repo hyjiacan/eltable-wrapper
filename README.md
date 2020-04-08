@@ -92,18 +92,35 @@ Vue.use(ElTableWrapper, defaults)
 |header-size|String/Number|48|`header` 高度，单位为`px`|
 |footer-size|String/Number|40|`footer` 高度，单位为`px`|
 |selection|String|-|指示表格选择模式，可选值为: 空, `single`, `multiple`，需要启用单选时，需要指定值为`single`，当表格列中指定了 `type="selection"` 时，会覆盖此值为 `multiple`|
+|toggle-on-row-click|Boolean|false|是否在行被点击时切换行的选中状态（仅在多选时有效）`since 0.7.0`|
 |advance-selection|Boolean|false|是否启用高级选择，启用时支持跨页页面选择|
 |id-field|String/Array/Function|id|数据项的标识字段，若标识不在顶层，则使用数组传递，也可以传入一个函数，函数接收一个行对象，函数的返回值将作为标识|
 |size|String/Number|10|每页显示的数据量|
 |sizes|Array|-|切换每页显示数据量的列表|
 |index|String/Number|1|默认显示的页码|
 |show-pager-summary|Boolean|true|是否显示总数据量|
+|check-field|String|-|设置行的选中字段，若不为空，那么行数据的此字段会被标记为 `true/false`（仅在多选时有效）`since 0.7.0`|
 
 - `ElTable` 的原生属性支持见 [ElTable支持的属性](OPTIONS.md#ElTable支持的属性)
 - `ElTable` 的原生事件支持见 [ElTable支持的事件](OPTIONS.md#ElTable支持的事件)
 - `ElPagination` 的原生属性支持见 [ElPagination支持的属性](OPTIONS.md#ElPagination支持的属性)
 
 > 多层的`id-field`使用数组而不是字符串，是为了便于处理某些字段中包含特殊字符(甚至是`.`符号)的情形
+
+`check-field` 示例:
+
+```vue
+<template>
+    <el-table-wrapper check-field="isSelected" selection="multiple">
+        <template v-slot="{row}">
+            {{row.isSelected}}
+        </template>
+    </el-table-wrapper>
+</template>
+```
+> `check-field` 通常与 `toggle-on-row-click` 属性联合使用，以在不使用 `checkbox`（选择列）的时候用来标记行的选中状态。
+> 为保证数据能正确响应，最好在数据加载到表格前就加上 `check-field`(即上例中的 `_isSelected` 属性 ) 字段。
+
 
 ### AJAX属性
 
@@ -230,6 +247,8 @@ const data = {
 |pagerAppend|data|分页插槽，默认放在分页右侧|
 |pagerSummary|data|自定义的分页信息统计|
 |footer|data|分页左侧的文字|
+
+> 可以使用 `v-slot:footer="{data}"` 或 `slot-scope="{data}"` 来引用数据
 
 注:
  

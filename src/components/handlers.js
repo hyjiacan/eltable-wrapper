@@ -4,13 +4,13 @@
  */
 export default {
   methods: {
-    resetScroll () {
+    resetScroll() {
       let wrapper = this.$el.querySelector('.el-table__body-wrapper')
       if (wrapper) {
         wrapper.scrollTop = 0
       }
     },
-    onPageChanged (index) {
+    onPageChanged(index) {
       this.pager.indexChanged = true
       if (this.data.extra && this.type === 'i' && index === this.pager.count) {
         // 当显示到最后一页时，加载更多数据
@@ -29,7 +29,7 @@ export default {
         this._loadPagedData()
       }
     },
-    onSizeChanged (size) {
+    onSizeChanged(size) {
       if (this.pager.size === size) {
         return
       }
@@ -45,7 +45,7 @@ export default {
         this.load()
       }
     },
-    onTableCurrentRowChanged (selected, prev) {
+    onTableCurrentRowChanged(selected, prev) {
       // 未启用单选
       if (this.selection !== 'single') {
         return
@@ -77,11 +77,23 @@ export default {
       this.selectionData.cache = [selected]
       this.$emit('select', selected, prev)
     },
-    onTableSelectionChanged (selection) {
+    onTableSelectionChanged(selection) {
       // 未启用多选
       if (!this.isMultipleSelection) {
         return
       }
+
+      // 设置数据的选中字段
+      if (this.checkField) {
+        const idSet = []
+        selection.forEach(row => {
+          idSet.push(this.getDataId(row))
+        })
+        this.data.cache.forEach(row => {
+          row[this.checkField] = idSet.indexOf(this.getDataId(row)) !== -1
+        })
+      }
+
       if (this.selectionData.ignore) {
         // 忽略由程序触发的事件
         return
@@ -147,7 +159,9 @@ export default {
           delete all[id]
           // 更新选中集合
           let idx = this.selectionData.cache.findIndex(row => this.getDataId(row) === id)
-          this.selectionData.cache.splice(idx, 1)
+          if (idx >= 0) {
+            this.selectionData.cache.splice(idx, 1)
+          }
         }
       }
       if (!items.length) {
@@ -164,67 +178,71 @@ export default {
         allSelected
       })
     },
-    onCellMouseEnter () {
+    onCellMouseEnter() {
       let args = [].slice.apply(arguments)
       args.unshift('cell-mouse-enter')
       this.$emit.apply(this, args)
     },
-    onCellMouseLeave () {
+    onCellMouseLeave() {
       let args = [].slice.apply(arguments)
       args.unshift('cell-mouse-leave')
       this.$emit.apply(this, args)
     },
-    onCellClick () {
+    onCellClick() {
       let args = [].slice.apply(arguments)
       args.unshift('cell-click')
       this.$emit.apply(this, args)
     },
-    onCellDblclick () {
+    onCellDblclick() {
       let args = [].slice.apply(arguments)
       args.unshift('cell-dblclick')
       this.$emit.apply(this, args)
     },
-    onRowClick () {
+    onRowClick() {
+      // 在多选时，支持单击以选中行
+      if (this.isMultipleSelection && this.toggleOnRowClick) {
+        this.toggle(arguments[0])
+      }
       let args = [].slice.apply(arguments)
       args.unshift('row-click')
       this.$emit.apply(this, args)
     },
-    onRowContextmenu () {
+    onRowContextmenu() {
       let args = [].slice.apply(arguments)
       args.unshift('row-contextmenu')
       this.$emit.apply(this, args)
     },
-    onRowDblclick () {
+    onRowDblclick() {
       let args = [].slice.apply(arguments)
       args.unshift('row-dblclick')
       this.$emit.apply(this, args)
     },
-    onHeaderClick () {
+    onHeaderClick() {
       let args = [].slice.apply(arguments)
       args.unshift('header-click')
       this.$emit.apply(this, args)
     },
-    onHeaderContextmenu () {
+    onHeaderContextmenu() {
       let args = [].slice.apply(arguments)
       args.unshift('header-contextmenu')
       this.$emit.apply(this, args)
     },
-    onSortChange () {
+    onSortChange() {
       let args = [].slice.apply(arguments)
       args.unshift('sort-change')
       this.$emit.apply(this, args)
     },
-    onFilterChange () {
+    onFilterChange() {
       let args = [].slice.apply(arguments)
       args.unshift('filter-change')
       this.$emit.apply(this, args)
     },
-    onHeaderDragend () {
+    onHeaderDragend() {
       let args = [].slice.apply(arguments)
       args.unshift('header-dragend')
       this.$emit.apply(this, args)
     },
-    onExpandChange () {
+    onExpandChange() {
       let args = [].slice.apply(arguments)
       args.unshift('expand-change')
       this.$emit.apply(this, args)

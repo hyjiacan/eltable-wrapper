@@ -4,7 +4,7 @@
 const fs = require('fs')
 let pkg = require('./package.json')
 
-const LOCK = false
+const LOCK = process.argv[2] === '--lock-version' || process.argv[2] === '-l'
 
 if (LOCK) {
   console.info('version locked: ' + pkg.version)

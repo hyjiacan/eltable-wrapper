@@ -1,6 +1,6 @@
 export default {
   methods: {
-    __init () {
+    __init() {
       this._ajaxParamsBuffer = {
         ...this.params
       }
@@ -14,14 +14,14 @@ export default {
         this.pager.size = parseInt(this.pageSize)
       }
     },
-    _throwError (msg) {
+    _throwError(msg) {
       throw new Error(`ElTableWrapper: ${msg}`)
     },
     /**
      * 检查传入的属性是否合法
      * @private
      */
-    _checkProps () {
+    _checkProps() {
       if (isNaN(this.index)) {
         this._throwError('Invalid value for property "index", numeric required')
       }
@@ -51,7 +51,7 @@ export default {
      * @param {Function} beforeSend 发送前的处理函数
      * @private
      */
-    _loadRemoteData (beforeSend) {
+    _loadRemoteData(beforeSend) {
       if (this.type === 'i') {
         this._loadIncData(beforeSend)
         return
@@ -68,7 +68,7 @@ export default {
      * 发送 ajax 请求
      * @private
      */
-    _sendAjax (params) {
+    _sendAjax(params) {
       return this.ajax({
         url: this.url,
         method: this.method,
@@ -79,7 +79,7 @@ export default {
      * 加载服务器返回的增量数据
      * @private
      */
-    _loadIncData (beforeSend) {
+    _loadIncData(beforeSend) {
       // 这么写以避免搞掉原始参数
       let p = {
         ...this.params,
@@ -128,7 +128,7 @@ export default {
      * 加载服务器分页好的数据
      * @private
      */
-    _loadPagedData (beforeSend) {
+    _loadPagedData(beforeSend) {
       // 这么写以避免搞掉原始参数
       let p = {
         ...this.params,
@@ -156,13 +156,13 @@ export default {
         this.$emit('update:loading', false)
       })
     },
-    _invokeResponseHandler (data) {
+    _invokeResponseHandler(data) {
       if (this.responseHandler) {
         return this.responseHandler(data)
       }
       return data
     },
-    _invokeCheckParams (param) {
+    _invokeCheckParams(param) {
       if (!this.checkParams) {
         return param
       }
@@ -183,14 +183,14 @@ export default {
       // 返回其它类型时，直接作为参数返回
       return result
     },
-    _getLastId () {
+    _getLastId() {
       let data = this.data.extra
       if (!data) {
         return this.defaultId
       }
       return this.getDataId(data, this.incIdField)
     },
-    _updatePageCount () {
+    _updatePageCount() {
       let length = 0
       switch (this.type) {
         case 's':
@@ -207,7 +207,7 @@ export default {
       this.pager.count = Math.ceil(length / this.pager.size)
       this.$emit('data-size-change', length)
     },
-    _updateSelection () {
+    _updateSelection() {
       if (!this.selectionData.cache.length) {
         return
       }
@@ -232,7 +232,7 @@ export default {
         })
       })
     },
-    _updateLocalData (data) {
+    _updateLocalData(data) {
       // 更新时，先清空数据
       this.clear()
       if (data && data.length) {
