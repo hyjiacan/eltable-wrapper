@@ -49,11 +49,12 @@ export default {
     /**
      *
      * @param {Function} beforeSend 发送前的处理函数
+     * @param {string|number} [lastId]
      * @private
      */
-    _loadRemoteData(beforeSend) {
+    _loadRemoteData(beforeSend, lastId) {
       if (this.type === 'i') {
-        this._loadIncData(beforeSend)
+        this._loadIncData(beforeSend, lastId)
         return
       }
 
@@ -77,13 +78,15 @@ export default {
     },
     /**
      * 加载服务器返回的增量数据
+     * @param {function} beforeSend
+     * @param {string|number} [lastId]
      * @private
      */
-    _loadIncData(beforeSend) {
+    _loadIncData(beforeSend, lastId) {
       // 这么写以避免搞掉原始参数
       let p = {
         ...this.params,
-        [this.paramInc]: this._getLastId(),
+        [this.paramInc]: lastId === undefined ? this._getLastId() : lastId,
         [this.paramSize]: this.incSize
       }
       p = this._invokeCheckParams(p)

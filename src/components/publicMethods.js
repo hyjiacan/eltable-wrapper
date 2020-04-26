@@ -17,7 +17,7 @@ export default {
             this.clear()
           }
           this.resetScroll()
-        })
+        }, clear ? this.defaultId : undefined)
       }, this.ajaxDelay)
       return this
     },
