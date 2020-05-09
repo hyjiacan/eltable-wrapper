@@ -10,7 +10,11 @@
           t-row-class-name="customize-row-class"
           t-highlight-current-row
           @select="onSelect"
+          ref="lt"
         >
+          <template v-slot:pagerPrepend>
+            <button @click="onRemoveRow">通行ID移除选中行</button>
+          </template>
           <el-table-column label="ID" prop="id"></el-table-column>
           <el-table-column label="Name" prop="name"></el-table-column>
           <el-table-column label="Dept." prop="dept"></el-table-column>
@@ -109,7 +113,8 @@ export default {
       params: {
         ignoreField: '',
         triggerField: ''
-      }
+      },
+      singleSelect: null
     }
   },
   methods: {
@@ -127,6 +132,7 @@ export default {
     onSelect(selection, prev) {
       // eslint-disable-next-line
       console.log(selection, prev)
+      this.singleSelect = selection
     },
     selectionChanged(e) {
       // eslint-disable-next-line
@@ -150,6 +156,18 @@ export default {
       } else {
         this.$refs.localTable.deselectAll()
       }
+    },
+    onRemoveRow() {
+      if (!this.singleSelect) {
+        this.$message.warning('没有选择行')
+        return
+      }
+
+      this.$confirm(`确定要移除行吗？ ID: ${this.singleSelect.id}`).then(() => {
+        this.$refs.lt.remove(this.singleSelect.id)
+        this.singleSelect = null
+      }).catch(() => {
+      })
     }
   },
   mounted() {

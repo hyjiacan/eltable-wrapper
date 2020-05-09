@@ -182,11 +182,11 @@ Vue.use(ElTableWrapper, defaults)
 |prepend|data: Array/Object|this|向表格头追加数据项|
 |insert|data: Array/Object, index: Number|this|向表格指定位置追加数据项|
 |update|data: Array/Object|this|从数据缓存中更新数据项|
-|remove|data: Array/Object|this|从数据缓存中移除数据项|
+|remove|data: Array/Object/String/Number|this|从数据缓存中移除数据项。参数可以是数据项，也可以是数据对应`id-field` 指定值|
 |getDataId|row: Object, \[idField]: string|this|根配置的 idField 读取数据项的 id|
-|select|rows: Object/Array|this|选中指定的行|
+|select|rows: Object/Array|this|选中指定的行。参数可以是数据项，也可以是数据对应`id-field` 指定值|
 |selectAll|-|Array|全选，仅在多选时生效，返回选中的数据项|
-|deselect|rows: Object/Array|this|取消选中指定的行|
+|deselect|rows: Object/Array|this|取消选中指定的行，参数可以是数据项，也可以是数据对应`id-field` 指定值|
 |deselectAll|-|Array|取消全选，仅在多选时生效，返回取消选中的数据项|
 |getSelection|-|Array/Object|获取选中的行，单选时返回选中的行对象，多选时返回行集合|
 |clearSelection|-|this|清除所有选中|
@@ -196,6 +196,7 @@ Vue.use(ElTableWrapper, defaults)
 |sort|-|this|`doLayout` 的 `sort` 方法|
 
 `info()` 返回值:
+
 ```javascript
 const data = {
     // 页码 
@@ -210,6 +211,15 @@ const data = {
     selected: Number
 }
 ```
+
+`remove/select/deselect` 的参数说明:
+
+- 数组 处理多行数据 参数: `[{}, {}]`
+- 对象 处理单行数据 `{}`
+- 字符串/数字 处理由 `id-field` 指定的行的标识值对应的单行数据 `1/'913a0229-cd5e-45a4-a57a-698f2432774f'` `since 0.7.3`
+- 字符串/数字(数组) 处理由 `id-field` 指定的行的标识值对应的多行数据 `[1, 2, 3]/['913a0229-cd5e-45a4-a57a-698f2432774f', ...]` `since 0.7.3`
+
+数据类型可以混用，参数:`[{}, 3, '913a0229-cd5e-45a4-a57a-698f2432774f', ...]`
 
 ## 事件
 

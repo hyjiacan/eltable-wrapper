@@ -114,9 +114,13 @@ export default {
       rows.forEach(row => {
         let id = this.getDataId(row)
         let idx = this.data.cache.findIndex(row => this.getDataId(row) === id)
-        this.data.cache.splice(idx, 1)
+        if (idx >= 0) {
+          this.data.cache.splice(idx, 1)
+        }
         idx = this.selectionData.cache.findIndex(row => this.getDataId(row) === id)
-        this.selectionData.cache.splice(idx, 1)
+        if (idx >= 0) {
+          this.selectionData.cache.splice(idx, 1)
+        }
       })
       this.data.count = this.data.cache.length
       this.pager.count = Math.ceil(this.data.count / this.pager.size)
@@ -159,9 +163,15 @@ export default {
      * @return {String}
      */
     getDataId(row, idField) {
-      if (!row) {
+      if (row === undefined || row === null) {
         return undefined
       }
+
+      // 当其值是字符串或数字时，默认其传入了 id
+      if (typeof row === 'string' || typeof row === 'number') {
+        return row.toString()
+      }
+
       idField = idField || this.idField
       if (typeof idField === 'function') {
         return idField(row).toString()
