@@ -5,7 +5,7 @@
   "description": "Wrap component `ElTable` and `ElPagination` for `element-ui`",
   "repository": {
     "type": "git",
-    "url": "https://192.168.12.224:3000/hyjiacan/eltable-wrapper.git"
+    "url": "http://192.168.12.224:3000/hyjiacan/eltable-wrapper.git"
   },
   "publishConfig": {
     "access": "public",
