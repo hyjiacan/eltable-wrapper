@@ -23,6 +23,9 @@
       </pager>
     </div>
     <div class="el-table-wrapper-content" :style="contentStyle">
+      <div class="el-table-wrapper-title-toolbar" v-if="tShowHeader">
+        <slot name="titleToolbar" :data="slotData"/>
+      </div>
       <el-table
         style="width: 100%"
         height="100%"
@@ -81,8 +84,7 @@
         <slot name="append" slot="append"/>
       </el-table>
     </div>
-    <div class="el-table-wrapper-footer" :style="footerStyle"
-         v-if="(!pDisabled && pagerPosition !== 'top')">
+    <div class="el-table-wrapper-footer" :style="footerStyle" v-if="footerVisible">
       <div class="el-table-wrapper-footer-text">
         <slot name="footer" :data="slotData">
           <template v-if="isMultipleSelection">
@@ -175,6 +177,10 @@ export default {
       type: [String, Number],
       default: 40
     },
+    showFooter: {
+      type: Boolean,
+      default: true
+    },
     /**
      * 默认的数据id，当未加载数据时，请求时使用此值
      */
@@ -183,10 +189,15 @@ export default {
       default: ''
     },
     /**
-     * 指示表格选择模式，可选值为: 空, single, multiple，当表格列中指定了 type="selectionData" 时，会覆盖此值为 multiple
+     * 指示表格选择模式，可选值为: 空, single, multiple，当表格列中指定了 type="selection" 时，会覆盖此值为 multiple
      */
     selection: {
       type: String
+    },
+    /**
+     * 指定选中项
+     */
+    value: {
     },
     /**
      * 是否在行被点击时切换行的选中状态（仅在多选时有效）

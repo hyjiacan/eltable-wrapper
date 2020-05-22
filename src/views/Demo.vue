@@ -1,6 +1,32 @@
 <template>
   <div class="hello">
     <el-tabs>
+      <el-tab-pane label="不分页">
+        <el-table-wrapper
+          type="l"
+          :local-data="localData"
+          pager-position="both"
+          t-row-class-name="customize-row-class"
+          t-highlight-current-row
+          @select="onSelect"
+          :show-footer="false"
+          p-disabled
+        >
+          <template v-slot:titleToolbar="{data}">
+            <span>{{data}}</span>
+            <button>自定义按钮</button>
+          </template>
+          <el-table-column type="selection"/>
+          <el-table-column label="ID" prop="id"></el-table-column>
+          <el-table-column label="Name" prop="name"></el-table-column>
+          <el-table-column label="Dept." prop="dept"></el-table-column>
+          <el-table-column label="Remark">
+            <template v-slot="{row}">
+              {{row.remark}}
+            </template>
+          </el-table-column>
+        </el-table-wrapper>
+      </el-tab-pane>
       <el-tab-pane label="本地数据">
         <el-table-wrapper
           type="l"
@@ -9,12 +35,20 @@
           pager-position="both"
           t-row-class-name="customize-row-class"
           t-highlight-current-row
+          v-model="selection"
+          @selection-change="selectionChanged"
           @select="onSelect"
+          advance-selection
           ref="lt"
         >
           <template v-slot:pagerPrepend>
-            <button @click="onRemoveRow">通行ID移除选中行</button>
+            <div style="float: right">
+              <span>这个表格使用了 <code>advance-selection</code>，支持跨页选择</span>
+              <button @click="onShowSelection">在console查看选中数据</button>
+              <button @click="onRemoveRow">通行ID移除选中行</button>
+            </div>
           </template>
+          <el-table-column type="selection"/>
           <el-table-column label="ID" prop="id"></el-table-column>
           <el-table-column label="Name" prop="name"></el-table-column>
           <el-table-column label="Dept." prop="dept"></el-table-column>
@@ -117,6 +151,11 @@ export default {
       singleSelect: null
     }
   },
+  watch: {
+    selection(v) {
+      console.info('selection changed', v)
+    }
+  },
   methods: {
     ajax(e) {
       return new Promise((resolve, reject) => {
@@ -132,7 +171,6 @@ export default {
     onSelect(selection, prev) {
       // eslint-disable-next-line
       console.log(selection, prev)
-      this.singleSelect = selection
     },
     selectionChanged(e) {
       // eslint-disable-next-line
@@ -158,16 +196,20 @@ export default {
       }
     },
     onRemoveRow() {
-      if (!this.singleSelect) {
+      if (!this.selection || !this.selection.length) {
         this.$message.warning('没有选择行')
         return
       }
 
-      this.$confirm(`确定要移除行吗？ ID: ${this.singleSelect.id}`).then(() => {
-        this.$refs.lt.remove(this.singleSelect.id)
-        this.singleSelect = null
+      const ids = this.selection.map(item => item.id)
+
+      this.$confirm(`确定要移除选中行吗？ ID: ${ids}`).then(() => {
+        this.$refs.lt.remove(ids)
       }).catch(() => {
       })
+    },
+    onShowSelection() {
+      console.info(JSON.stringify(this.$refs.lt.getSelection(), null, 2))
     }
   },
   mounted() {

@@ -48,11 +48,16 @@ export default {
     },
     /**
      *
-     * @param {Function} beforeSend 发送前的处理函数
+     * @param {Function} [beforeSend] 发送前的处理函数
      * @param {string|number} [lastId]
      * @private
      */
     _loadRemoteData(beforeSend, lastId) {
+      // 禁用了分页，不传分页的相关参数
+      if (this.pDisabled) {
+        this._loadDataWithoutPagination()
+        return
+      }
       if (this.type === 'i') {
         this._loadIncData(beforeSend, lastId)
         return
@@ -78,7 +83,7 @@ export default {
     },
     /**
      * 加载服务器返回的增量数据
-     * @param {function} beforeSend
+     * @param {function} [beforeSend]
      * @param {string|number} [lastId]
      * @private
      */
@@ -152,6 +157,42 @@ export default {
         this.data.count = data[this.totalField]
         this.data.view = this.data.cache = data[this.listField] || []
         this._updatePageCount()
+      }).catch(e => {
+        this.$emit('ajax-error', e)
+      }).finally(() => {
+        this.data.loading = false
+        this.$emit('update:loading', false)
+      })
+    },
+    /**
+     * 加载数据（不带分页参数）
+     * @private
+     */
+    _loadDataWithoutPagination(beforeSend) {
+      // 这么写以避免搞掉原始参数
+      let p = {
+        ...this.params
+      }
+      p = this._invokeCheckParams(p)
+      if (p === false) {
+        return
+      }
+      if (beforeSend) {
+        beforeSend()
+      }
+      this.data.loading = true
+      this.$emit('update:loading', true)
+      this._sendAjax(p).then(data => {
+        data = this._invokeResponseHandler(data)
+        if (Array.isArray(data)) {
+          // 数据是数组
+          this.data.count = data.length
+          this.data.view = this.data.cache = data
+        } else {
+          // 数据是对象
+          this.data.count = data[this.totalField]
+          this.data.view = this.data.cache = data[this.listField] || []
+        }
       }).catch(e => {
         this.$emit('ajax-error', e)
       }).finally(() => {

@@ -38,7 +38,7 @@ export default {
       return (!this.pDisabled && this.pagerPosition !== 'bottom') || this.$slots.header
     },
     footerVisible() {
-      return (!this.pDisabled && this.pagerPosition !== 'top') || this.$slots.footer
+      return this.showFooter || this.$slots.footer || (!this.pDisabled && this.pagerPosition !== 'top')
     },
     /**
      * 当前页显示的数据项

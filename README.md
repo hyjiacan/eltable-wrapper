@@ -4,7 +4,7 @@
 
 > 注: 后将此组件 `ElTableWrapper` 统称为 `组件`
 
-组件支持多种分页方式，[点此查看](PAGINATION.md)
+组件支持多种分页方式，[点此查看](./PAGINATION.md)
 
 ## 安装
 
@@ -91,6 +91,8 @@ Vue.use(ElTableWrapper, defaults)
 |pager-position|String|bottom|分页条位置，可选值为 `bottom` `top` `both`|
 |header-size|String/Number|48|`header` 高度，单位为`px`|
 |footer-size|String/Number|40|`footer` 高度，单位为`px`|
+|show-footer|Boolean|true|是否显示footer部分。当指定下方的 pager 或 footer 插槽时，也会显示 `since 0.8.0`|
+|v-model|Object/Array|-|获取选中的项，暂不支持设置初始化选中值，若要设置初始化选中值，请使用方法 `select` `since 0.8.0`|
 |selection|String|-|指示表格选择模式，可选值为: 空, `single`, `multiple`，需要启用单选时，需要指定值为`single`，当表格列中指定了 `type="selection"` 时，会覆盖此值为 `multiple`|
 |toggle-on-row-click|Boolean|false|是否在行被点击时切换行的选中状态（仅在多选时有效）`since 0.7.0`|
 |advance-selection|Boolean|false|是否启用高级选择，启用时支持跨页页面选择|
@@ -257,6 +259,7 @@ const data = {
 |pagerAppend|data|分页插槽，默认放在分页右侧|
 |pagerSummary|data|自定义的分页信息统计|
 |footer|data|分页左侧的文字|
+|titleToolbar|data|表格标题栏插槽，覆盖在标题栏上方 `since 0.8.0`|
 
 > 可以使用 `v-slot:footer="{data}"` 或 `slot-scope="{data}"` 来引用数据
 

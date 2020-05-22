@@ -76,6 +76,7 @@ export default {
       }
       this.selectionData.cache = [selected]
       this.$emit('select', selected, prev)
+      this.$emit('input', selected)
     },
     onTableSelectionChanged(selection) {
       // 未启用多选
@@ -171,12 +172,14 @@ export default {
       // 是否选择了所有数据项
       let allSelected = this.selectionData.cache.length > 0 && this.selectionData.cache.length === this.data.cache.length
       // 触发事件
-      this.$emit('selection-change', {
+      const e = {
         selection: [].concat(this.selectionData.cache),
         type,
         changed: items,
         allSelected
-      })
+      }
+      this.$emit('selection-change', e)
+      this.$emit('input', e.selection)
     },
     onCellMouseEnter() {
       let args = [].slice.apply(arguments)
