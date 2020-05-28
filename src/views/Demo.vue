@@ -35,7 +35,6 @@
           pager-position="both"
           t-row-class-name="customize-row-class"
           t-highlight-current-row
-          v-model="selection"
           @selection-change="selectionChanged"
           @select="onSelect"
           advance-selection
@@ -99,7 +98,7 @@
       </el-tab-pane>
       <el-tab-pane label="远程数据">
         <el-table-wrapper
-          url="mock/data.json"
+          url="/mock/data.json"
           :ajax="ajax"
           :params="params"
           :check-params="onCheckParams"

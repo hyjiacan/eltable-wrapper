@@ -277,6 +277,8 @@ const data = {
     pageSize: Number,
     // 总数据量
     dataSize: Number,
+    // 当前页的数据量 
+    viewSize: Number,
     // 选中数量
     selected: Number
 }
@@ -291,6 +293,7 @@ const data = {
     pageSize: Number,
     dataSize: Number,
     selected: Number,
+    viewSize: Number,
     position: String['top', 'bottom']
 }
 ```

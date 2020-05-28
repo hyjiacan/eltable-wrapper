@@ -96,6 +96,7 @@ export default {
         pageCount: i.pager.count,
         pageSize: i.pager.size,
         dataSize: i.data.count,
+        viewSize: i.currentData.length,
         selected: i.selectionData.cache.length
       }
     }

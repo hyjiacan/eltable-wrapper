@@ -46,16 +46,10 @@ export default {
     },
     /**
      * 获取数据信息
-     * @return {{pageIndex: number,pageCount: number,pageSize: number,dataSize: number,selected: number}}
+     * @return {{pageIndex: number,pageCount: number,pageSize: number,dataSize: number, viewSize: number, selected: number}}
      */
     info() {
-      return {
-        pageIndex: this.pager.index,
-        pageCount: this.pager.count,
-        pageSize: this.pager.size,
-        dataSize: this.data.count,
-        selected: this.selectionData.cache.length
-      }
+      return this.slotData
     },
     /**
      * 向表格尾追加数据项
