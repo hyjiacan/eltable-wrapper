@@ -41,7 +41,6 @@ export default {
       this.selectionData.cache = []
       this.selectionData.all = {}
       this.selectionData.current = {}
-      this.$emit('data-size-change', 0)
       return this
     },
     /**

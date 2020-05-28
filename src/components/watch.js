@@ -34,6 +34,9 @@ export default {
     },
     localData(data) {
       this._updateLocalData(data)
+    },
+    'data.cache'(v) {
+      this.$emit('data-size-change', v.length)
     }
   }
 }

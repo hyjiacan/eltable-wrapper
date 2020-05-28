@@ -35,6 +35,7 @@
           pager-position="both"
           t-row-class-name="customize-row-class"
           t-highlight-current-row
+          v-model="selection"
           @selection-change="selectionChanged"
           @select="onSelect"
           advance-selection
@@ -81,6 +82,7 @@
             </label>
             <span style="margin-left: 5px">已选择 {{data.selected}} 项</span>
           </template>
+          <el-table-column type="selection"/>
           <el-table-column label="ID" prop="id">
             <template v-slot="{row}">
               <span>{{row.id}}</span>
@@ -147,7 +149,8 @@ export default {
         ignoreField: '',
         triggerField: ''
       },
-      singleSelect: null
+      singleSelect: null,
+      selection: []
     }
   },
   watch: {
@@ -185,7 +188,8 @@ export default {
       return params
     },
     toggleSelection() {
-      this.$refs.table.toggle(this.localData.slice(0, 3))
+      // this.$refs.localTable.toggle(this.localData.slice(0, 3))
+      this.$refs.localTable.select(this.localData.slice(0, 3))
     },
     onCheckAllChange({target}) {
       if (target.checked) {
