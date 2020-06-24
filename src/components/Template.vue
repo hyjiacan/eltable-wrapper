@@ -105,6 +105,8 @@
 </template>
 
 <script>
+import {Loading} from 'element-ui'
+
 import Pager from './Pager'
 import './index.less'
 import publicMethods from './publicMethods'
@@ -117,7 +119,12 @@ import watch from './watch'
 export default {
   name: 'ElTableWrapper',
   mixins: [computed, data, handlers, privateMethods, publicMethods, watch],
-  components: {Pager},
+  components: {
+    Pager
+  },
+  directives: {
+    loading: Loading.directive
+  },
   provide() {
     return {
       elTableRoot: this
@@ -197,8 +204,7 @@ export default {
     /**
      * 指定选中项
      */
-    value: {
-    },
+    value: {},
     /**
      * 是否在行被点击时切换行的选中状态（仅在多选时有效）
      */

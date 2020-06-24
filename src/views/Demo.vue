@@ -138,9 +138,14 @@
 
 <script>
 import axios from 'axios'
+import {TabPane, Tabs} from 'element-ui'
+
+import 'element-ui/lib/theme-chalk/tabs.css'
+import 'element-ui/lib/theme-chalk/tab-pane.css'
 
 export default {
   name: 'Demo',
+  components: {ElTabs: Tabs, ElTabPane: TabPane},
   data() {
     return {
       cache: [],

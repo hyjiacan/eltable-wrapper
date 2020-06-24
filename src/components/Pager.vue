@@ -38,8 +38,14 @@
 </template>
 
 <script>
+import {Pagination} from 'element-ui'
+import 'element-ui/lib/theme-chalk/pagination.css'
+
 export default {
   name: 'Pager',
+  components: {
+    ElPagination: Pagination
+  },
   props: {
     position: {
       type: String,
