@@ -6,11 +6,14 @@ module.exports = {
     optimization: {
       minimize: true
     },
-    externals: [
-      'element-ui',
-      'element-ui/lib/theme-chalk/table.css',
-      'element-ui/lib/theme-chalk/table-column.css',
-      'element-ui/lib/theme-chalk/pagination.css'
-    ]
+    externals: {
+      table: 'element-ui/lib/table',
+      tableColumn: 'element-ui/lib/table-column',
+      pagination: 'element-ui/lib/pagination',
+      loading: 'element-ui/lib/loading',
+      tableCss: 'element-ui/lib/theme-chalk/table.css',
+      tableColumnCss: 'element-ui/lib/theme-chalk/table-column.css',
+      paginationCss: 'element-ui/lib/theme-chalk/pagination.css'
+    }
   }
 }

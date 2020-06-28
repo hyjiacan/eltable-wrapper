@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {Pagination} from 'element-ui'
+import Pagination from 'element-ui/lib/pagination'
 import 'element-ui/lib/theme-chalk/pagination.css'
 
 export default {

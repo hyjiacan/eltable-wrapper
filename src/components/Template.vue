@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import {Loading} from 'element-ui'
+import Loading from 'element-ui/lib/loading'
 
 import Pager from './Pager'
 import './index.less'

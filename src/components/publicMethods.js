@@ -225,8 +225,7 @@ export default {
      */
     selectAll() {
       if (!this.isMultipleSelection) {
-        console.warn('ElTableWrapper: method "selectAll" only allowed for multiple selectionData')
-        return []
+        throw new Error('[ElTableWrapper] method "selectAll" only allowed for multiple selectionData')
       }
       let data = this.advanceSelection ? this.data.cache : this.currentData
       this.select(data)
@@ -274,8 +273,7 @@ export default {
      */
     deselectAll() {
       if (!this.isMultipleSelection) {
-        console.warn('ElTableWrapper: method "deselectAll" only allowed for multiple selection')
-        return []
+        throw new Error('[ElTableWrapper] method "deselectAll" only allowed for multiple selection')
       }
       let data = this.advanceSelection ? this.data.cache : this.currentData
       this.deselect(data)
@@ -287,8 +285,7 @@ export default {
      */
     toggle(rows) {
       if (!this.isMultipleSelection) {
-        console.warn('ElTableWrapper: method "toggle" only allowed for multiple selection')
-        return this
+        throw new Error('[ElTableWrapper] Method "toggle" only allowed for multiple selection')
       }
 
       if (!rows) {

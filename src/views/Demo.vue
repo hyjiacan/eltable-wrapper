@@ -138,7 +138,8 @@
 
 <script>
 import axios from 'axios'
-import {TabPane, Tabs} from 'element-ui'
+import TabPane from 'element-ui/lib/tab-pane'
+import Tabs from 'element-ui/lib/tabs'
 
 import 'element-ui/lib/theme-chalk/tabs.css'
 import 'element-ui/lib/theme-chalk/tab-pane.css'
