@@ -4,7 +4,7 @@ module.exports = {
   filenameHashing: false,
   configureWebpack: {
     optimization: {
-      minimize: true
+      // minimize: true
     },
     externals: process.env.NODE_ENV === 'production' ? [
       'element-ui/lib/table',

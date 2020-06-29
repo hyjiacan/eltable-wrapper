@@ -55,7 +55,7 @@ export default {
     _loadRemoteData(beforeSend, lastId) {
       // 禁用了分页，不传分页的相关参数
       if (this.pDisabled) {
-        this._loadDataWithoutPagination()
+        this._loadDataWithoutPagination(beforeSend)
         return
       }
       if (this.type === 'i') {

@@ -12,12 +12,11 @@ export default {
     load(clear = true) {
       clearTimeout(this._ajaxHandle)
       this._ajaxHandle = setTimeout(() => {
-        this._loadRemoteData(() => {
-          if (clear) {
-            this.clear()
-          }
-          this.resetScroll()
-        }, clear ? this.defaultId : undefined)
+        if (clear) {
+          this.clear()
+        }
+        this.resetScroll()
+        this._loadRemoteData(null, clear ? this.defaultId : undefined)
       }, this.ajaxDelay)
       return this
     },
