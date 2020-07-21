@@ -55,12 +55,15 @@ export default {
      * @param row
      */
     append(row) {
+      let rowCount
       if (Array.isArray(row)) {
+        rowCount = row.length
         this.data.cache = this.data.cache.concat(row)
       } else {
+        rowCount = 1
         this.data.cache.push(row)
       }
-      this.data.count = this.data.cache.length
+      this.data.count += rowCount
       this.pager.count = Math.ceil(this.data.count / this.pager.size)
       this.data.view = this.data.cache
       return this
@@ -70,12 +73,15 @@ export default {
      * @param row
      */
     prepend(row) {
+      let rowCount
       if (Array.isArray(row)) {
+        rowCount = row.length
         this.data.cache = row.concat(this.data.cache)
       } else {
+        rowCount = 1
         this.data.cache.unshift(row)
       }
-      this.data.count = this.data.cache.length
+      this.data.count += rowCount
       this.pager.count = Math.ceil(this.data.count / this.pager.size)
       this.data.view = this.data.cache
       return this
@@ -86,12 +92,15 @@ export default {
      * @param index
      */
     insert(row, index) {
+      let rowCount
       if (Array.isArray(row)) {
-        [].splice.apply(this.data.cache, [index, 0].concat(row))
+        rowCount = row.length
+        Array.prototype.splice.apply(this.data.cache, [index, 0].concat(row))
       } else {
+        rowCount = 1
         this.data.cache.splice(index, 0, row)
       }
-      this.data.count = this.data.cache.length
+      this.data.count += rowCount
       this.pager.count = Math.ceil(this.data.count / this.pager.size)
       this.data.view = this.data.cache
       return this
@@ -104,18 +113,20 @@ export default {
       if (!Array.isArray(rows)) {
         rows = [rows]
       }
+      let removeRowCount = 0
       rows.forEach(row => {
         let id = this.getDataId(row)
         let idx = this.data.cache.findIndex(row => this.getDataId(row) === id)
         if (idx >= 0) {
           this.data.cache.splice(idx, 1)
+          removeRowCount++
         }
         idx = this.selectionData.cache.findIndex(row => this.getDataId(row) === id)
         if (idx >= 0) {
           this.selectionData.cache.splice(idx, 1)
         }
       })
-      this.data.count = this.data.cache.length
+      this.data.count -= removeRowCount
       this.pager.count = Math.ceil(this.data.count / this.pager.size)
       this.data.view = this.data.cache
       return this

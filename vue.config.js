@@ -1,10 +1,10 @@
 module.exports = {
   publicPath: './',
-  productionSourceMap: true,
+  productionSourceMap: false,
   filenameHashing: false,
   configureWebpack: {
     optimization: {
-      // minimize: true
+      minimize: false
     },
     externals: process.env.NODE_ENV === 'production' ? [
       'element-ui/lib/table',
