@@ -49,22 +49,22 @@ export default {
     /**
      *
      * @param {Function} [beforeSend] 发送前的处理函数
-     * @param {string|number} [lastId]
+     * @param {boolean} [newQuery=false] 是否是新查询
      * @private
      */
-    _loadRemoteData(beforeSend, lastId) {
+    _loadRemoteData(beforeSend, newQuery) {
       // 禁用了分页，不传分页的相关参数
       if (this.pDisabled) {
         this._loadDataWithoutPagination(beforeSend)
         return
       }
       if (this.type === 'i') {
-        this._loadIncData(beforeSend, lastId)
+        this._loadIncData(beforeSend, newQuery ? this.defaultId : undefined)
         return
       }
 
       if (this.type === 's') {
-        this._loadPagedData(beforeSend)
+        this._loadPagedData(beforeSend, newQuery)
         return
       }
       // eslint-disable-next-line
@@ -136,11 +136,11 @@ export default {
      * 加载服务器分页好的数据
      * @private
      */
-    _loadPagedData(beforeSend) {
+    _loadPagedData(beforeSend, newQuery) {
       // 这么写以避免搞掉原始参数
       let p = {
         ...this.params,
-        [this.paramIndex]: this.pager.index - 1,
+        [this.paramIndex]: newQuery ? 0 : this.pager.index - 1,
         [this.paramSize]: this.pager.size
       }
       p = this._invokeCheckParams(p)

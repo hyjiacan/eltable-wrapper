@@ -12,11 +12,9 @@ export default {
     load(clear = true) {
       clearTimeout(this._ajaxHandle)
       this._ajaxHandle = setTimeout(() => {
-        if (clear) {
+        this._loadRemoteData(() => {
           this.clear()
-        }
-        this.resetScroll()
-        this._loadRemoteData(null, clear ? this.defaultId : undefined)
+        }, clear)
       }, this.ajaxDelay)
       return this
     },
@@ -40,6 +38,9 @@ export default {
       this.selectionData.cache = []
       this.selectionData.all = {}
       this.selectionData.current = {}
+
+      this.resetScroll()
+
       return this
     },
     /**

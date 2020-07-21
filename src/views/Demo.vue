@@ -206,16 +206,15 @@ export default {
     },
     onRemoveRow() {
       if (!this.selection || !this.selection.length) {
-        this.$message.warning('没有选择行')
+        alert('没有选择行')
         return
       }
 
       const ids = this.selection.map(item => item.id)
 
-      this.$confirm(`确定要移除选中行吗？ ID: ${ids}`).then(() => {
+      if (confirm(`确定要移除选中行吗？ ID: ${ids}`)) {
         this.$refs.lt.remove(ids)
-      }).catch(() => {
-      })
+      }
     },
     onShowSelection() {
       console.info(JSON.stringify(this.$refs.lt.getSelection(), null, 2))
