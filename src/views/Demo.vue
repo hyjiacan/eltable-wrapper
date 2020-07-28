@@ -108,6 +108,9 @@
           @select="onSelect"
           @selection-change="selectionChanged"
           @select-all="selectionChanged"
+          :ajax-option-foo="true"
+          :ajax-option-bar="true"
+          :ajax-option-required="['size', 'index']"
           t-row-class-name="customize-row-class"
           t-highlight-current-row
           load-when-params-change
@@ -166,6 +169,7 @@ export default {
   },
   methods: {
     ajax(e) {
+      console.log(e)
       return new Promise((resolve, reject) => {
         axios.request(e).then(response => {
           resolve(response.data)

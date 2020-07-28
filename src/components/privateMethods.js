@@ -78,7 +78,8 @@ export default {
       return this.ajax({
         url: this.url,
         method: this.method,
-        [this.ajaxParamsName]: params
+        [this.ajaxParamsName]: params,
+        option: this.ajaxOptions
       })
     },
     /**

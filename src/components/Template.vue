@@ -10,7 +10,7 @@
         <slot name="header" :data="slotData">
           <template v-if="isMultipleSelection">
             <template v-if="selectionData.cache.length">
-              已选择 {{selectionData.cache.length}} 项
+              已选择 {{ selectionData.cache.length }} 项
             </template>
             <template v-else>未选择项</template>
           </template>
@@ -79,7 +79,7 @@
       >
         <slot/>
         <slot name="empty" slot="empty">
-          {{tEmptyText}}
+          {{ tEmptyText }}
         </slot>
         <slot name="append" slot="append"/>
       </el-table>
@@ -89,7 +89,7 @@
         <slot name="footer" :data="slotData">
           <template v-if="isMultipleSelection">
             <template v-if="selectionData.cache.length">
-              已选择 {{selectionData.cache.length}} 项
+              已选择 {{ selectionData.cache.length }} 项
             </template>
             <template v-else>未选择项</template>
           </template>
@@ -236,6 +236,12 @@ export default {
     method: {
       type: String,
       default: 'get'
+    },
+    /**
+     * 在发送ajax请求时，附带传递给ajax方法的选项
+     */
+    ajaxOption: {
+      type: Object
     },
     /**
      * 发送ajax请求的延时，单位为毫秒，设置此值以降低请求被频繁触发

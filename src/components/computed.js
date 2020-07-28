@@ -99,6 +99,23 @@ export default {
         viewSize: i.currentData.length,
         selected: i.selectionData.cache.length
       }
+    },
+    ajaxOptions() {
+      const options = {
+        ...this.ajaxOption
+      }
+      for (const attr in this.$attrs) {
+        if (!this.$attrs.hasOwnProperty(attr)) {
+          continue
+        }
+        // 仅需要 ajax-option- 开头的项
+        const match = /^ajax-option-(?<name>.+)$/.exec(attr)
+        if (!match) {
+          continue
+        }
+        options[match.groups.name] = this.$attrs[attr]
+      }
+      return options
     }
   }
 }
