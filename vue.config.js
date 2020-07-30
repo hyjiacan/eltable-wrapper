@@ -13,7 +13,8 @@ module.exports = {
       'element-ui/lib/loading',
       'element-ui/lib/theme-chalk/table.css',
       'element-ui/lib/theme-chalk/table-column.css',
-      'element-ui/lib/theme-chalk/pagination.css'
+      'element-ui/lib/theme-chalk/pagination.css',
+      'element-ui/lib/theme-chalk/icon.css'
     ] : []
   }
 }
