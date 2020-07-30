@@ -91,6 +91,7 @@ Vue.use(ElTableWrapper, defaults)
 |pager-position|String|bottom|分页条位置，可选值为 `bottom` `top` `both`|
 |header-size|String/Number|48|`header` 高度，单位为`px`|
 |footer-size|String/Number|40|`footer` 高度，单位为`px`|
+|footer-target|String/HTMLElement|-|自定义 `footer` 的挂载元素，设置此值可以将其挂载到任意位置。可以是元素对象或选择器 `since 1.2.0`|
 |show-footer|Boolean|true|是否显示footer部分。当指定下方的 pager 或 footer 插槽时，也会显示 `since 0.8.0`|
 |v-model|Object/Array|-|获取选中的项，暂不支持设置初始化选中值，若要设置初始化选中值，请使用方法 `select` `since 0.8.0`|
 |selection|String|-|指示表格选择模式，可选值为: 空, `single`, `multiple`，需要启用单选时，需要指定值为`single`，当表格列中指定了 `type="selection"` 时，会覆盖此值为 `multiple`|

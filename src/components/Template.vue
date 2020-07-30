@@ -28,7 +28,7 @@
       </div>
       <el-table
         style="width: 100%"
-        height="100%"
+        :height="autoHeight ? null : '100%'"
         :highlight-current-row="tHighlightCurrentRow || selection === 'single'"
         :data="currentData"
         @current-change="onTableCurrentRowChanged"
@@ -84,23 +84,19 @@
         <slot name="append" slot="append"/>
       </el-table>
     </div>
-    <div class="el-table-wrapper-footer" :style="footerStyle" v-if="footerVisible">
-      <div class="el-table-wrapper-footer-text">
-        <slot name="footer" :data="slotData">
-          <template v-if="isMultipleSelection">
-            <template v-if="selectionData.cache.length">
-              已选择 {{ selectionData.cache.length }} 项
-            </template>
-            <template v-else>未选择项</template>
+    <table-footer :footer-visible="footerVisible"
+                  :pager-visible="!pDisabled && pagerPosition !== 'top'"
+                  :size="footerSize"
+                  :target="footerTarget">
+      <slot name="footer" :data="slotData">
+        <template v-if="isMultipleSelection">
+          <template v-if="selectionData.cache.length">
+            已选择 {{ selectionData.cache.length }} 项
           </template>
-        </slot>
-      </div>
-      <pager position="bottom" v-show="!pDisabled && pagerPosition !== 'top'">
-        <slot name="pagerPrepend" :data="data" slot="pagerPrepend" slot-scope="{data}"/>
-        <slot name="pagerSummary" :data="data" slot="pagerSummary" slot-scope="{data}"/>
-        <slot name="pagerAppend" :data="data" slot="pagerAppend" slot-scope="{data}"/>
-      </pager>
-    </div>
+          <template v-else-if="data.view.length">未选择项</template>
+        </template>
+      </slot>
+    </table-footer>
   </div>
 </template>
 
@@ -115,11 +111,13 @@ import handlers from './handlers'
 import data from './data'
 import computed from './computed'
 import watch from './watch'
+import TableFooter from '@/components/TableFooter'
 
 export default {
   name: 'ElTableWrapper',
   mixins: [computed, data, handlers, privateMethods, publicMethods, watch],
   components: {
+    TableFooter,
     Pager
   },
   directives: {
@@ -187,6 +185,9 @@ export default {
     showFooter: {
       type: Boolean,
       default: true
+    },
+    footerTarget: {
+      type: [String, HTMLElement]
     },
     /**
      * 默认的数据id，当未加载数据时，请求时使用此值

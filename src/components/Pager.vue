@@ -40,6 +40,7 @@
 <script>
 import Pagination from 'element-ui/lib/pagination'
 import 'element-ui/lib/theme-chalk/pagination.css'
+import 'element-ui/lib/theme-chalk/icon.css'
 
 export default {
   name: 'Pager',

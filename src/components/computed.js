@@ -7,7 +7,7 @@ export default {
       let cls = {
         'el-table-wrapper-auto-height': this.autoHeight,
         'el-table-wrapper-header-visible': this.headerVisible,
-        'el-table-wrapper-footer-visible': this.footerVisible
+        'el-table-wrapper-footer-visible': this.footerVisible && !this.footerTarget
       }
       if (this.customClass) {
         cls[this.customClass] = true
@@ -26,12 +26,7 @@ export default {
     contentStyle() {
       return {
         top: this.headerVisible ? `${parseFloat(this.headerSize)}px` : 0,
-        bottom: this.footerVisible ? `${parseFloat(this.footerSize)}px` : 0
-      }
-    },
-    footerStyle() {
-      return {
-        height: this.footerVisible ? `${parseFloat(this.footerSize)}px` : 0
+        bottom: this.footerVisible && !this.footerTarget ? `${parseFloat(this.footerSize)}px` : 0
       }
     },
     headerVisible() {

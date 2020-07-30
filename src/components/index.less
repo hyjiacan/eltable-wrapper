@@ -11,6 +11,16 @@
       padding: 4px 5px;
       box-sizing: border-box;
     }
+
+    .el-table-wrapper-header,
+    .el-table-wrapper-content,
+    .el-table-wrapper-footer {
+      position: relative;
+      top: unset;
+      left: unset;
+      right: unset;
+      bottom: unset;
+    }
   }
 }
 
@@ -52,12 +62,15 @@
 }
 
 .el-table-wrapper-footer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
   padding: 4px 5px;
   box-sizing: border-box;
+
+  &:not(.el-table-wrapper-footer-custom) {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
 }
 
 .el-table-wrapper-pager {

@@ -13,7 +13,7 @@
           p-disabled
         >
           <template v-slot:titleToolbar="{data}">
-            <span>{{data}}</span>
+            <span>{{ data }}</span>
             <button>自定义按钮</button>
           </template>
           <el-table-column type="selection"/>
@@ -22,7 +22,7 @@
           <el-table-column label="Dept." prop="dept"></el-table-column>
           <el-table-column label="Remark">
             <template v-slot="{row}">
-              {{row.remark}}
+              {{ row.remark }}
             </template>
           </el-table-column>
         </el-table-wrapper>
@@ -54,7 +54,7 @@
           <el-table-column label="Dept." prop="dept"></el-table-column>
           <el-table-column label="Remark">
             <template v-slot="{row}">
-              {{row.remark}}
+              {{ row.remark }}
             </template>
           </el-table-column>
         </el-table-wrapper>
@@ -80,12 +80,12 @@
               <input type="checkbox" style="vertical-align: -2px" @change="onCheckAllChange"/>
               <span>全选</span>
             </label>
-            <span style="margin-left: 5px">已选择 {{data.selected}} 项</span>
+            <span style="margin-left: 5px">已选择 {{ data.selected }} 项</span>
           </template>
           <el-table-column type="selection"/>
           <el-table-column label="ID" prop="id">
             <template v-slot="{row}">
-              <span>{{row.id}}</span>
+              <span>{{ row.id }}</span>
               <span v-if="row.__checked__" style="color: red;">(选中)</span>
             </template>
           </el-table-column>
@@ -93,7 +93,7 @@
           <el-table-column label="Dept." prop="dept"></el-table-column>
           <el-table-column label="Remark">
             <template v-slot="{row}">
-              {{row.remark}}
+              {{ row.remark }}
             </template>
           </el-table-column>
         </el-table-wrapper>
@@ -130,10 +130,29 @@
           <el-table-column label="Dept." prop="dept"></el-table-column>
           <el-table-column label="Remark">
             <template v-slot="{row}">
-              {{row.remark}}
+              {{ row.remark }}
             </template>
           </el-table-column>
         </el-table-wrapper>
+      </el-tab-pane>
+      <el-tab-pane label="自定义footer挂载位置">
+        <div class="splitter">
+          <div id="footer-target">
+            <div class="tip">footer被挂载到这里了</div>
+          </div>
+          <el-table-wrapper
+            type="l"
+            :local-data="localData"
+            pager-position="both"
+            footer-target="#footer-target"
+          >
+            <el-table-column type="selection" prop="checked"></el-table-column>
+            <el-table-column label="ID" prop="id"></el-table-column>
+            <el-table-column label="Name" prop="name"></el-table-column>
+            <el-table-column label="Dept." prop="dept"></el-table-column>
+            <el-table-column label="Remark" prop="remark"></el-table-column>
+          </el-table-wrapper>
+        </div>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -248,6 +267,27 @@ export default {
 <style lang="less" scoped>
 .hello {
   height: 100%;
+}
+
+.splitter {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 60px auto;
+}
+
+#footer-target {
+  background-color: bisque;
+
+  .tip {
+    position: absolute;
+    left: 400px;
+    top: 10px;
+    color: red;
+  }
+
+  &:hover {
+    background-color: #ee9832;
+  }
 }
 </style>
 <style lang="less">
