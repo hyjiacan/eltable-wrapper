@@ -59,7 +59,8 @@ export default {
         indexChanged: false
       },
       _ajaxParamsBuffer: null,
-      _ajaxParamsDiff: []
+      _ajaxParamsDiff: [],
+      _loadingInstance: null
     }
   }
 }

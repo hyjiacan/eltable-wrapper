@@ -29,7 +29,7 @@ export default {
         this._throwError('Invalid value for property "index", expected equals or great than "1"')
       }
       // 检查pager-position
-      let available = ['top', 'bottom', 'both']
+      const available = ['top', 'bottom', 'both']
       if (available.indexOf(this.pagerPosition) === -1) {
         this._throwError('Invalid value for property "pager-position", available are: ' + available.join(','))
       }
@@ -74,12 +74,22 @@ export default {
      * 发送 ajax 请求
      * @private
      */
-    _sendAjax(params) {
+    async _sendAjax(params) {
+      this.data.loading = true
+      this.$emit('update:loading', true)
+
+      await this.$nextTick()
+
       return this.ajax({
         url: this.url,
         method: this.method,
         [this.ajaxParamsName]: params,
         option: this.ajaxOptions
+      }).catch(e => {
+        this.$emit('ajax-error', e)
+      }).finally(() => {
+        this.data.loading = false
+        this.$emit('update:loading', false)
       })
     },
     /**
@@ -102,8 +112,6 @@ export default {
       if (beforeSend) {
         beforeSend()
       }
-      this.data.loading = true
-      this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
         data = this._invokeResponseHandler(data)
         if (data.length <= this.incSize) {
@@ -126,11 +134,6 @@ export default {
             this._loadIncData()
           })
         }
-      }).catch(e => {
-        this.$emit('ajax-error', e)
-      }).finally(() => {
-        this.data.loading = false
-        this.$emit('update:loading', false)
       })
     },
     /**
@@ -151,18 +154,11 @@ export default {
       if (beforeSend) {
         beforeSend()
       }
-      this.data.loading = true
-      this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
         data = this._invokeResponseHandler(data)
         this.data.count = data[this.totalField]
         this.data.view = this.data.cache = data[this.listField] || []
         this._updatePageCount()
-      }).catch(e => {
-        this.$emit('ajax-error', e)
-      }).finally(() => {
-        this.data.loading = false
-        this.$emit('update:loading', false)
       })
     },
     /**
@@ -181,8 +177,6 @@ export default {
       if (beforeSend) {
         beforeSend()
       }
-      this.data.loading = true
-      this.$emit('update:loading', true)
       this._sendAjax(p).then(data => {
         data = this._invokeResponseHandler(data)
         if (Array.isArray(data)) {
@@ -194,11 +188,6 @@ export default {
           this.data.count = data[this.totalField]
           this.data.view = this.data.cache = data[this.listField] || []
         }
-      }).catch(e => {
-        this.$emit('ajax-error', e)
-      }).finally(() => {
-        this.data.loading = false
-        this.$emit('update:loading', false)
       })
     },
     _invokeResponseHandler(data) {
@@ -211,12 +200,12 @@ export default {
       if (!this.checkParams) {
         return param
       }
-      let paramsDiff = this._ajaxParamsDiff || []
+      const paramsDiff = this._ajaxParamsDiff || []
       if (paramsDiff.length) {
         // 重置变化的参数
         this._ajaxParamsDiff = []
       }
-      let result = this.checkParams(param, paramsDiff)
+      const result = this.checkParams(param, paramsDiff)
       // 返回 false 时表示阻止执行
       if (result === false) {
         return false
@@ -229,7 +218,7 @@ export default {
       return result
     },
     _getLastId() {
-      let data = this.data.extra
+      const data = this.data.extra
       if (!data) {
         return this.defaultId
       }
@@ -259,7 +248,7 @@ export default {
       this.selectionData.ignore = true
       this.$nextTick(() => {
         // 设置选中项
-        let cache = this.selectionData.cache
+        const cache = this.selectionData.cache
         if (this.isMultipleSelection) {
           cache.forEach(row => {
             this.$refs.table.toggleRowSelection(row, true)

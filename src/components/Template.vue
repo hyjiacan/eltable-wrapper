@@ -5,6 +5,7 @@
        :element-loading-spinner="loadingIcon"
        :element-loading-background="loadingColor"
   >
+    <div class="el-table-wrapper-top-mark"></div>
     <div class="el-table-wrapper-header" :style="headerStyle" v-if="headerVisible">
       <div class="el-table-wrapper-header-text">
         <slot name="header" :data="slotData">
@@ -101,7 +102,9 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import Loading from 'element-ui/lib/loading'
+import 'element-ui/lib/theme-chalk/loading.css'
 
 import Pager from './Pager'
 import './index.less'
@@ -113,15 +116,14 @@ import computed from './computed'
 import watch from './watch'
 import TableFooter from '@/components/TableFooter'
 
+Vue.use(Loading.directive)
+
 export default {
   name: 'ElTableWrapper',
   mixins: [computed, data, handlers, privateMethods, publicMethods, watch],
   components: {
     TableFooter,
     Pager
-  },
-  directives: {
-    loading: Loading.directive
   },
   provide() {
     return {
@@ -372,7 +374,7 @@ export default {
     },
     loadingText: {
       type: String,
-      default: 'Loading...'
+      default: '正在加载...'
     },
     loadingIcon: {
       type: String,

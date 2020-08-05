@@ -1,6 +1,43 @@
 <template>
   <div class="hello">
     <el-tabs>
+      <el-tab-pane label="远程数据">
+        <el-table-wrapper
+          url="/mock/data.json"
+          :ajax="ajax"
+          :params="params"
+          :check-params="onCheckParams"
+          pager-position="both"
+          @select="onSelect"
+          @selection-change="selectionChanged"
+          @select-all="selectionChanged"
+          :ajax-option-foo="true"
+          :ajax-option-bar="true"
+          :ajax-option-required="['size', 'index']"
+          t-row-class-name="customize-row-class"
+          t-highlight-current-row
+          load-when-params-change
+          advance-selection
+          ref="table"
+        >
+          <template v-slot:pagerPrepend>
+            <span>触发的字段</span>
+            <input v-model="params.triggerField" title="变化时自动重新加载"/>
+            <span>忽略的字段</span>
+            <input v-model="params.ignoreField" title="变化时不会自动重新加载"/>
+            <button @click="$refs.table.load()" title="主动查询时，会带上忽略的字段">查询</button>
+          </template>
+          <el-table-column type="selection" prop="checked"></el-table-column>
+          <el-table-column label="ID" prop="id"></el-table-column>
+          <el-table-column label="Name" prop="name"></el-table-column>
+          <el-table-column label="Dept." prop="dept"></el-table-column>
+          <el-table-column label="Remark">
+            <template v-slot="{row}">
+              {{ row.remark }}
+            </template>
+          </el-table-column>
+        </el-table-wrapper>
+      </el-tab-pane>
       <el-tab-pane label="不分页">
         <el-table-wrapper
           type="l"
@@ -98,43 +135,6 @@
           </el-table-column>
         </el-table-wrapper>
       </el-tab-pane>
-      <el-tab-pane label="远程数据">
-        <el-table-wrapper
-          url="/mock/data.json"
-          :ajax="ajax"
-          :params="params"
-          :check-params="onCheckParams"
-          pager-position="both"
-          @select="onSelect"
-          @selection-change="selectionChanged"
-          @select-all="selectionChanged"
-          :ajax-option-foo="true"
-          :ajax-option-bar="true"
-          :ajax-option-required="['size', 'index']"
-          t-row-class-name="customize-row-class"
-          t-highlight-current-row
-          load-when-params-change
-          advance-selection
-          ref="table"
-        >
-          <template v-slot:pagerPrepend>
-            <span>触发的字段</span>
-            <input v-model="params.triggerField" title="变化时自动重新加载"/>
-            <span>忽略的字段</span>
-            <input v-model="params.ignoreField" title="变化时不会自动重新加载"/>
-            <button @click="$refs.table.load()" title="主动查询时，会带上忽略的字段">查询</button>
-          </template>
-          <el-table-column type="selection" prop="checked"></el-table-column>
-          <el-table-column label="ID" prop="id"></el-table-column>
-          <el-table-column label="Name" prop="name"></el-table-column>
-          <el-table-column label="Dept." prop="dept"></el-table-column>
-          <el-table-column label="Remark">
-            <template v-slot="{row}">
-              {{ row.remark }}
-            </template>
-          </el-table-column>
-        </el-table-wrapper>
-      </el-tab-pane>
       <el-tab-pane label="自定义footer挂载位置">
         <div class="splitter">
           <div id="footer-target">
@@ -191,9 +191,11 @@ export default {
       console.log(e)
       return new Promise((resolve, reject) => {
         axios.request(e).then(response => {
-          resolve(response.data)
-          this.cache = response.data
-          this.$refs.table.select(this.cache[2])
+          setTimeout(() => {
+            resolve(response.data)
+            this.cache = response.data
+            this.$refs.table.select(this.cache[2])
+          }, 1000)
         }).catch(response => {
           reject(response.data)
         })

@@ -4,7 +4,7 @@ export default {
      * 附加的样式类
      */
     wrapperClass() {
-      let cls = {
+      const cls = {
         'el-table-wrapper-auto-height': this.autoHeight,
         'el-table-wrapper-header-visible': this.headerVisible,
         'el-table-wrapper-footer-visible': this.footerVisible && !this.footerTarget
@@ -15,7 +15,7 @@ export default {
       return cls
     },
     headerStyle() {
-      let style = {
+      const style = {
         height: this.headerVisible ? `${parseFloat(this.headerSize)}px` : 0
       }
       if (this.tBorder) {
@@ -54,7 +54,7 @@ export default {
         // 服务器分页时，重新加载数据
         return this.data.view
       }
-      let from = (this.pager.index - 1) * this.pager.size
+      const from = (this.pager.index - 1) * this.pager.size
       return this.data.view.slice(from, from + this.pager.size)
     },
     incIdField() {
@@ -77,7 +77,7 @@ export default {
         return this.selection === 'multiple'
       }
       // 循环列 查找多选列
-      let selectionCol = this.$slots.default.every(node => {
+      const selectionCol = this.$slots.default.every(node => {
         return !node.componentOptions ||
           !node.componentOptions.propsData ||
           node.componentOptions.propsData.type !== 'selection'
@@ -85,7 +85,7 @@ export default {
       return !selectionCol || this.selection === 'multiple'
     },
     slotData() {
-      let i = this
+      const i = this
       return {
         pageIndex: i.pager.index,
         pageCount: i.pager.count,
