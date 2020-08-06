@@ -1292,14 +1292,7 @@ var es6_array_find_index = __webpack_require__("20d6");
     }
   }
 });
-// EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
-var runtime = __webpack_require__("96cf");
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__("1da1");
-
 // CONCATENATED MODULE: ./src/components/privateMethods.js
-
 
 
 
@@ -1403,46 +1396,28 @@ function privateMethods_objectSpread(target) { for (var i = 1; i < arguments.len
      * 发送 ajax 请求
      * @private
      */
-    _sendAjax: function () {
-      var _sendAjax2 = Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee(params) {
-        var _this$ajax,
-            _this = this;
+    _sendAjax: function _sendAjax(params) {
+      var _this = this;
 
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                this.data.loading = true;
-                this.$emit('update:loading', true);
-                _context.next = 4;
-                return this.$nextTick();
+      this.data.loading = true;
+      this.$emit('update:loading', true);
+      return new Promise(function (resolve) {
+        var _this$ajax;
 
-              case 4:
-                return _context.abrupt("return", this.ajax((_this$ajax = {
-                  url: this.url,
-                  method: this.method
-                }, Object(defineProperty["a" /* default */])(_this$ajax, this.ajaxParamsName, params), Object(defineProperty["a" /* default */])(_this$ajax, "option", this.ajaxOptions), _this$ajax)).catch(function (e) {
-                  _this.$emit('ajax-error', e);
-                }).finally(function () {
-                  _this.data.loading = false;
+        _this.ajax((_this$ajax = {
+          url: _this.url,
+          method: _this.method
+        }, Object(defineProperty["a" /* default */])(_this$ajax, _this.ajaxParamsName, params), Object(defineProperty["a" /* default */])(_this$ajax, "option", _this.ajaxOptions), _this$ajax)).then(function (response) {
+          resolve(response);
+        }).catch(function (e) {
+          _this.$emit('ajax-error', e);
+        }).finally(function () {
+          _this.data.loading = false;
 
-                  _this.$emit('update:loading', false);
-                }));
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function _sendAjax(_x) {
-        return _sendAjax2.apply(this, arguments);
-      }
-
-      return _sendAjax;
-    }(),
+          _this.$emit('update:loading', false);
+        });
+      });
+    },
 
     /**
      * 加载服务器返回的增量数据

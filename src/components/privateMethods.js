@@ -74,22 +74,24 @@ export default {
      * 发送 ajax 请求
      * @private
      */
-    async _sendAjax(params) {
+    _sendAjax(params) {
       this.data.loading = true
       this.$emit('update:loading', true)
 
-      await this.$nextTick()
-
-      return this.ajax({
-        url: this.url,
-        method: this.method,
-        [this.ajaxParamsName]: params,
-        option: this.ajaxOptions
-      }).catch(e => {
-        this.$emit('ajax-error', e)
-      }).finally(() => {
-        this.data.loading = false
-        this.$emit('update:loading', false)
+      return new Promise(resolve => {
+        this.ajax({
+          url: this.url,
+          method: this.method,
+          [this.ajaxParamsName]: params,
+          option: this.ajaxOptions
+        }).then(response => {
+          resolve(response)
+        }).catch(e => {
+          this.$emit('ajax-error', e)
+        }).finally(() => {
+          this.data.loading = false
+          this.$emit('update:loading', false)
+        })
       })
     },
     /**
