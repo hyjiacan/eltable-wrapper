@@ -102,7 +102,7 @@ export default {
           idSet.push(this.getDataId(row))
         })
         this.data.cache.forEach(row => {
-          row[this.checkField] = idSet.indexOf(this.getDataId(row)) !== -1
+          this._updateCheckField(row, idSet.indexOf(this.getDataId(row)) !== -1)
         })
       }
 

@@ -274,6 +274,11 @@ export default {
       if (data && data.length) {
         this.append(this.localData)
       }
+    },
+    _updateCheckField(row, checked) {
+      if (this.checkField) {
+        this.$set(row, this.checkField, checked)
+      }
     }
   }
 }

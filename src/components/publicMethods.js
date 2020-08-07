@@ -225,9 +225,7 @@ export default {
           current[id] = row
           cache.push(row)
         }
-        if (this.checkField) {
-          row[this.checkField] = true
-        }
+        this._updateCheckField(row, true)
       })
       this._updateSelection()
       return this
@@ -273,9 +271,7 @@ export default {
           }
         }
         this.$refs.table.toggleRowSelection(row, false)
-        if (this.checkField) {
-          row[this.checkField] = false
-        }
+        this._updateCheckField(row, false)
       })
       this.selectionData.ignore = false
       return this
@@ -334,12 +330,14 @@ export default {
             cache.splice(idx, 1)
           }
           removeRows.push(row)
+          this._updateCheckField(row, false)
         } else {
           // 选中
           current[id] = row
           all[id] = row
           cache.push(row)
           newRows.push(row)
+          this._updateCheckField(row, true)
         }
       })
       this.selectionData.ignore = false

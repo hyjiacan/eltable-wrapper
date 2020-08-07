@@ -73,16 +73,18 @@ export default {
       return /^(put|post|patch)$/.test(this.method) ? 'data' : 'params'
     },
     isMultipleSelection() {
-      if (!this.$slots.default) {
+      const slots = this.$scopedSlots.default ? this.$scopedSlots.default() : this.$slots.default
+
+      if (!slots) {
         return this.selection === 'multiple'
       }
       // 循环列 查找多选列
-      const selectionCol = this.$slots.default.every(node => {
-        return !node.componentOptions ||
-          !node.componentOptions.propsData ||
-          node.componentOptions.propsData.type !== 'selection'
+      const selectionCol = slots.some(node => {
+        return node.componentOptions &&
+          node.componentOptions.propsData &&
+          node.componentOptions.propsData.type === 'selection'
       })
-      return !selectionCol || this.selection === 'multiple'
+      return selectionCol || this.selection === 'multiple'
     },
     slotData() {
       const i = this

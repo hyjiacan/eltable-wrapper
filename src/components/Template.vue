@@ -78,7 +78,7 @@
         @expand-change="onExpandChange"
         ref="table"
       >
-        <slot/>
+        <slot :toggle="toggle" :select="select" :deselect="deselect"/>
         <slot name="empty" slot="empty">
           {{ tEmptyText }}
         </slot>

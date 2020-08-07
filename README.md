@@ -277,7 +277,7 @@ const data = {
 |名称|数据|描述|
 |---|---|---|
 |header|data|可选的表格顶部插槽|
-|default|-|`ElTable` 的列集合，用法与 `ElTable` 的默认插槽相同|
+|default|{toggle, select, deselect}|`ElTable` 的列集合，用法与 `ElTable` 的默认插槽相同|
 |empty|-|`ElTable` 的 `empty` 插槽|
 |append|-|`ElTable` 的 `append` 插槽|
 |pagerPrepend|data|分页插槽，默认放在分页左侧|
@@ -285,6 +285,8 @@ const data = {
 |pagerSummary|data|自定义的分页信息统计|
 |footer|data|分页左侧的文字|
 |titleToolbar|data|表格标题栏插槽，覆盖在标题栏上方 `since 0.8.0`|
+
+> `toggle, select, deselect` 均为方法，可以直接调用。
 
 > 可以使用 `v-slot:footer="{data}"` 或 `slot-scope="{data}"` 来引用数据
 
