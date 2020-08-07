@@ -39,7 +39,9 @@ export default {
       this.selectionData.all = {}
       this.selectionData.current = {}
 
-      this.resetScroll()
+      if (this.autoResetScroll) {
+        this.resetScroll()
+      }
 
       return this
     },

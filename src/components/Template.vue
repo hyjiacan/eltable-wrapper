@@ -310,6 +310,13 @@ export default {
       type: Boolean,
       default: false
     },
+    /**
+     * 是否在加载数据后自动将滚动条定位到顶部
+     */
+    autoResetScroll: {
+      type: Boolean,
+      default: true
+    },
     // AJAX END===========================================================
 
     // 分页 BEGIN======================================================

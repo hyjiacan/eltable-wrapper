@@ -34,7 +34,9 @@ export default {
       if (this.type === 's') {
         this._loadPagedData()
       }
-      this.resetScroll()
+      if (this.autoResetScroll) {
+        this.resetScroll()
+      }
     },
     onSizeChanged(size) {
       if (this.pager.size === size) {
@@ -50,8 +52,9 @@ export default {
         // 服务器分页时需要重新加载数据
         this.load()
       }
-
-      this.resetScroll()
+      if (this.autoResetScroll) {
+        this.resetScroll()
+      }
     },
     onTableCurrentRowChanged(selected, prev) {
       // 未启用单选

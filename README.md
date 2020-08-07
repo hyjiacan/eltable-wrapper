@@ -144,6 +144,7 @@ Vue.use(ElTableWrapper, defaults)
 |loading-text|Boolean|false|显示loading状态时的文本|
 |loading-icon|Boolean|false|显示loading状态时的图标|
 |loading-color|Boolean|false|显示loading状态时的背景色|
+|auto-reset-scroll|Boolean|true|是否在加载数据后自动将滚动条定位到顶部，设置为 `false` 时可以调用 `resetScroll()`|
 
 > `check-params` 的第二个参数，仅在`params`改变时，自动重新请求时有效，其描述了参数的变化，
 > 更多信息参考 [deep-diff](https://github.com/flitbit/diff)。
