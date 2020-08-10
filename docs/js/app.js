@@ -1230,8 +1230,9 @@ var es6_array_find_index = __webpack_require__("20d6");
       this.selectionData.ignore = false;
 
       if (removeRows.length) {
+        this.$emit('input', this.getSelection());
         this.$emit('selection-change', {
-          selection: [].concat(this.selectionData.cache),
+          selection: this.getSelection(),
           type: 'deselect',
           changed: removeRows,
           allSelected: false
@@ -1239,8 +1240,9 @@ var es6_array_find_index = __webpack_require__("20d6");
       }
 
       if (newRows.length) {
+        this.$emit('input', this.getSelection());
         this.$emit('selection-change', {
-          selection: [].concat(this.selectionData.cache),
+          selection: this.getSelection(),
           type: 'select',
           changed: removeRows,
           allSelected: cache.length > 0 && cache.length === this.data.cache.length
@@ -1882,13 +1884,13 @@ function privateMethods_objectSpread(target) { for (var i = 1; i < arguments.len
       var allSelected = this.selectionData.cache.length > 0 && this.selectionData.cache.length === this.data.cache.length; // 触发事件
 
       var e = {
-        selection: [].concat(this.selectionData.cache),
+        selection: this.getSelection(),
         type: type,
         changed: items,
         allSelected: allSelected
       };
-      this.$emit('selection-change', e);
       this.$emit('input', e.selection);
+      this.$emit('selection-change', e);
     },
     onCellMouseEnter: function onCellMouseEnter() {
       var args = [].slice.apply(arguments);
