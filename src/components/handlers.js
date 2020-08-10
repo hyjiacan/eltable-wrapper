@@ -184,13 +184,13 @@ export default {
       const allSelected = this.selectionData.cache.length > 0 && this.selectionData.cache.length === this.data.cache.length
       // 触发事件
       const e = {
-        selection: [].concat(this.selectionData.cache),
+        selection: this.getSelection(),
         type,
         changed: items,
         allSelected
       }
-      this.$emit('selection-change', e)
       this.$emit('input', e.selection)
+      this.$emit('selection-change', e)
     },
     onCellMouseEnter() {
       const args = [].slice.apply(arguments)

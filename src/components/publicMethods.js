@@ -343,8 +343,9 @@ export default {
       this.selectionData.ignore = false
 
       if (removeRows.length) {
+        this.$emit('input', this.getSelection())
         this.$emit('selection-change', {
-          selection: [].concat(this.selectionData.cache),
+          selection: this.getSelection(),
           type: 'deselect',
           changed: removeRows,
           allSelected: false
@@ -352,8 +353,9 @@ export default {
       }
 
       if (newRows.length) {
+        this.$emit('input', this.getSelection())
         this.$emit('selection-change', {
-          selection: [].concat(this.selectionData.cache),
+          selection: this.getSelection(),
           type: 'select',
           changed: removeRows,
           allSelected: cache.length > 0 && cache.length === this.data.cache.length
