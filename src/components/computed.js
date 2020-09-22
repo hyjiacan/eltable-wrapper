@@ -24,16 +24,19 @@ export default {
       return style
     },
     contentStyle() {
+      if (this.autoHeight) {
+        return {}
+      }
       return {
         top: this.headerVisible ? `${parseFloat(this.headerSize)}px` : 0,
         bottom: this.footerVisible && !this.footerTarget ? `${parseFloat(this.footerSize)}px` : 0
       }
     },
     headerVisible() {
-      return (!this.pDisabled && this.pagerPosition !== 'bottom') || this.$slots.header
+      return (!this.pDisabled && this.pagerPosition !== 'bottom') || this.$slots.header || this.$scopedSlots.header
     },
     footerVisible() {
-      return this.showFooter || this.$slots.footer || (!this.pDisabled && this.pagerPosition !== 'top')
+      return this.showFooter || this.$slots.footer || this.$scopedSlots.footer || (!this.pDisabled && this.pagerPosition !== 'top')
     },
     /**
      * 当前页显示的数据项

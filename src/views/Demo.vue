@@ -20,6 +20,9 @@
           advance-selection
           ref="table"
         >
+          <template v-slot:header="{data}">
+            <div>selected: {{data.selected}}</div>
+          </template>
           <template v-slot:pagerPrepend>
             <span>触发的字段</span>
             <input v-model="params.triggerField" title="变化时自动重新加载"/>

@@ -97,6 +97,13 @@
           <template v-else-if="data.view.length">未选择项</template>
         </template>
       </slot>
+      <template v-slot:pager>
+        <pager position="bottom" v-show="!pDisabled && pagerPosition !== 'top'">
+          <slot name="pagerPrepend" :data="data" slot="pagerPrepend" slot-scope="{data}"/>
+          <slot name="pagerSummary" :data="data" slot="pagerSummary" slot-scope="{data}"/>
+          <slot name="pagerAppend" :data="data" slot="pagerAppend" slot-scope="{data}"/>
+        </pager>
+      </template>
     </table-footer>
   </div>
 </template>

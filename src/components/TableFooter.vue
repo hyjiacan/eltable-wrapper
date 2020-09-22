@@ -3,28 +3,15 @@
     <div class="el-table-wrapper-footer-text">
       <slot/>
     </div>
-    <pager position="bottom" v-show="pagerVisible">
-      <slot name="pagerPrepend" :data="data" slot="pagerPrepend" slot-scope="{data}"/>
-      <slot name="pagerSummary" :data="data" slot="pagerSummary" slot-scope="{data}"/>
-      <slot name="pagerAppend" :data="data" slot="pagerAppend" slot-scope="{data}"/>
-    </pager>
+    <slot name="pager"/>
   </div>
 </template>
 
 <script>
-import Pager from '@/components/Pager'
-
 export default {
   name: 'TableFooter',
-  components: {
-    Pager
-  },
   props: {
     footerVisible: {
-      type: Boolean,
-      required: true
-    },
-    pagerVisible: {
       type: Boolean,
       required: true
     },
