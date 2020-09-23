@@ -39,6 +39,9 @@ export default {
       this.selectionData.all = {}
       this.selectionData.current = {}
 
+      // 清空选中项
+      this.$emit('input', [])
+
       if (this.autoResetScroll) {
         this.resetScroll()
       }
