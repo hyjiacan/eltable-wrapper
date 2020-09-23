@@ -213,6 +213,13 @@ export default {
       this.$emit.apply(this, args)
     },
     onRowClick() {
+      // 拦截点击事件
+      if (this.rowClickInterceptor) {
+        const intercept = this.rowClickInterceptor(...arguments)
+        if (intercept === false) {
+          return
+        }
+      }
       // 在多选时，支持单击以选中行
       if (this.isMultipleSelection && this.toggleOnRowClick) {
         this.toggle(arguments[0])

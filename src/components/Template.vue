@@ -222,6 +222,12 @@ export default {
       type: Boolean,
       default: false
     },
+    /**
+     * 行点击事件的拦截器，返回 false 表示拦截点击事件
+     */
+    rowClickInterceptor: {
+      type: Function
+    },
     checkField: {
       type: String
     },
