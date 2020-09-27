@@ -183,22 +183,22 @@ export default {
 
       idField = idField || this.idField
       if (typeof idField === 'function') {
-        return idField(row).toString()
+        return String(idField(row))
       }
       if (!Array.isArray(idField)) {
         if (!row.hasOwnProperty(idField)) {
           this._throwError(`Field "${idField}" not found in data row, a valid "id-field" property is expected`)
         }
-        return row[idField].toString()
+        return String(row[idField])
       }
       let temp = row
       idField.forEach(field => {
         if (!temp.hasOwnProperty(field)) {
           this._throwError(`Field "${idField.join('.')}" not found in data row, a valid "id-field" property is expected`)
         }
-        temp = temp[field].toString()
+        temp = temp[field]
       })
-      return temp
+      return String(temp)
     },
     /**
      * 选中指定行

@@ -9,11 +9,11 @@
     <div class="el-table-wrapper-header" :style="headerStyle" v-if="headerVisible">
       <div class="el-table-wrapper-header-text">
         <slot name="header" :data="slotData">
-          <template v-if="isMultipleSelection">
-            <template v-if="selectionData.cache.length">
+          <template v-if="isMultipleSelection && showSelectionInfo">
+            <span v-if="selectionData.cache.length">
               已选择 {{ selectionData.cache.length }} 项
-            </template>
-            <template v-else>未选择项</template>
+            </span>
+            <span v-else>未选择项</span>
           </template>
         </slot>
       </div>
@@ -90,11 +90,11 @@
                   :size="footerSize"
                   :target="footerTarget">
       <slot name="footer" :data="slotData">
-        <template v-if="isMultipleSelection">
-          <template v-if="selectionData.cache.length">
+        <template v-if="isMultipleSelection && showSelectionInfo">
+          <span v-if="selectionData.cache.length">
             已选择 {{ selectionData.cache.length }} 项
-          </template>
-          <template v-else-if="data.view.length">未选择项</template>
+          </span>
+          <span v-else-if="data.view.length">未选择项</span>
         </template>
       </slot>
       <template v-slot:pager>
@@ -160,6 +160,10 @@ export default {
     autoHeight: {
       type: Boolean,
       default: false
+    },
+    showSelectionInfo: {
+      type: Boolean,
+      default: true
     },
     /**
      * 设置为 true 以使用高级选择
