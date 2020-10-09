@@ -1,6 +1,6 @@
 {
   "name": "@hyjiacan/eltable-wrapper",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "main": "lib/eltable-wrapper.common.js",
   "description": "Wrap component `ElTable` and `ElPagination` for `element-ui`",
   "repository": {
@@ -22,6 +22,7 @@
   "license": "MIT",
   "files": [
     "lib",
+    "src/components",
     "README.md",
     "OPTIONS.md",
     "PAGINATION.md"
