@@ -7,6 +7,7 @@ module.exports = {
       minimize: false
     },
     externals: process.env.NODE_ENV === 'production' ? [
+      'deep-diff',
       'element-ui/lib/table',
       'element-ui/lib/table-column',
       'element-ui/lib/pagination',
@@ -15,7 +16,8 @@ module.exports = {
       'element-ui/lib/theme-chalk/table-column.css',
       'element-ui/lib/theme-chalk/pagination.css',
       'element-ui/lib/theme-chalk/icon.css',
-      'element-ui/lib/theme-chalk/loading.css'
+      'element-ui/lib/theme-chalk/loading.css',
+      'merge'
     ] : []
   }
 }
