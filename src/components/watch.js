@@ -24,7 +24,7 @@ export default {
         }
         if (this._ajaxParamsDiff.length) {
           this._ajaxParamsBuffer = {
-            ...this.params
+            ...this.ajaxParams
           }
         }
       }

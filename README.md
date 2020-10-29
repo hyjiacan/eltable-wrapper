@@ -134,6 +134,7 @@ Vue.use(ElTableWrapper, defaults)
 |ajax|function|-|向服务器发送ajax请求的方法，需要返回一个 `Promise`对象。当 `type` 为`i` 或 `s` 时是必须的|
 |url|String|-|向服务器请求数据的url|
 |method|String|get|向服务器请求数据的method|
+|ajax-param-*|any|-|在发送ajax请求时，附带传递给ajax方法的参数。详细见下方描述|
 |ajax-option|Object|{}|在发送ajax请求时，附带传递给ajax方法的选项。其值可以分开设置，详细见下方描述|
 |ajax-delay|Number|500|发送ajax请求的延时，单位为毫秒，设置此值以降低请求被频繁触发|
 |params|Object|-|向服务器请求数据的参数|
@@ -152,15 +153,39 @@ Vue.use(ElTableWrapper, defaults)
 > 更多信息参考 [deep-diff](https://github.com/flitbit/diff)。
 > 可以在`check-params`中通过判断`changed`的值，以阻止某些参数变化时自动重新加载
 
+#### `ajax-param-*`
+
+`Since 1.2.0`
+
+用于向 AJAX 请求指定参数，这些参数会被 `params` 中相同属性的值覆盖。
+
+如：
+
+- `:ajax-param-size="20"` => `{size: 20}`
+- `ajax-param-type="normal"` => `{type: 'normal'}`
+- `ajax-param-data-prop="xxxxx"` => `{data: {prop: 'xxxxx'}}` 
+
 #### `ajax-option`
 
-这通常是一个对象。但有时候我们仅仅需要设置其中的一个或几个属性，
+这通常是一个对象。用于传递给 ajax 函数，其格式如下：
+
+```javascript
+ajax({
+    option: {...}
+})
+```
+
+上面代码中 `option` 就是 `ajax-option` 的值。
+
+但有时候我们仅仅需要设置其中的一个或几个属性，
 此时再写一个对象就显示繁琐了。于是，就支持了以下的简写：
 
 ```vue
 <el-table-wrapper
   :ajax-option-foo="true"
-  :ajax-option-bar="false"></el-table-wrapper>
+  :ajax-option-bar="false"
+  ajax-option-foobar-fool="ish"
+></el-table-wrapper>
 ```
 
 以上写法等价于
@@ -169,11 +194,16 @@ Vue.use(ElTableWrapper, defaults)
 <el-table-wrapper 
   :ajax-option="{
     foo: true,
-    bar: false
+    bar: false,
+    foobar: {
+      fool: 'ish'
+    }
   }"></el-table-wrapper>
 ```
 
 这两种写法可以同时存在，`ajax-option-foo` 这样的写法的值会覆盖 `ajax-option` 中指定的值。
+
+> 多级对象 `foobar.fool` 支持 `Since 1.2.0`
 
 #### 增量分页特有属性
 

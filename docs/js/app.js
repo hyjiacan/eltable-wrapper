@@ -231,14 +231,14 @@ var es7_promise_finally = __webpack_require__("097d");
 // EXTERNAL MODULE: ./node_modules/vue/dist/vue.runtime.esm.js
 var vue_runtime_esm = __webpack_require__("2b0e");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"443f69c6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=ae195d5a&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3db9bcea-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=ae195d5a&
 var Appvue_type_template_id_ae195d5a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('demo')],1)}
 var staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=ae195d5a&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"443f69c6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/Demo.vue?vue&type=template&id=6226856f&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3db9bcea-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/Demo.vue?vue&type=template&id=6226856f&scoped=true&
 var Demovue_type_template_id_6226856f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"hello"},[_c('el-tabs',[_c('el-tab-pane',{attrs:{"label":"远程数据"}},[_c('el-table-wrapper',{ref:"table",attrs:{"url":"/mock/data.json","ajax":_vm.ajax,"params":_vm.params,"check-params":_vm.onCheckParams,"pager-position":"both","ajax-option-foo":true,"ajax-option-bar":true,"ajax-option-required":['size', 'index'],"t-row-class-name":"customize-row-class","t-highlight-current-row":"","load-when-params-change":"","advance-selection":""},on:{"select":_vm.onSelect,"selection-change":_vm.selectionChanged,"select-all":_vm.selectionChanged},scopedSlots:_vm._u([{key:"header",fn:function(ref){
 var data = ref.data;
 return [_c('div',[_vm._v("selected: "+_vm._s(data.selected))])]}},{key:"pagerPrepend",fn:function(){return [_c('span',[_vm._v("触发的字段")]),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.params.triggerField),expression:"params.triggerField"}],attrs:{"title":"变化时自动重新加载"},domProps:{"value":(_vm.params.triggerField)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.params, "triggerField", $event.target.value)}}}),_c('span',[_vm._v("忽略的字段")]),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.params.ignoreField),expression:"params.ignoreField"}],attrs:{"title":"变化时不会自动重新加载"},domProps:{"value":(_vm.params.ignoreField)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.params, "ignoreField", $event.target.value)}}}),_c('button',{attrs:{"title":"主动查询时，会带上忽略的字段"},on:{"click":function($event){return _vm.$refs.table.load()}}},[_vm._v("查询")])]},proxy:true}])},[_c('el-table-column',{attrs:{"type":"selection","prop":"checked"}}),_c('el-table-column',{attrs:{"label":"ID","prop":"id"}}),_c('el-table-column',{attrs:{"label":"Name","prop":"name"}}),_c('el-table-column',{attrs:{"label":"Dept.","prop":"dept"}}),_c('el-table-column',{attrs:{"label":"Remark"},scopedSlots:_vm._u([{key:"default",fn:function(ref){
@@ -648,8 +648,8 @@ var table_default = /*#__PURE__*/__webpack_require__.n(table_);
 var table_column_ = __webpack_require__("7fe6");
 var table_column_default = /*#__PURE__*/__webpack_require__.n(table_column_);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"443f69c6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Template.vue?vue&type=template&id=f15b7756&
-var Templatevue_type_template_id_f15b7756_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"loading",rawName:"v-loading",value:(_vm.data.loading),expression:"data.loading"}],staticClass:"el-table-wrapper",class:_vm.wrapperClass,attrs:{"element-loading-text":_vm.loadingText,"element-loading-spinner":_vm.loadingIcon,"element-loading-background":_vm.loadingColor}},[_c('div',{staticClass:"el-table-wrapper-top-mark"}),(_vm.headerVisible)?_c('div',{staticClass:"el-table-wrapper-header",style:(_vm.headerStyle)},[_c('div',{staticClass:"el-table-wrapper-header-text"},[_vm._t("header",[(_vm.isMultipleSelection)?[(_vm.selectionData.cache.length)?[_vm._v("\n            已选择 "+_vm._s(_vm.selectionData.cache.length)+" 项\n          ")]:[_vm._v("未选择项")]]:_vm._e()],{"data":_vm.slotData})],2),_c('pager',{directives:[{name:"show",rawName:"v-show",value:(!_vm.pDisabled && _vm.pagerPosition !== 'bottom'),expression:"!pDisabled && pagerPosition !== 'bottom'"}],attrs:{"position":"top"},scopedSlots:_vm._u([{key:"pagerPrepend",fn:function(ref){
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3db9bcea-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Template.vue?vue&type=template&id=f40afa7a&
+var Templatevue_type_template_id_f40afa7a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"loading",rawName:"v-loading",value:(_vm.data.loading),expression:"data.loading"}],staticClass:"el-table-wrapper",class:_vm.wrapperClass,attrs:{"element-loading-text":_vm.loadingText,"element-loading-spinner":_vm.loadingIcon,"element-loading-background":_vm.loadingColor}},[_c('div',{staticClass:"el-table-wrapper-top-mark"}),(_vm.headerVisible)?_c('div',{staticClass:"el-table-wrapper-header",style:(_vm.headerStyle)},[_c('div',{staticClass:"el-table-wrapper-header-text"},[_vm._t("header",[(_vm.isMultipleSelection && _vm.showSelectionInfo)?[(_vm.selectionData.cache.length)?_c('span',[_vm._v("\n            已选择 "+_vm._s(_vm.selectionData.cache.length)+" 项\n          ")]):_c('span',[_vm._v("未选择项")])]:_vm._e()],{"data":_vm.slotData})],2),_c('pager',{directives:[{name:"show",rawName:"v-show",value:(!_vm.pDisabled && _vm.pagerPosition !== 'bottom'),expression:"!pDisabled && pagerPosition !== 'bottom'"}],attrs:{"position":"top"},scopedSlots:_vm._u([{key:"pagerPrepend",fn:function(ref){
 var data = ref.data;
 return _vm._t("pagerPrepend",null,{"data":data})}},{key:"pagerSummary",fn:function(ref){
 var data = ref.data;
@@ -661,11 +661,11 @@ return _vm._t("pagerPrepend",null,{"data":data})}},{key:"pagerSummary",fn:functi
 var data = ref.data;
 return _vm._t("pagerSummary",null,{"data":data})}},{key:"pagerAppend",fn:function(ref){
 var data = ref.data;
-return _vm._t("pagerAppend",null,{"data":data})}}],null,true)})]},proxy:true}])},[_vm._t("footer",[(_vm.isMultipleSelection)?[(_vm.selectionData.cache.length)?[_vm._v("\n          已选择 "+_vm._s(_vm.selectionData.cache.length)+" 项\n        ")]:(_vm.data.view.length)?[_vm._v("未选择项")]:_vm._e()]:_vm._e()],{"data":_vm.slotData})],2)],1)}
-var Templatevue_type_template_id_f15b7756_staticRenderFns = []
+return _vm._t("pagerAppend",null,{"data":data})}}],null,true)})]},proxy:true}])},[_vm._t("footer",[(_vm.isMultipleSelection && _vm.showSelectionInfo)?[(_vm.selectionData.cache.length)?_c('span',[_vm._v("\n          已选择 "+_vm._s(_vm.selectionData.cache.length)+" 项\n        ")]):(_vm.data.view.length)?_c('span',[_vm._v("未选择项")]):_vm._e()]:_vm._e()],{"data":_vm.slotData})],2)],1)}
+var Templatevue_type_template_id_f40afa7a_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Template.vue?vue&type=template&id=f15b7756&
+// CONCATENATED MODULE: ./src/components/Template.vue?vue&type=template&id=f40afa7a&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("c5f6");
@@ -677,7 +677,7 @@ var loading_default = /*#__PURE__*/__webpack_require__.n(loading_);
 // EXTERNAL MODULE: external "element-ui/lib/theme-chalk/loading.css"
 var loading_css_ = __webpack_require__("2c1b");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"443f69c6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Pager.vue?vue&type=template&id=3a1af57c&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3db9bcea-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Pager.vue?vue&type=template&id=3a1af57c&scoped=true&
 var Pagervue_type_template_id_3a1af57c_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"el-table-wrapper-pager"},[_c('div',{staticClass:"el-table-wrapper-pager-prepend"},[_vm._t("pagerPrepend",null,{"data":_vm.slotData})],2),(_vm.elTableRoot.showPagerSummary)?[_c('span',{staticClass:"el-table-wrapper-pager-summary"},[_vm._t("pagerSummary",[(_vm.elTableRoot.loading)?[_vm._v("正在加载...")]:(_vm.elTableRoot.type === 'i' && _vm.elTableRoot.data.extra)?[_vm._v("已加载 "+_vm._s(_vm.elTableRoot.data.count)+" 条数据")]:[_vm._v("共 "+_vm._s(_vm.elTableRoot.data.count)+" 条数据")]],{"data":_vm.slotData})],2)]:_vm._e(),_c('el-pagination',{attrs:{"page-size":_vm.elTableRoot.pager.size,"page-count":_vm.elTableRoot.pager.count,"current-page":_vm.elTableRoot.pager.index,"small":_vm.elTableRoot.pSmall,"background":_vm.elTableRoot.pBackground,"pagerCount":_vm.elTableRoot.pPagerCount,"layout":_vm.elTableRoot.pLayout,"pageSizes":_vm.elTableRoot.pPageSizes,"popperClass":_vm.elTableRoot.pPopperClass,"prevText":_vm.elTableRoot.pPrevText,"nextText":_vm.elTableRoot.pNextText,"disabled":_vm.elTableRoot.pDisabled,"hideOnSinglePage":_vm.elTableRoot.pHideOnSinglePage},on:{"current-change":_vm.elTableRoot.onPageChanged,"size-change":_vm.elTableRoot.onSizeChanged}}),_c('div',{staticClass:"el-table-wrapper-pager-append"},[_vm._t("pagerAppend",null,{"data":_vm.slotData})],2)],2)}
 var Pagervue_type_template_id_3a1af57c_scoped_true_staticRenderFns = []
 
@@ -1043,7 +1043,7 @@ var es6_array_find_index = __webpack_require__("20d6");
       idField = idField || this.idField;
 
       if (typeof idField === 'function') {
-        return idField(row).toString();
+        return String(idField(row));
       }
 
       if (!Array.isArray(idField)) {
@@ -1051,7 +1051,7 @@ var es6_array_find_index = __webpack_require__("20d6");
           this._throwError("Field \"".concat(idField, "\" not found in data row, a valid \"id-field\" property is expected"));
         }
 
-        return row[idField].toString();
+        return String(row[idField]);
       }
 
       var temp = row;
@@ -1060,9 +1060,9 @@ var es6_array_find_index = __webpack_require__("20d6");
           _this4._throwError("Field \"".concat(idField.join('.'), "\" not found in data row, a valid \"id-field\" property is expected"));
         }
 
-        temp = temp[field].toString();
+        temp = temp[field];
       });
-      return temp;
+      return String(temp);
     },
 
     /**
@@ -1327,7 +1327,7 @@ function privateMethods_objectSpread(target) { for (var i = 1; i < arguments.len
 /* harmony default export */ var privateMethods = ({
   methods: {
     __init: function __init() {
-      this._ajaxParamsBuffer = privateMethods_objectSpread({}, this.params);
+      this._ajaxParamsBuffer = privateMethods_objectSpread({}, this.ajaxParams);
 
       if (this.index) {
         this.pager.index = parseInt(this.index);
@@ -1449,7 +1449,7 @@ function privateMethods_objectSpread(target) { for (var i = 1; i < arguments.len
           _this2 = this;
 
       // 这么写以避免搞掉原始参数
-      var p = privateMethods_objectSpread(privateMethods_objectSpread({}, this.params), {}, (_objectSpread2 = {}, Object(defineProperty["a" /* default */])(_objectSpread2, this.paramInc, lastId === undefined ? this._getLastId() : lastId), Object(defineProperty["a" /* default */])(_objectSpread2, this.paramSize, this.incSize), _objectSpread2));
+      var p = privateMethods_objectSpread(privateMethods_objectSpread({}, this.ajaxParams), {}, (_objectSpread2 = {}, Object(defineProperty["a" /* default */])(_objectSpread2, this.paramInc, lastId === undefined ? this._getLastId() : lastId), Object(defineProperty["a" /* default */])(_objectSpread2, this.paramSize, this.incSize), _objectSpread2));
 
       p = this._invokeCheckParams(p);
 
@@ -1504,7 +1504,7 @@ function privateMethods_objectSpread(target) { for (var i = 1; i < arguments.len
           _this3 = this;
 
       // 这么写以避免搞掉原始参数
-      var p = privateMethods_objectSpread(privateMethods_objectSpread({}, this.params), {}, (_objectSpread3 = {}, Object(defineProperty["a" /* default */])(_objectSpread3, this.paramIndex, newQuery ? 0 : this.pager.index - 1), Object(defineProperty["a" /* default */])(_objectSpread3, this.paramSize, this.pager.size), _objectSpread3));
+      var p = privateMethods_objectSpread(privateMethods_objectSpread({}, this.ajaxParams), {}, (_objectSpread3 = {}, Object(defineProperty["a" /* default */])(_objectSpread3, this.paramIndex, newQuery ? 0 : this.pager.index - 1), Object(defineProperty["a" /* default */])(_objectSpread3, this.paramSize, this.pager.size), _objectSpread3));
 
       p = this._invokeCheckParams(p);
 
@@ -1533,7 +1533,7 @@ function privateMethods_objectSpread(target) { for (var i = 1; i < arguments.len
       var _this4 = this;
 
       // 这么写以避免搞掉原始参数
-      var p = privateMethods_objectSpread({}, this.params);
+      var p = privateMethods_objectSpread({}, this.ajaxParams);
 
       p = this._invokeCheckParams(p);
 
@@ -2091,6 +2091,13 @@ var getPrototypeOf = __webpack_require__("7e84");
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/wrapNativeSuper.js + 3 modules
 var wrapNativeSuper = __webpack_require__("9072");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.split.js
+var es6_regexp_split = __webpack_require__("28a5");
+
+// EXTERNAL MODULE: external "merge"
+var external_merge_ = __webpack_require__("6c42");
+var external_merge_default = /*#__PURE__*/__webpack_require__.n(external_merge_);
+
 // CONCATENATED MODULE: ./src/components/computed.js
 
 
@@ -2112,9 +2119,37 @@ var wrapNativeSuper = __webpack_require__("9072");
 
 function _wrapRegExp(re, groups) { _wrapRegExp = function _wrapRegExp(re, groups) { return new BabelRegExp(re, undefined, groups); }; var _RegExp = Object(wrapNativeSuper["a" /* default */])(RegExp); var _super = RegExp.prototype; var _groups = new WeakMap(); function BabelRegExp(re, flags, groups) { var _this = _RegExp.call(this, re, flags); _groups.set(_this, groups || _groups.get(re)); return _this; } Object(inherits["a" /* default */])(BabelRegExp, _RegExp); BabelRegExp.prototype.exec = function (str) { var result = _super.exec.call(this, str); if (result) result.groups = buildGroups(result, this); return result; }; BabelRegExp.prototype[Symbol.replace] = function (str, substitution) { if (typeof substitution === "string") { var groups = _groups.get(this); return _super[Symbol.replace].call(this, str, substitution.replace(/\$<([^>]+)>/g, function (_, name) { return "$" + groups[name]; })); } else if (typeof substitution === "function") { var _this = this; return _super[Symbol.replace].call(this, str, function () { var args = []; args.push.apply(args, arguments); if (Object(esm_typeof["a" /* default */])(args[args.length - 1]) !== "object") { args.push(buildGroups(args, _this)); } return substitution.apply(this, args); }); } else { return _super[Symbol.replace].call(this, str, substitution); } }; function buildGroups(result, re) { var g = _groups.get(re); return Object.keys(g).reduce(function (groups, name) { groups[name] = result[g[name]]; return groups; }, Object.create(null)); } return _wrapRegExp.apply(this, arguments); }
 
-function computed_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function computed_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { computed_ownKeys(Object(source), true).forEach(function (key) { Object(defineProperty["a" /* default */])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { computed_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+/**
+ * 获取命名方式的对象：将 a-b-c=5 生成 {a: {b: {c: 5}}}
+ * @param {string|string[]} names
+ * @param value
+ * @param obj
+ */
+
+function getNamedObject(names, value, obj) {
+  if (typeof names === 'string') {
+    names = names.split('-');
+  }
+
+  if (!names.length) {
+    return Object.create(null);
+  }
+
+  var name = names.shift();
+
+  if (!names.length) {
+    return Object(defineProperty["a" /* default */])({}, name, value);
+  }
+
+  if (!obj) {
+    obj = Object.create(null);
+  }
+
+  var subObj = obj.hasOwnProperty(name) ? obj[name] : obj[name] = Object.create(null);
+  obj[name] = getNamedObject(names, value, subObj);
+  return obj;
+}
 
 /* harmony default export */ var computed = ({
   computed: {
@@ -2230,7 +2265,8 @@ function computed_objectSpread(target) { for (var i = 1; i < arguments.length; i
       };
     },
     ajaxOptions: function ajaxOptions() {
-      var options = computed_objectSpread({}, this.ajaxOption);
+      // ajax-option-* 覆盖 ajax-options 的值
+      var options = [];
 
       for (var attr in this.$attrs) {
         if (!this.$attrs.hasOwnProperty(attr)) {
@@ -2246,16 +2282,39 @@ function computed_objectSpread(target) { for (var i = 1; i < arguments.length; i
           continue;
         }
 
-        options[match.groups.name] = this.$attrs[attr];
+        options.push(getNamedObject(match.groups.name, this.$attrs[attr]));
       }
 
-      return options;
+      return external_merge_default.a.recursive.apply(external_merge_default.a, [true, this.ajaxOption].concat(options));
+    },
+    ajaxParams: function ajaxParams() {
+      // params 覆盖 ajax-param-* 的值
+      var params = [];
+
+      for (var attr in this.$attrs) {
+        if (!this.$attrs.hasOwnProperty(attr)) {
+          continue;
+        } // 仅需要 ajax-param- 开头的项
+
+
+        var match = /*#__PURE__*/_wrapRegExp(/^ajax\x2Dparam\x2D(.+)$/, {
+          name: 1
+        }).exec(attr);
+
+        if (!match) {
+          continue;
+        }
+
+        params.push(getNamedObject(match.groups.name, this.$attrs[attr]));
+      }
+
+      return external_merge_default.a.recursive.apply(external_merge_default.a, [true].concat(params, [this.params]));
     }
   }
 });
-// EXTERNAL MODULE: ./node_modules/deep-diff/index.js
-var deep_diff = __webpack_require__("6e8d");
-var deep_diff_default = /*#__PURE__*/__webpack_require__.n(deep_diff);
+// EXTERNAL MODULE: external "deep-diff"
+var external_deep_diff_ = __webpack_require__("f097");
+var external_deep_diff_default = /*#__PURE__*/__webpack_require__.n(external_deep_diff_);
 
 // CONCATENATED MODULE: ./src/components/watch.js
 
@@ -2288,14 +2347,14 @@ function watch_objectSpread(target) { for (var i = 1; i < arguments.length; i++)
         } // 检查两个对象是否相同
 
 
-        this._ajaxParamsDiff = deep_diff_default()(this._ajaxParamsBuffer, v) || [];
+        this._ajaxParamsDiff = external_deep_diff_default()(this._ajaxParamsBuffer, v) || [];
 
         if (this.loadWhenParamsChange && this._ajaxParamsDiff.length) {
           this.load();
         }
 
         if (this._ajaxParamsDiff.length) {
-          this._ajaxParamsBuffer = watch_objectSpread({}, this.params);
+          this._ajaxParamsBuffer = watch_objectSpread({}, this.ajaxParams);
         }
       }
     },
@@ -2310,7 +2369,7 @@ function watch_objectSpread(target) { for (var i = 1; i < arguments.length; i++)
     }
   }
 });
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"443f69c6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TableFooter.vue?vue&type=template&id=8c33645a&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3db9bcea-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TableFooter.vue?vue&type=template&id=8c33645a&scoped=true&
 var TableFootervue_type_template_id_8c33645a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.footerVisible)?_c('div',{staticClass:"el-table-wrapper-footer",class:_vm.classes,style:(_vm.footerStyle)},[_c('div',{staticClass:"el-table-wrapper-footer-text"},[_vm._t("default")],2),_vm._t("pager")],2):_vm._e()}
 var TableFootervue_type_template_id_8c33645a_scoped_true_staticRenderFns = []
 
@@ -2571,6 +2630,10 @@ vue_runtime_esm["default"].use(loading_default.a.directive);
     autoHeight: {
       type: Boolean,
       default: false
+    },
+    showSelectionInfo: {
+      type: Boolean,
+      default: true
     },
 
     /**
@@ -3015,8 +3078,8 @@ vue_runtime_esm["default"].use(loading_default.a.directive);
 
 var Template_component = Object(componentNormalizer["a" /* default */])(
   components_Templatevue_type_script_lang_js_,
-  Templatevue_type_template_id_f15b7756_render,
-  Templatevue_type_template_id_f15b7756_staticRenderFns,
+  Templatevue_type_template_id_f40afa7a_render,
+  Templatevue_type_template_id_f40afa7a_staticRenderFns,
   false,
   null,
   null,
@@ -3115,6 +3178,13 @@ module.exports = element-ui/lib/theme-chalk/table-column.css;
 
 /***/ }),
 
+/***/ "6c42":
+/***/ (function(module, exports) {
+
+module.exports = merge;
+
+/***/ }),
+
 /***/ "7396":
 /***/ (function(module, exports) {
 
@@ -3176,6 +3246,13 @@ module.exports = element-ui/lib/table;
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "f097":
+/***/ (function(module, exports) {
+
+module.exports = deep-diff;
 
 /***/ })
 

@@ -1,3 +1,38 @@
+import merge from 'merge'
+
+/**
+ * 获取命名方式的对象：将 a-b-c=5 生成 {a: {b: {c: 5}}}
+ * @param {string|string[]} names
+ * @param value
+ * @param obj
+ */
+function getNamedObject(names, value, obj) {
+  if (typeof names === 'string') {
+    names = names.split('-')
+  }
+  if (!names.length) {
+    return Object.create(null)
+  }
+
+  const name = names.shift()
+
+  if (!names.length) {
+    return {
+      [name]: value
+    }
+  }
+
+  if (!obj) {
+    obj = Object.create(null)
+  }
+
+  const subObj = obj.hasOwnProperty(name) ? obj[name] : obj[name] = Object.create(null)
+
+  obj[name] = getNamedObject(names, value, subObj)
+
+  return obj
+}
+
 export default {
   computed: {
     /**
@@ -101,9 +136,8 @@ export default {
       }
     },
     ajaxOptions() {
-      const options = {
-        ...this.ajaxOption
-      }
+      // ajax-option-* 覆盖 ajax-options 的值
+      const options = []
       for (const attr in this.$attrs) {
         if (!this.$attrs.hasOwnProperty(attr)) {
           continue
@@ -113,9 +147,25 @@ export default {
         if (!match) {
           continue
         }
-        options[match.groups.name] = this.$attrs[attr]
+        options.push(getNamedObject(match.groups.name, this.$attrs[attr]))
       }
-      return options
+      return merge.recursive(true, this.ajaxOption, ...options)
+    },
+    ajaxParams() {
+      // params 覆盖 ajax-param-* 的值
+      const params = []
+      for (const attr in this.$attrs) {
+        if (!this.$attrs.hasOwnProperty(attr)) {
+          continue
+        }
+        // 仅需要 ajax-param- 开头的项
+        const match = /^ajax-param-(?<name>.+)$/.exec(attr)
+        if (!match) {
+          continue
+        }
+        params.push(getNamedObject(match.groups.name, this.$attrs[attr]))
+      }
+      return merge.recursive(true, ...params, this.params)
     }
   }
 }

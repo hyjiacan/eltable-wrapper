@@ -2,7 +2,7 @@ export default {
   methods: {
     __init() {
       this._ajaxParamsBuffer = {
-        ...this.params
+        ...this.ajaxParams
       }
       if (this.index) {
         this.pager.index = parseInt(this.index)
@@ -103,7 +103,7 @@ export default {
     _loadIncData(beforeSend, lastId) {
       // 这么写以避免搞掉原始参数
       let p = {
-        ...this.params,
+        ...this.ajaxParams,
         [this.paramInc]: lastId === undefined ? this._getLastId() : lastId,
         [this.paramSize]: this.incSize
       }
@@ -145,7 +145,7 @@ export default {
     _loadPagedData(beforeSend, newQuery) {
       // 这么写以避免搞掉原始参数
       let p = {
-        ...this.params,
+        ...this.ajaxParams,
         [this.paramIndex]: newQuery ? 0 : this.pager.index - 1,
         [this.paramSize]: this.pager.size
       }
@@ -170,7 +170,7 @@ export default {
     _loadDataWithoutPagination(beforeSend) {
       // 这么写以避免搞掉原始参数
       let p = {
-        ...this.params
+        ...this.ajaxParams
       }
       p = this._invokeCheckParams(p)
       if (p === false) {
