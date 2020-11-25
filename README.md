@@ -44,9 +44,9 @@ Vue.use(ElTableWrapper, defaults)
     :params="{p0: 1}"
     @ajax-error="onAjaxError"
     >
-  <el-table-column type="selection"></el-table-column>    
-  <el-table-column prop="id"></el-table-column>    
-  <el-table-column prop="name"></el-table-column>    
+  <el-table-column type="selection"></el-table-column>
+  <el-table-column prop="id"></el-table-column>
+  <el-table-column prop="name"></el-table-column>
 </el-table-wrapper>
 <script>
 export default {
@@ -61,7 +61,7 @@ export default {
 
 ## 属性
 
-可以通过以下方式指定组件属性的默认值: 
+可以通过以下方式指定组件属性的默认值:
 
 ```javascript
 import Vue from 'vue'
@@ -96,6 +96,7 @@ Vue.use(ElTableWrapper, defaults)
 |v-model|Object/Array|-|获取选中的项，暂不支持设置初始化选中值，若要设置初始化选中值，请使用方法 `select` `since 0.8.0`|
 |selection|String|-|指示表格选择模式，可选值为: 空, `single`, `multiple`，需要启用单选时，需要指定值为`single`，当表格列中指定了 `type="selection"` 时，会覆盖此值为 `multiple`|
 |show-selection-info|Boolean|true|在多选模式下，是否在分页条左侧显示选中项信息 `since 1.1.9`|
+|empty-selection-text|String|未选择项|当未选择数据项时，在选中信息处显示的提示文本 `since 1.1.10`|
 |toggle-on-row-click|Boolean|false|是否在行被点击时切换行的选中状态（仅在多选时有效）`since 0.7.0`|
 |row-click-interceptor|Function|-|点击行时的拦截器，返回 false 表示拦截点击事件。一般配合 `toggle-on-row-click` 属性使用 `since 1.1.8`|
 |advance-selection|Boolean|false|是否启用高级选择，启用时支持跨页页面选择|
@@ -163,7 +164,7 @@ Vue.use(ElTableWrapper, defaults)
 
 - `:ajax-param-size="20"` => `{size: 20}`
 - `ajax-param-type="normal"` => `{type: 'normal'}`
-- `ajax-param-data-prop="xxxxx"` => `{data: {prop: 'xxxxx'}}` 
+- `ajax-param-data-prop="xxxxx"` => `{data: {prop: 'xxxxx'}}`
 
 #### `ajax-option`
 
@@ -191,7 +192,7 @@ ajax({
 以上写法等价于
 
 ```vue
-<el-table-wrapper 
+<el-table-wrapper
   :ajax-option="{
     foo: true,
     bar: false,
@@ -258,7 +259,7 @@ ajax({
 
 ```javascript
 const data = {
-    // 页码 
+    // 页码
     pageIndex: Number,
     // 总页数
     pageCount: Number,
@@ -323,12 +324,12 @@ const data = {
 > 可以使用 `v-slot:footer="{data}"` 或 `slot-scope="{data}"` 来引用数据
 
 注:
- 
+
 `header`, `footer` 有相同的作用域数据:
 
 ```javascript
 const data = {
-    // 页码 
+    // 页码
     pageIndex: Number,
     // 总页数
     pageCount: Number,
@@ -336,7 +337,7 @@ const data = {
     pageSize: Number,
     // 总数据量
     dataSize: Number,
-    // 当前页的数据量 
+    // 当前页的数据量
     viewSize: Number,
     // 选中数量
     selected: Number

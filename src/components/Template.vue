@@ -94,7 +94,7 @@
           <span v-if="selectionData.cache.length">
             已选择 {{ selectionData.cache.length }} 项
           </span>
-          <span v-else-if="data.view.length">未选择项</span>
+          <span v-else-if="data.view.length">{{emptySelectionText}}</span>
         </template>
       </slot>
       <template v-slot:pager>
@@ -161,9 +161,19 @@ export default {
       type: Boolean,
       default: false
     },
+    /**
+     * 是否显示选中项信息
+     */
     showSelectionInfo: {
       type: Boolean,
       default: true
+    },
+    /**
+     * 当未选择数据项时，在选中信息处显示的提示文本
+     */
+    emptySelectionText: {
+      type: String,
+      default: '未选择项'
     },
     /**
      * 设置为 true 以使用高级选择
@@ -235,6 +245,7 @@ export default {
     checkField: {
       type: String
     },
+
     // 通用 END===========================================================
 
     // AJAX BEGIN===========================================================
