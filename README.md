@@ -96,7 +96,7 @@ Vue.use(ElTableWrapper, defaults)
 |v-model|Object/Array|-|获取选中的项，暂不支持设置初始化选中值，若要设置初始化选中值，请使用方法 `select` `since 0.8.0`|
 |selection|String|-|指示表格选择模式，可选值为: 空, `single`, `multiple`，需要启用单选时，需要指定值为`single`，当表格列中指定了 `type="selection"` 时，会覆盖此值为 `multiple`|
 |show-selection-info|Boolean|true|在多选模式下，是否在分页条左侧显示选中项信息 `since 1.1.9`|
-|empty-selection-text|String|未选择项|当未选择数据项时，在选中信息处显示的提示文本 `since 1.1.10`|
+|empty-selection-text|String|未选择项|当未选择数据项时，在选中信息处显示的提示文本 `since 1.2.1`|
 |toggle-on-row-click|Boolean|false|是否在行被点击时切换行的选中状态（仅在多选时有效）`since 0.7.0`|
 |row-click-interceptor|Function|-|点击行时的拦截器，返回 false 表示拦截点击事件。一般配合 `toggle-on-row-click` 属性使用 `since 1.1.8`|
 |advance-selection|Boolean|false|是否启用高级选择，启用时支持跨页页面选择|
