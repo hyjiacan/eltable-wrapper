@@ -32,8 +32,6 @@
         :height="autoHeight ? null : '100%'"
         :highlight-current-row="tHighlightCurrentRow || selection === 'single'"
         :data="currentData"
-        @current-change="onTableCurrentRowChanged"
-        @selection-change="onTableSelectionChanged"
         :maxHeight="tMaxHeight"
         :stripe="tStripe"
         :border="tBorder"
@@ -63,6 +61,7 @@
         :indent="tIndent"
         :lazy="tLazy"
         :load="tLoad"
+        @selection-change="onTableSelectionChanged"
         @cell-mouse-enter="onCellMouseEnter"
         @cell-mouse-leave="onCellMouseLeave"
         @cell-click="onCellClick"
@@ -74,8 +73,10 @@
         @header-contextmenu="onHeaderContextmenu"
         @sort-change="onSortChange"
         @filter-change="onFilterChange"
+        @current-change="onTableCurrentRowChanged"
         @header-dragend="onHeaderDragend"
         @expand-change="onExpandChange"
+        :tree-props="tTreeProps"
         ref="table"
       >
         <slot :toggle="toggle" :select="select" :deselect="deselect"/>
@@ -127,6 +128,7 @@ Vue.use(Loading.directive)
 
 export default {
   name: 'ElTableWrapper',
+  inheritAttrs: false,
   mixins: [computed, data, handlers, privateMethods, publicMethods, watch],
   components: {
     TableFooter,
@@ -527,6 +529,10 @@ export default {
     },
     tLoad: {
       type: Function
+    },
+    tTreeProps: {
+      type: Object,
+      default: () => ({})
     },
     // ElTable 原生属性 END =======================================
     // ELPagination 原生属性 BEGIN ================================

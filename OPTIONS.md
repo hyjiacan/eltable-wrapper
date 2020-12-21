@@ -1,6 +1,6 @@
 # ElTable 与 ElPagination 属性与事件支持
 
-当前支持最高版本 `element-ui: 2.8.2`
+当前支持最高版本 [element-ui 2.14](https://element.eleme.cn/2.14/#/zh-CN/component/table)
 
 ## ElTable支持的属性
 
@@ -34,6 +34,7 @@
 - indent
 - lazy
 - load
+- tree-props
 
 当需要设置这些属性时，在这些属性前面添加前缀 `t-`
 
