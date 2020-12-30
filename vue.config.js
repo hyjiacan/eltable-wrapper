@@ -12,9 +12,11 @@ module.exports = {
     },
     externals: process.env.NODE_ENV === 'production' ? [
       'deep-diff',
-      'element-ui',
       'element-ui/lib/theme-chalk/index.css',
-      'merge'
+      'merge',
+      {
+        'element-ui': 'ELEMENT'
+      }
     ] : []
   }
 }

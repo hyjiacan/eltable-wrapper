@@ -1,4 +1,4 @@
-import ElementUI from 'element-ui'
+import ELEMENT from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import ElTableWrapper from './Template.vue'
@@ -28,7 +28,7 @@ ElTableWrapper.install = function (Vue, defaults) {
   if (defaults) {
     setDefaultProps(defaults)
   }
-  Vue.use(ElementUI)
+  Vue.use(ELEMENT)
   Vue.component(ElTableWrapper.name, ElTableWrapper)
 }
 
