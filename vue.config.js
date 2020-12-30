@@ -3,20 +3,17 @@ module.exports = {
   productionSourceMap: false,
   filenameHashing: false,
   configureWebpack: {
-    optimization: {
-      minimize: false
+    // optimization: {
+    //   minimize: true
+    // },
+    output: {
+      library: 'ElTableWrapper',
+      libraryExport: 'default'
     },
     externals: process.env.NODE_ENV === 'production' ? [
       'deep-diff',
-      'element-ui/lib/table',
-      'element-ui/lib/table-column',
-      'element-ui/lib/pagination',
-      'element-ui/lib/loading',
-      'element-ui/lib/theme-chalk/table.css',
-      'element-ui/lib/theme-chalk/table-column.css',
-      'element-ui/lib/theme-chalk/pagination.css',
-      'element-ui/lib/theme-chalk/icon.css',
-      'element-ui/lib/theme-chalk/loading.css',
+      'element-ui',
+      'element-ui/lib/theme-chalk/index.css',
       'merge'
     ] : []
   }

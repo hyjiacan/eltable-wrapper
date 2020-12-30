@@ -110,10 +110,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import Loading from 'element-ui/lib/loading'
-import 'element-ui/lib/theme-chalk/loading.css'
-
 import Pager from './Pager'
 import './index.less'
 import publicMethods from './publicMethods'
@@ -123,8 +119,6 @@ import data from './data'
 import computed from './computed'
 import watch from './watch'
 import TableFooter from '@/components/TableFooter'
-
-Vue.use(Loading.directive)
 
 export default {
   name: 'ElTableWrapper',

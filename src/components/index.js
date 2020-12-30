@@ -1,10 +1,7 @@
-import Table from 'element-ui/lib/table'
-import TableColumn from 'element-ui/lib/table-column'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 import ElTableWrapper from './Template.vue'
-
-import 'element-ui/lib/theme-chalk/table.css'
-import 'element-ui/lib/theme-chalk/table-column.css'
 
 function setDefaultProps(customize) {
   for (let prop in customize) {
@@ -31,8 +28,7 @@ ElTableWrapper.install = function (Vue, defaults) {
   if (defaults) {
     setDefaultProps(defaults)
   }
-  Vue.use(Table)
-  Vue.use(TableColumn)
+  Vue.use(ElementUI)
   Vue.component(ElTableWrapper.name, ElTableWrapper)
 }
 
