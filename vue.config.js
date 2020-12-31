@@ -11,11 +11,11 @@ module.exports = {
       libraryExport: 'default'
     },
     externals: process.env.NODE_ENV === 'production' ? [
-      'deep-diff',
       'element-ui/lib/theme-chalk/index.css',
       'merge',
       {
-        'element-ui': 'ELEMENT'
+        'element-ui': 'ELEMENT',
+        'deep-diff': 'DeepDiff'
       }
     ] : []
   }
