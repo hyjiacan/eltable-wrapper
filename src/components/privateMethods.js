@@ -161,6 +161,7 @@ export default {
         this.data.count = data[this.totalField]
         this.data.view = this.data.cache = data[this.listField] || []
         this._updatePageCount()
+        this._updateSelection()
       })
     },
     /**
@@ -224,7 +225,7 @@ export default {
       if (!data) {
         return this.defaultId
       }
-      return this.getDataId(data, this.incIdField)
+      return this.getRowId(data, this.incIdField)
     },
     _updatePageCount() {
       let length = 0
@@ -244,27 +245,47 @@ export default {
       this.$emit('data-size-change', length)
     },
     _updateSelection() {
-      if (!this.selectionData.cache.length) {
+      if (!this.data.selection.length) {
         return
       }
-      this.selectionData.ignore = true
+      const selectedRows = []
+      this.doNotEmitSelectionEvent = true
       this.$nextTick(() => {
         // 设置选中项
-        const cache = this.selectionData.cache
+        const selection = this.data.selection
         if (this.isMultipleSelection) {
-          cache.forEach(row => {
-            this.$refs.table.toggleRowSelection(row, true)
+          this.$refs.table.clearSelection()
+          // 要使用当前 currentData 中的数据来设置为选中
+          // 不能使用 data.selection 中的数据
+          // 猜测：ElTable 中可能会判断对象的引用
+          // 而不仅仅是 data id
+          // 从而导致数据相同但引用不同时，选中的数据发生了变化
+          // 也就是，ElTable 实际选中的数据，是 selection 中的对象，而不是 currentData 中的对象
+          console.log(this.currentData, this.data.selection)
+          this.currentData.forEach(row => {
+            // 仅选中当前页的数据
+            const id = this.getRowId(row)
+            const selected = this.data.selection.some(item => this.getRowId(item) === id)
+            this.$refs.table.toggleRowSelection(row, selected)
+            this._updateCheckField(row, selected)
+            if (selected) {
+              selectedRows.push(row)
+            }
           })
         } else {
           // 选中一行就行了
-          if (cache.length) {
-            this.$refs.table.setCurrentRow(cache[0])
+          if (selection.length) {
+            this.$refs.table.setCurrentRow(selection[0])
           } else {
             this.$refs.table.setCurrentRow()
           }
         }
         this.$nextTick(() => {
-          this.selectionData.ignore = false
+          this.doNotEmitSelectionEvent = false
+
+          if (this.isMultipleSelection) {
+            this.onTableSelectionChanged(selectedRows)
+          }
         })
       })
     },
@@ -280,5 +301,17 @@ export default {
         this.$set(row, this.checkField, checked)
       }
     }
+  }
+}
+
+/**
+ *
+ * @param {Array} array
+ * @param {Function} indicator
+ */
+export function remove(array, indicator) {
+  const index = array.findIndex(indicator)
+  if (index >= -1) {
+    array.splice(index, 1)
   }
 }

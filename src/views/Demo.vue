@@ -1,276 +1,48 @@
 <template>
-  <div class="hello">
-    <el-tabs>
-      <el-tab-pane label="远程数据">
-        <el-table-wrapper
-          url="/mock/data.json"
-          :ajax="ajax"
-          :params="params"
-          :check-params="onCheckParams"
-          pager-position="both"
-          @select="onSelect"
-          @selection-change="selectionChanged"
-          @select-all="selectionChanged"
-          :ajax-option-foo="true"
-          :ajax-option-bar="true"
-          :ajax-option-required="['size', 'index']"
-          t-row-class-name="customize-row-class"
-          t-highlight-current-row
-          load-when-params-change
-          advance-selection
-          ref="table"
-        >
-          <template v-slot:header="{data}">
-            <div>selected: {{data.selected}}</div>
-          </template>
-          <template v-slot:pagerPrepend>
-            <span>触发的字段</span>
-            <input v-model="params.triggerField" title="变化时自动重新加载"/>
-            <span>忽略的字段</span>
-            <input v-model="params.ignoreField" title="变化时不会自动重新加载"/>
-            <button @click="$refs.table.load()" title="主动查询时，会带上忽略的字段">查询</button>
-          </template>
-          <el-table-column type="selection" prop="checked"></el-table-column>
-          <el-table-column label="ID" prop="id"></el-table-column>
-          <el-table-column label="Name" prop="name"></el-table-column>
-          <el-table-column label="Dept." prop="dept"></el-table-column>
-          <el-table-column label="Remark">
-            <template v-slot="{row}">
-              {{ row.remark }}
-            </template>
-          </el-table-column>
-        </el-table-wrapper>
-      </el-tab-pane>
-      <el-tab-pane label="不分页">
-        <el-table-wrapper
-          type="l"
-          :local-data="localData"
-          pager-position="both"
-          t-row-class-name="customize-row-class"
-          t-highlight-current-row
-          @select="onSelect"
-          :show-footer="false"
-          p-disabled
-        >
-          <template v-slot:titleToolbar="{data}">
-            <span>{{ data }}</span>
-            <button>自定义按钮</button>
-          </template>
-          <el-table-column type="selection"/>
-          <el-table-column label="ID" prop="id"></el-table-column>
-          <el-table-column label="Name" prop="name"></el-table-column>
-          <el-table-column label="Dept." prop="dept"></el-table-column>
-          <el-table-column label="Remark">
-            <template v-slot="{row}">
-              {{ row.remark }}
-            </template>
-          </el-table-column>
-        </el-table-wrapper>
-      </el-tab-pane>
-      <el-tab-pane label="本地数据">
-        <el-table-wrapper
-          type="l"
-          :local-data="localData"
-          selection="single"
-          pager-position="both"
-          t-row-class-name="customize-row-class"
-          t-highlight-current-row
-          v-model="selection"
-          @selection-change="selectionChanged"
-          @select="onSelect"
-          advance-selection
-          ref="lt"
-        >
-          <template v-slot:pagerPrepend>
-            <div style="float: right">
-              <span>这个表格使用了 <code>advance-selection</code>，支持跨页选择</span>
-              <button @click="onShowSelection">在console查看选中数据</button>
-              <button @click="onRemoveRow">通行ID移除选中行</button>
-            </div>
-          </template>
-          <el-table-column type="selection"/>
-          <el-table-column label="ID" prop="id"></el-table-column>
-          <el-table-column label="Name" prop="name"></el-table-column>
-          <el-table-column label="Dept." prop="dept"></el-table-column>
-          <el-table-column label="Remark">
-            <template v-slot="{row}">
-              {{ row.remark }}
-            </template>
-          </el-table-column>
-        </el-table-wrapper>
-      </el-tab-pane>
-      <el-tab-pane label="本地数据(点击选中行)">
-        <el-table-wrapper
-          type="l"
-          :local-data="localData"
-          selection="multiple"
-          pager-position="both"
-          t-row-class-name="customize-row-class"
-          t-highlight-current-row
-          toggle-on-row-click
-          check-field="__checked__"
-          ref="localTable"
-          @select="onSelect"
-        >
-          <template v-slot:pagerPrepend>
-            <button @click="toggleSelection">切换前三行的选中状态</button>
-          </template>
-          <template v-slot:footer="{data}">
-            <label>
-              <input type="checkbox" style="vertical-align: -2px" @change="onCheckAllChange"/>
-              <span>全选</span>
-            </label>
-            <span style="margin-left: 5px">已选择 {{ data.selected }} 项</span>
-          </template>
-          <el-table-column type="selection"/>
-          <el-table-column label="ID" prop="id">
-            <template v-slot="{row}">
-              <span>{{ row.id }}</span>
-              <span v-if="row.__checked__" style="color: red;">(选中)</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="Name" prop="name"></el-table-column>
-          <el-table-column label="Dept." prop="dept"></el-table-column>
-          <el-table-column label="Remark">
-            <template v-slot="{row}">
-              {{ row.remark }}
-            </template>
-          </el-table-column>
-        </el-table-wrapper>
-      </el-tab-pane>
-      <el-tab-pane label="自定义footer挂载位置">
-        <div class="splitter">
-          <div id="footer-target">
-            <div class="tip">footer被挂载到这里了</div>
-          </div>
-          <el-table-wrapper
-            type="l"
-            :local-data="localData"
-            pager-position="both"
-            footer-target="#footer-target"
-          >
-            <el-table-column type="selection" prop="checked"></el-table-column>
-            <el-table-column label="ID" prop="id"></el-table-column>
-            <el-table-column label="Name" prop="name"></el-table-column>
-            <el-table-column label="Dept." prop="dept"></el-table-column>
-            <el-table-column label="Remark" prop="remark"></el-table-column>
-          </el-table-wrapper>
-        </div>
-      </el-tab-pane>
-    </el-tabs>
+  <div id="hello">
+    <div id="header">
+      <router-link to="/remote" active-class="active-router">远程数据</router-link>
+      <router-link to="/local" active-class="active-router">本地数据</router-link>
+      <router-link to="/local2" active-class="active-router">本地数据(点击选中行)</router-link>
+      <router-link to="/non-pagination" active-class="active-router">不分页</router-link>
+      <router-link to="/custom-footer" active-class="active-router">自定义footer挂载位置</router-link>
+    </div>
+    <div id="content">
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import TabPane from 'element-ui/lib/tab-pane'
-import Tabs from 'element-ui/lib/tabs'
-
-import 'element-ui/lib/theme-chalk/tabs.css'
-import 'element-ui/lib/theme-chalk/tab-pane.css'
-
 export default {
-  name: 'Demo',
-  components: {ElTabs: Tabs, ElTabPane: TabPane},
-  data() {
-    return {
-      cache: [],
-      localData: [],
-      params: {
-        ignoreField: '',
-        triggerField: ''
-      },
-      singleSelect: null,
-      selection: []
-    }
-  },
-  watch: {
-    selection(v) {
-      console.info('selection changed', v)
-    }
-  },
-  methods: {
-    ajax(e) {
-      console.log(e)
-      return new Promise((resolve, reject) => {
-        axios.request(e).then(response => {
-          setTimeout(() => {
-            resolve(response.data)
-            this.cache = response.data
-            this.$refs.table.select(this.cache[2])
-          }, 1000)
-        }).catch(response => {
-          reject(response.data)
-        })
-      })
-    },
-    onSelect(selection, prev) {
-      // eslint-disable-next-line
-      console.log(selection, prev)
-    },
-    selectionChanged(e) {
-      // eslint-disable-next-line
-      console.log(e.selection, e.type, e.changed, e.allSelected)
-    },
-    onCheckParams(params, changed) {
-      // 找出忽略的字段
-      let hit = changed.filter(item => item.path[0] === 'ignoreField')
-      // 如果只有忽略字段变化了，就不触发
-      if (changed.length === 1 && hit.length) {
-        return false
-      }
-      return params
-    },
-    toggleSelection() {
-      // this.$refs.localTable.toggle(this.localData.slice(0, 3))
-      this.$refs.localTable.select(this.localData.slice(0, 3))
-    },
-    onCheckAllChange({target}) {
-      if (target.checked) {
-        this.$refs.localTable.selectAll()
-      } else {
-        this.$refs.localTable.deselectAll()
-      }
-    },
-    onRemoveRow() {
-      if (!this.selection || !this.selection.length) {
-        alert('没有选择行')
-        return
-      }
-
-      const ids = this.selection.map(item => item.id)
-
-      if (confirm(`确定要移除选中行吗？ ID: ${ids}`)) {
-        this.$refs.lt.remove(ids)
-      }
-    },
-    onShowSelection() {
-      console.info(JSON.stringify(this.$refs.lt.getSelection(), null, 2))
-    }
-  },
-  mounted() {
-    let data = []
-
-    for (let i = 0; i < 99; i++) {
-      data.push({
-        id: i,
-        name: 'name' + i,
-        dept: 'dept' + i,
-        remark: 'remark' + i,
-        __checked__: false
-      })
-    }
-    this.localData = data
-    setTimeout(() => {
-      this.$refs.table.deselect(this.cache[2])
-    }, 3000)
-  }
+  name: 'Demo'
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less" scoped>
-.hello {
+<style lang="less">
+#header {
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+
+  a {
+    padding: 5px 10px;
+  }
+}
+
+#hello {
+  height: 100%;
+  padding-top: 40px;
+  box-sizing: border-box;
+}
+
+#content {
   height: 100%;
 }
 
@@ -324,5 +96,11 @@ export default {
   .el-tabs__content, .el-tab-pane {
     height: 100%;
   }
+}
+
+.active-router {
+  color: #000;
+  cursor: default;
+  text-decoration: none;
 }
 </style>

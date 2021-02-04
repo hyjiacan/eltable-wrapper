@@ -10,6 +10,10 @@ export default {
          */
         cache: [],
         /**
+         * 选中数据存放
+         */
+        selection: [],
+        /**
          * 所有可用数据，比如过滤后的数据
          * 客户端分页时，每一页的数据都是直接从这个里面取的
          */
@@ -26,23 +30,9 @@ export default {
         _ajaxHandle: -1
       },
       /**
-       * 选中数据的存放
+       * 标记是否可以触发选中事件
        */
-      selectionData: {
-        /**
-         * 当前页选中的数据集合
-         */
-        current: {},
-        /**
-         * 高级选择时所有选中的数据集合
-         */
-        all: {},
-        /**
-         * 所有选中的数据项，按选中顺序存放
-         */
-        cache: [],
-        ignore: false
-      },
+      doNotEmitSelectionEvent: false,
       pager: {
         /**
          * 每页显示的数据量

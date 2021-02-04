@@ -19,7 +19,6 @@
 - header-row-style
 - header-cell-class-name
 - header-cell-style
-- row-key
 - empty-text
 - default-expand-all
 - highlight-current-row

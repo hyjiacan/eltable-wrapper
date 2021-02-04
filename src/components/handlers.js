@@ -2,6 +2,7 @@
  * 事件处理集合
  * @type {{}}
  */
+
 export default {
   methods: {
     resetScroll() {
@@ -28,11 +29,19 @@ export default {
       if (this.pager.index === index) {
         return
       }
+      // 不需要使用 ElTable 保存选择状态
+      // 这个状态目前已经在此组件中实现了
+      if (!this.advanceSelection) {
+        this.clearSelection()
+      }
+
       this.pager.index = index
       this.$emit('update:index', index)
       this.$emit('page-index-change', index)
       if (this.type === 's') {
         this._loadPagedData()
+      } else {
+        this._updateSelection()
       }
       if (this.autoResetScroll) {
         this.resetScroll()
@@ -61,31 +70,18 @@ export default {
       if (this.selection !== 'single') {
         return
       }
-      if (this.selectionData.ignore) {
-        // 忽略由程序触发的事件
-        return
-      }
       // 如果是多选模式
       if (this.isMultipleSelection) {
         return
       }
-      if (this.pager.indexChanged) {
-        this.selectionData.current = {}
-        this.pager.indexChanged = false
-        // 高级选择时，切换页面不触发取消选择事件
-        if (this.advanceSelection && this.selectionData.cache.length) {
-          return
-        }
 
-        // 如果没有开启高级选择模式，那么在切换页面时，清空选中项
-        this.selectionData.cache = []
-        this.selectionData.all = {}
-      }
       // 单选模式
-      this.selectionData.all = this.selectionData.current = {
-        [this.getDataId(selected)]: selected
+      this.data.selection = selected ? [selected] : []
+
+      if (this.doNotEmitSelectionEvent) {
+        // 忽略由程序触发的事件
+        return
       }
-      this.selectionData.cache = [selected]
       this.$emit('select', selected, prev)
       this.$emit('input', selected)
     },
@@ -95,122 +91,66 @@ export default {
         return
       }
 
-      // 设置数据的选中字段
-      if (this.checkField) {
-        const idSet = []
-        selection.forEach(row => {
-          idSet.push(this.getDataId(row))
-        })
-        this.data.cache.forEach(row => {
-          this._updateCheckField(row, idSet.indexOf(this.getDataId(row)) !== -1)
-        })
-      }
-
-      if (this.selectionData.ignore) {
-        // 忽略由程序触发的事件
+      if (this.doNotEmitSelectionEvent) {
         return
       }
-      // 是取消选中项(deselect)了还是选中项(select)了
-      const currentPageSelectedLength = Object.keys(this.selectionData.current).length
-      const type = currentPageSelectedLength < selection.length ? 'select' : 'deselect'
-      if (this.pager.indexChanged) {
-        this.selectionData.current = {}
+
+      if (this.advanceSelection && this.pager.indexChanged) {
+        // 切换页面不触发取消选择事件
         this.pager.indexChanged = false
-        // 高级选择时，切换页面不触发取消选择事件
-        if (this.advanceSelection) {
-          if (type === 'deselect' && currentPageSelectedLength > 0) {
-            // 当前页有选中时才阻止这个事件
-            // 否则会导致页面跳转后选中事件无效
-            return
-          }
-        } else {
-          // 如果没有开启高级选择模式，那么在切换页面时，清空选中项
-          this.selectionData.cache = []
-          this.selectionData.all = {}
-        }
-      }
-
-      const items = []
-      const current = this.selectionData.current
-      const all = this.selectionData.all
-      if (type === 'select') {
-        // 需要找出新选中的项
-        selection.forEach(row => {
-          const id = this.getDataId(row)
-          if (current.hasOwnProperty(id)) {
-            return
-          }
-          // 这项就是新选中的了
-          current[id] = row
-          if (all.hasOwnProperty(id)) {
-            return
-          }
-          all[id] = row
-          items.push(row)
-        })
-        // 更新选中集合
-        this.selectionData.cache = this.selectionData.cache.concat(items)
-      } else {
-        // 需要找出取消选中的项
-        // 找到一项，删除一项，最后剩下的就是被取消选中的项了
-        const temp = Object.assign({}, current)
-        selection.forEach(row => {
-          const id = this.getDataId(row)
-          if (temp.hasOwnProperty(id)) {
-            delete temp[id]
-          }
-        })
-
-        // 剩下的这项就是取消选中的了
-        for (const id in temp) {
-          if (!temp.hasOwnProperty(id)) {
-            continue
-          }
-          items.push(temp[id])
-          delete current[id]
-          delete all[id]
-          // 更新选中集合
-          const idx = this.selectionData.cache.findIndex(row => this.getDataId(row) === id)
-          if (idx >= 0) {
-            this.selectionData.cache.splice(idx, 1)
-          }
-        }
-      }
-      if (!items.length) {
-        // 如果没有变化的项，就忽略
         return
       }
+
+      // 获取当前页数据的 ID 集合，用于判断选中项状态
+      const currentPageIds = this.currentData.map(row => this.getRowId(row))
+      // 获取当前页的选中项的 ID 集合
+      const currentPageSelectionIds = selection.map(row => this.getRowId(row))
+
+      // 先移除未选中的项
+      // 即此项已经在 data.selection 中，但当前的参数 selection 中不包含
+      // 但要将数据限制在当前页面的数据 currentData
+      // 移除数据太麻烦，不如重新创建数组来得方便
+
+      // 要保留选中状态的行
+      const selectedRows = []
+      const unselectedRows = []
+      this.data.selection.forEach(row => {
+        const id = this.getRowId(row)
+        // 只处理当前页的数据
+        // 其它的选中项，直接追加上
+        if (currentPageIds.indexOf(id) === -1) {
+          selectedRows.push(row)
+          return
+        }
+        // 当前行是否选中
+        // 那么就保留此行
+        if (currentPageSelectionIds.indexOf(id) !== -1) {
+          selectedRows.push(row)
+        } else {
+          this._updateCheckField(row, false)
+          unselectedRows.push(row)
+        }
+      })
+
+      // 再添加新选中的项
+      selection.forEach(row => {
+        const id = this.getRowId(row)
+        if (this.data.selection.some(item => this.getRowId(item) === id)) {
+          return
+        }
+        selectedRows.push(row)
+        this._updateCheckField(row, true)
+        this.data.selection.push(row)
+      })
+
+      this.data.selection = selectedRows
+
       // 是否选择了所有数据项
-      const allSelected = this.selectionData.cache.length > 0 && this.selectionData.cache.length === this.data.cache.length
-      // 触发事件
-      const e = {
-        selection: this.getSelection(),
-        type,
-        changed: items,
-        allSelected
-      }
-      this.$emit('input', e.selection)
-      this.$emit('selection-change', e)
-    },
-    onCellMouseEnter() {
-      const args = [].slice.apply(arguments)
-      args.unshift('cell-mouse-enter')
-      this.$emit.apply(this, args)
-    },
-    onCellMouseLeave() {
-      const args = [].slice.apply(arguments)
-      args.unshift('cell-mouse-leave')
-      this.$emit.apply(this, args)
-    },
-    onCellClick() {
-      const args = [].slice.apply(arguments)
-      args.unshift('cell-click')
-      this.$emit.apply(this, args)
-    },
-    onCellDblclick() {
-      const args = [].slice.apply(arguments)
-      args.unshift('cell-dblclick')
-      this.$emit.apply(this, args)
+      const allSelected = this.data.selection.length > 0 &&
+        this.data.selection.length === this.data.cache.length
+
+      this.$emit('input', selectedRows)
+      this.$emit('selection-change', selectedRows, allSelected)
     },
     onRowClick() {
       // 拦截点击事件
@@ -224,48 +164,11 @@ export default {
       if (this.isMultipleSelection && this.toggleOnRowClick) {
         this.toggle(arguments[0])
       }
+      if (!this.$listeners['row-click']) {
+        return
+      }
       const args = [].slice.apply(arguments)
       args.unshift('row-click')
-      this.$emit.apply(this, args)
-    },
-    onRowContextmenu() {
-      const args = [].slice.apply(arguments)
-      args.unshift('row-contextmenu')
-      this.$emit.apply(this, args)
-    },
-    onRowDblclick() {
-      const args = [].slice.apply(arguments)
-      args.unshift('row-dblclick')
-      this.$emit.apply(this, args)
-    },
-    onHeaderClick() {
-      const args = [].slice.apply(arguments)
-      args.unshift('header-click')
-      this.$emit.apply(this, args)
-    },
-    onHeaderContextmenu() {
-      const args = [].slice.apply(arguments)
-      args.unshift('header-contextmenu')
-      this.$emit.apply(this, args)
-    },
-    onSortChange() {
-      const args = [].slice.apply(arguments)
-      args.unshift('sort-change')
-      this.$emit.apply(this, args)
-    },
-    onFilterChange() {
-      const args = [].slice.apply(arguments)
-      args.unshift('filter-change')
-      this.$emit.apply(this, args)
-    },
-    onHeaderDragend() {
-      const args = [].slice.apply(arguments)
-      args.unshift('header-dragend')
-      this.$emit.apply(this, args)
-    },
-    onExpandChange() {
-      const args = [].slice.apply(arguments)
-      args.unshift('expand-change')
       this.$emit.apply(this, args)
     }
   }

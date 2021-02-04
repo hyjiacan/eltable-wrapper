@@ -243,7 +243,7 @@ ajax({
 |insert|data: Array/Object, index: Number|this|向表格指定位置追加数据项|
 |update|data: Array/Object|this|从数据缓存中更新数据项|
 |remove|data: Array/Object/String/Number|this|从数据缓存中移除数据项。参数可以是数据项，也可以是数据对应`id-field` 指定值|
-|getDataId|row: Object, \[idField]: string|this|根配置的 idField 读取数据项的 id|
+|getRowId|row: Object, \[idField]: string|this|根配置的 idField 读取数据项的 id|
 |select|rows: Object/Array|this|选中指定的行。参数可以是数据项，也可以是数据对应`id-field` 指定值|
 |selectAll|-|Array|全选，仅在多选时生效，返回选中的数据项|
 |deselect|rows: Object/Array|this|取消选中指定的行，参数可以是数据项，也可以是数据对应`id-field` 指定值|

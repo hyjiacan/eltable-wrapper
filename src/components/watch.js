@@ -8,9 +8,6 @@ export default {
     size(v) {
       this.pager.size = v
     },
-    currentData() {
-      this._updateSelection()
-    },
     params: {
       deep: true,
       handler(v) {

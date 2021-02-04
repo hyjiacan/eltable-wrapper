@@ -31,13 +31,11 @@ export default {
     clear() {
       this.data.cache = []
       this.data.view = []
+      this.data.selection = []
       this.data.extra = null
       this.data.count = 0
       this.pager.index = 1
       this.pager.count = 0
-      this.selectionData.cache = []
-      this.selectionData.all = {}
-      this.selectionData.current = {}
 
       // 清空选中项
       this.$emit('input', [])
@@ -120,17 +118,16 @@ export default {
       }
       let removeRowCount = 0
       rows.forEach(row => {
-        let id = this.getDataId(row)
-        let idx = this.data.cache.findIndex(row => this.getDataId(row) === id)
+        let id = this.getRowId(row)
+        let idx = this.data.cache.findIndex(row => this.getRowId(row) === id)
         if (idx >= 0) {
           this.data.cache.splice(idx, 1)
           removeRowCount++
         }
-        idx = this.selectionData.cache.findIndex(row => this.getDataId(row) === id)
-        if (idx >= 0) {
-          this.selectionData.cache.splice(idx, 1)
-        }
       })
+      this.doNotEmitSelectionEvent = true
+      this.deselect(rows)
+      this.doNotEmitSelectionEvent = false
       this.data.count -= removeRowCount
       this.pager.count = Math.ceil(this.data.count / this.pager.size)
       this.data.view = this.data.cache
@@ -146,13 +143,13 @@ export default {
       }
       let temp = {}
       rows.forEach(row => {
-        temp[this.getDataId(row)] = row
+        temp[this.getRowId(row)] = row
       })
 
       let remain = rows.length
       for (let i = 0; i < this.data.cache.length; i++) {
         let row = this.data.cache[i]
-        let id = this.getDataId(row)
+        let id = this.getRowId(row)
         if (!temp.hasOwnProperty(id)) {
           continue
         }
@@ -171,7 +168,7 @@ export default {
      * @param idField
      * @return {String}
      */
-    getDataId(row, idField) {
+    getRowId(row, idField) {
       if (row === undefined || row === null) {
         return undefined
       }
@@ -205,16 +202,9 @@ export default {
      * @param rows
      */
     select(rows) {
-      let all = this.selectionData.all
-      let current = this.selectionData.current
-      let cache = this.selectionData.cache
       // 单选
       if (!this.isMultipleSelection) {
-        let id = this.getDataId(rows)
-        this.selectionData.all = this.selectionData.current = {
-          [id]: rows
-        }
-        this._updateSelection()
+        this.$refs.table.setCurrentRow(rows)
         return
       }
       // 多选
@@ -222,15 +212,8 @@ export default {
         rows = [rows]
       }
       rows.forEach(row => {
-        let id = this.getDataId(row)
-        if (!all.hasOwnProperty(id)) {
-          all[id] = row
-          current[id] = row
-          cache.push(row)
-        }
-        this._updateCheckField(row, true)
+        this.$refs.table.toggleRowSelection(row, true)
       })
-      this._updateSelection()
       return this
     },
     /**
@@ -239,7 +222,7 @@ export default {
      */
     selectAll() {
       if (!this.isMultipleSelection) {
-        throw new Error('[ElTableWrapper] method "selectAll" only allowed for multiple selectionData')
+        this._throwError('Method "selectAll" only allowed for multiple selection')
       }
       let data = this.advanceSelection ? this.data.cache : this.currentData
       this.select(data)
@@ -251,32 +234,15 @@ export default {
      */
     deselect(rows) {
       if (!this.isMultipleSelection) {
-        this.selectionData.all = this.selectionData.current = {}
-        this.selectionData.cache = []
-        this._updateSelection()
+        this.$refs.table.setCurrentRow()
         return
       }
       if (!Array.isArray(rows)) {
         rows = [rows]
       }
-      let all = this.selectionData.all
-      let current = this.selectionData.current
-      let cache = this.selectionData.cache
-      this.selectionData.ignore = true
       rows.forEach(row => {
-        let id = this.getDataId(row)
-        if (all.hasOwnProperty(id)) {
-          delete all[id]
-          delete current[id]
-          let idx = cache.findIndex(row => this.getDataId(row) === id)
-          if (idx >= 0) {
-            cache.splice(idx, 1)
-          }
-        }
         this.$refs.table.toggleRowSelection(row, false)
-        this._updateCheckField(row, false)
       })
-      this.selectionData.ignore = false
       return this
     },
     /**
@@ -285,7 +251,7 @@ export default {
      */
     deselectAll() {
       if (!this.isMultipleSelection) {
-        throw new Error('[ElTableWrapper] method "deselectAll" only allowed for multiple selection')
+        this._throwError('Method "deselectAll" only allowed for multiple selection')
       }
       let data = this.advanceSelection ? this.data.cache : this.currentData
       this.deselect(data)
@@ -297,7 +263,7 @@ export default {
      */
     toggle(rows) {
       if (!this.isMultipleSelection) {
-        throw new Error('[ElTableWrapper] Method "toggle" only allowed for multiple selection')
+        this._throwError('Method "toggle" only allowed for multiple selection')
       }
 
       if (!rows) {
@@ -307,64 +273,9 @@ export default {
       if (!Array.isArray(rows)) {
         rows = [rows]
       }
-
-      // 已经选中的行
-      const cache = this.selectionData.cache
-      const current = this.selectionData.current
-      const all = this.selectionData.all
-
-      // 需要被取消选中的行
-      let removeRows = []
-
-      // 需要被新选中的行
-      const newRows = []
-
-      this.selectionData.ignore = true
       rows.forEach(row => {
         this.$refs.table.toggleRowSelection(row)
-        const id = this.getDataId(row)
-        if (this.selectionData.all.hasOwnProperty(id)) {
-          // 取消选中
-          delete current[id]
-          delete all[id]
-
-          const idx = cache.findIndex(row => this.getDataId(row) === id)
-          if (idx >= 0) {
-            cache.splice(idx, 1)
-          }
-          removeRows.push(row)
-          this._updateCheckField(row, false)
-        } else {
-          // 选中
-          current[id] = row
-          all[id] = row
-          cache.push(row)
-          newRows.push(row)
-          this._updateCheckField(row, true)
-        }
       })
-      this.selectionData.ignore = false
-
-      if (removeRows.length) {
-        this.$emit('input', this.getSelection())
-        this.$emit('selection-change', {
-          selection: this.getSelection(),
-          type: 'deselect',
-          changed: removeRows,
-          allSelected: false
-        })
-      }
-
-      if (newRows.length) {
-        this.$emit('input', this.getSelection())
-        this.$emit('selection-change', {
-          selection: this.getSelection(),
-          type: 'select',
-          changed: removeRows,
-          allSelected: cache.length > 0 && cache.length === this.data.cache.length
-        })
-      }
-
       return this
     },
     /**
@@ -373,15 +284,15 @@ export default {
      */
     getSelection() {
       if (this.isMultipleSelection) {
-        return [].concat(this.selectionData.cache)
+        return this.data.selection.slice(0)
       }
-      return this.selectionData.cache[0]
+      return this.data.selection[0]
     },
     /**
      * 清除所有选中项
      */
     clearSelection() {
-      if (!this.selectionData.cache.length) {
+      if (!this.data.selection.length) {
         return this
       }
       if (this.isMultipleSelection) {

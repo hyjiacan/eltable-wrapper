@@ -8,7 +8,6 @@
   {
     "id": 1,
     "name": "name1",
-    "checked": true,
     "dept": "dept1",
     "remark": "remark1"
   },

@@ -10,8 +10,8 @@
       <div class="el-table-wrapper-header-text">
         <slot name="header" :data="slotData">
           <template v-if="isMultipleSelection && showSelectionInfo">
-            <span v-if="selectionData.cache.length">
-              已选择 {{ selectionData.cache.length }} 项
+            <span v-if="data.selection.length">
+              已选择 {{ data.selection.length }} 项
             </span>
             <span v-else>未选择项</span>
           </template>
@@ -47,7 +47,7 @@
         :header-row-style="tHeaderRowStyle"
         :header-cell-class-name="tHeaderCellClassName"
         :header-cell-style="tHeaderCellStyle"
-        :row-key="tRowKey || getDataId"
+        :row-key="tRowKey || getRowId"
         :empty-text="tEmptyText"
         :default-expand-all="tDefaultExpandAll"
         :expand-row-keys="tExpandRowKeys"
@@ -62,20 +62,9 @@
         :lazy="tLazy"
         :load="tLoad"
         @selection-change="onTableSelectionChanged"
-        @cell-mouse-enter="onCellMouseEnter"
-        @cell-mouse-leave="onCellMouseLeave"
-        @cell-click="onCellClick"
-        @cell-dblclick="onCellDblclick"
         @row-click="onRowClick"
-        @row-contextmenu="onRowContextmenu"
-        @row-dblclick="onRowDblclick"
-        @header-click="onHeaderClick"
-        @header-contextmenu="onHeaderContextmenu"
-        @sort-change="onSortChange"
-        @filter-change="onFilterChange"
         @current-change="onTableCurrentRowChanged"
-        @header-dragend="onHeaderDragend"
-        @expand-change="onExpandChange"
+        v-on="eventHandlers"
         :tree-props="tTreeProps"
         ref="table"
       >
@@ -92,8 +81,8 @@
                   :target="footerTarget">
       <slot name="footer" :data="slotData">
         <template v-if="isMultipleSelection && showSelectionInfo">
-          <span v-if="selectionData.cache.length">
-            已选择 {{ selectionData.cache.length }} 项
+          <span v-if="data.selection.length">
+            已选择 {{ data.selection.length }} 项
           </span>
           <span v-else-if="data.view.length">{{emptySelectionText}}</span>
         </template>
