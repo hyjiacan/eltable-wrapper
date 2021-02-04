@@ -166,52 +166,52 @@ export default {
         params.push(getNamedObject(match.groups.name, this.$attrs[attr]))
       }
       return merge.recursive(true, ...params, this.params)
-    },
+    }
     /**
      * 当前页面选中的项
      * @return {Object[]}
      */
-    currentSelection() {
-      const data = {}
-      this.data.view.forEach(row => {
-        const id = this.getRowId(row)
-        if (this.data.selection.some(item => this.getRowId(item) === id)) {
-          data[id] = row
-        }
-      })
-
-      return data
-    },
-    eventHandlers() {
-      const handlers = {}
-
-      const listenEvents = [
-        'cell-mouse-enter',
-        'cell-mouse-leave',
-        'cell-click',
-        'cell-dblclick',
-        'row-contextmenu',
-        'header-click',
-        'header-contextmenu',
-        'sort-change',
-        'filter-change',
-        'header-dragend',
-        'expand-change'
-      ]
-
-      const vm = this
-      listenEvents.forEach(eventName => {
-        const handler = this.$listeners[eventName]
-        if (handler) {
-          handlers[eventName] = function () {
-            const args = [].slice.apply(arguments)
-            args.unshift(eventName)
-            this.$emit.apply(vm, args)
-          }
-        }
-      })
-      return handlers
-    }
+    // currentSelection() {
+    //   const data = {}
+    //   this.data.view.forEach(row => {
+    //     const id = this.getRowId(row)
+    //     if (this.data.selection.some(item => this.getRowId(item) === id)) {
+    //       data[id] = row
+    //     }
+    //   })
+    //
+    //   return data
+    // }
+    // eventHandlers() {
+    //   const handlers = {}
+    //
+    //   const listenEvents = [
+    //     'cell-mouse-enter',
+    //     'cell-mouse-leave',
+    //     'cell-click',
+    //     'cell-dblclick',
+    //     'row-contextmenu',
+    //     'header-click',
+    //     'header-contextmenu',
+    //     'sort-change',
+    //     'filter-change',
+    //     'header-dragend',
+    //     'expand-change'
+    //   ]
+    //
+    //   const vm = this
+    //   listenEvents.forEach(eventName => {
+    //     const handler = this.$listeners[eventName]
+    //     if (handler) {
+    //       handlers[eventName] = function () {
+    //         const args = [].slice.apply(arguments)
+    //         args.unshift(eventName)
+    //         this.$emit.apply(vm, args)
+    //       }
+    //     }
+    //   })
+    //   return handlers
+    // }
     // tableProps() {
     //   const props = {}
     //   for (const prop in this.$attrs) {

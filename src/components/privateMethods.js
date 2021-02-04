@@ -261,7 +261,6 @@ export default {
           // 而不仅仅是 data id
           // 从而导致数据相同但引用不同时，选中的数据发生了变化
           // 也就是，ElTable 实际选中的数据，是 selection 中的对象，而不是 currentData 中的对象
-          console.log(this.currentData, this.data.selection)
           this.currentData.forEach(row => {
             // 仅选中当前页的数据
             const id = this.getRowId(row)

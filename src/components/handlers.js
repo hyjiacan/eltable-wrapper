@@ -113,7 +113,8 @@ export default {
 
       // 要保留选中状态的行
       const selectedRows = []
-      const unselectedRows = []
+      // const unselectedRows = []
+      const unselectedIds = []
       this.data.selection.forEach(row => {
         const id = this.getRowId(row)
         // 只处理当前页的数据
@@ -127,8 +128,21 @@ export default {
         if (currentPageSelectionIds.indexOf(id) !== -1) {
           selectedRows.push(row)
         } else {
+          // console.log(id, false)
+          // this._updateCheckField(row, false)
+          // unselectedRows.push(row)
+          unselectedIds.push(id)
+        }
+      })
+
+      let i = 0
+      this.data.cache.forEach(row => {
+        if (unselectedIds.some(id => this.getRowId(row) === id)) {
           this._updateCheckField(row, false)
-          unselectedRows.push(row)
+          i++
+        }
+        if (i === unselectedIds.length) {
+          return false
         }
       })
 
@@ -169,6 +183,66 @@ export default {
       }
       const args = [].slice.apply(arguments)
       args.unshift('row-click')
+      this.$emit.apply(this, args)
+    },
+    onRowContextmenu() {
+      const args = [].slice.apply(arguments)
+      args.unshift('row-contextmenu')
+      this.$emit.apply(this, args)
+    },
+    onRowDblclick() {
+      const args = [].slice.apply(arguments)
+      args.unshift('row-dblclick')
+      this.$emit.apply(this, args)
+    },
+    onHeaderClick() {
+      const args = [].slice.apply(arguments)
+      args.unshift('header-click')
+      this.$emit.apply(this, args)
+    },
+    onHeaderContextmenu() {
+      const args = [].slice.apply(arguments)
+      args.unshift('header-contextmenu')
+      this.$emit.apply(this, args)
+    },
+    onSortChange() {
+      const args = [].slice.apply(arguments)
+      args.unshift('sort-change')
+      this.$emit.apply(this, args)
+    },
+    onFilterChange() {
+      const args = [].slice.apply(arguments)
+      args.unshift('filter-change')
+      this.$emit.apply(this, args)
+    },
+    onHeaderDragend() {
+      const args = [].slice.apply(arguments)
+      args.unshift('header-dragend')
+      this.$emit.apply(this, args)
+    },
+    onExpandChange() {
+      const args = [].slice.apply(arguments)
+      args.unshift('expand-change')
+      this.$emit.apply(this, args)
+    },
+    onCellMouseEnter() {
+      const args = [].slice.apply(arguments)
+      args.unshift('cell-mouse-enter')
+      this.$emit.apply(this, args)
+    },
+    onCellMouseLeave() {
+      const args = [].slice.apply(arguments)
+      args.unshift('cell-mouse-leave')
+      this.$emit.apply(this, args)
+    },
+    onCellClick() {
+      const args = [].slice.apply(arguments)
+      args.unshift('cell-click')
+      this.$emit.apply(this, args)
+    },
+    onCellDblclick() {
+      const args = [].slice.apply(arguments)
+      args.unshift('cell-dblclick')
       this.$emit.apply(this, args)
     }
   }
