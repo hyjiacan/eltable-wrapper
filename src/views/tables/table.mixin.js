@@ -37,7 +37,7 @@ export default {
     },
     selectionChanged(e) {
       // eslint-disable-next-line
-      // console.log(e.selection, e.type, e.changed, e.allSelected)
+      // console.log(e.selection, e.allSelected)
     },
     onCheckParams(params, changed) {
       // 找出忽略的字段

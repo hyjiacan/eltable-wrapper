@@ -164,7 +164,10 @@ export default {
         this.data.selection.length === this.data.cache.length
 
       this.$emit('input', selectedRows)
-      this.$emit('selection-change', selectedRows, allSelected)
+      this.$emit('selection-change', {
+        selection: selectedRows,
+        allSelected
+      })
     },
     onRowClick() {
       // 拦截点击事件

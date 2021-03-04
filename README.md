@@ -290,7 +290,7 @@ const data = {
 |page-size-change|size: Number|表格每页显示的数据量变化|
 |page-index-change|index: Number|表格的页码变化|
 |select|selected: Object, prevSelected: Object|在单选时，行被点击后触发|
-|selection-change|{selection: Array, type: String, changed: Array, allSelected: Boolean}|多选时，选中或取消选中行时触发；当没有数据项时，`allSelected`始终为`false`|
+|selection-change|{selection: Array, allSelected: Boolean}|多选时，选中或取消选中行时触发；当没有数据项时，`allSelected`始终为`false`|
 |cell-mouse-enter|-|ElTable 事件|
 |cell-mouse-leave|-|ElTable 事件|
 |cell-click|-|ElTable 事件|
