@@ -1,6 +1,6 @@
 {
   "name": "@hyjiacan/eltable-wrapper",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "main": "lib/eltable-wrapper.common.js",
   "description": "Wrap component `ElTable` and `ElPagination` for `element-ui`",
   "repository": {
