@@ -2,8 +2,15 @@
  * 事件处理集合
  * @type {{}}
  */
-
 export default {
+  data() {
+    return {
+      selectionEventThrottleTimer: -1
+    }
+  },
+  beforeDestroy() {
+    clearTimeout(this.selectionEventThrottleTimer)
+  },
   methods: {
     resetScroll() {
       if (this.autoHeight) {
@@ -101,73 +108,83 @@ export default {
         return
       }
 
-      // 获取当前页数据的 ID 集合，用于判断选中项状态
-      const currentPageIds = this.currentData.map(row => this.getRowId(row))
-      // 获取当前页的选中项的 ID 集合
-      const currentPageSelectionIds = selection.map(row => this.getRowId(row))
+      // 节流执行
+      clearTimeout(this.selectionEventThrottleTimer)
+      this.selectionEventThrottleTimer = setTimeout(() => {
+        console.log(this.data.selection.length, selection.length)
+        // 获取当前页数据的 ID 集合，用于判断选中项状态
+        const currentPageIds = this.currentData.map(row => this.getRowId(row))
+        // 获取当前页的选中项的 ID 集合
+        const currentPageSelectionIds = selection.map(row => this.getRowId(row))
 
-      // 先移除未选中的项
-      // 即此项已经在 data.selection 中，但当前的参数 selection 中不包含
-      // 但要将数据限制在当前页面的数据 currentData
-      // 移除数据太麻烦，不如重新创建数组来得方便
+        // 先移除未选中的项
+        // 即此项已经在 data.selection 中，但当前的参数 selection 中不包含
+        // 但要将数据限制在当前页面的数据 currentData
+        // 移除数据太麻烦，不如重新创建数组来得方便
 
-      // 要保留选中状态的行
-      const selectedRows = []
-      // const unselectedRows = []
-      const unselectedIds = []
-      this.data.selection.forEach(row => {
-        const id = this.getRowId(row)
-        // 只处理当前页的数据
-        // 其它的选中项，直接追加上
-        if (currentPageIds.indexOf(id) === -1) {
+        // 要保留选中状态的行
+        const selectedRows = []
+        const unselectedRows = []
+        const unselectedIds = []
+        this.data.selection.forEach(row => {
+          const id = this.getRowId(row)
+          // 只处理当前页的数据
+          // 其它的选中项，直接追加上
+          if (currentPageIds.indexOf(id) === -1) {
+            selectedRows.push(row)
+            return
+          }
+          // 当前行是否选中
+          // 那么就保留此行
+          if (currentPageSelectionIds.indexOf(id) !== -1) {
+            selectedRows.push(row)
+          } else {
+            // console.log(id, false)
+            // this._updateCheckField(row, false)
+            unselectedRows.push(row)
+            unselectedIds.push(id)
+          }
+        })
+
+        let i = 0
+        this.data.cache.forEach(row => {
+          if (unselectedIds.some(id => this.getRowId(row) === id)) {
+            this._updateCheckField(row, false)
+            i++
+          }
+          if (i === unselectedIds.length) {
+            return false
+          }
+        })
+
+        const newselectRows = []
+
+        // 再添加新选中的项
+        selection.forEach(row => {
+          const id = this.getRowId(row)
+          if (this.data.selection.some(item => this.getRowId(item) === id)) {
+            return
+          }
+          newselectRows.push(row)
           selectedRows.push(row)
-          return
-        }
-        // 当前行是否选中
-        // 那么就保留此行
-        if (currentPageSelectionIds.indexOf(id) !== -1) {
-          selectedRows.push(row)
-        } else {
-          // console.log(id, false)
-          // this._updateCheckField(row, false)
-          // unselectedRows.push(row)
-          unselectedIds.push(id)
-        }
-      })
+          this._updateCheckField(row, true)
+          this.data.selection.push(row)
+        })
 
-      let i = 0
-      this.data.cache.forEach(row => {
-        if (unselectedIds.some(id => this.getRowId(row) === id)) {
-          this._updateCheckField(row, false)
-          i++
-        }
-        if (i === unselectedIds.length) {
-          return false
-        }
-      })
+        this.data.selection = selectedRows
 
-      // 再添加新选中的项
-      selection.forEach(row => {
-        const id = this.getRowId(row)
-        if (this.data.selection.some(item => this.getRowId(item) === id)) {
-          return
-        }
-        selectedRows.push(row)
-        this._updateCheckField(row, true)
-        this.data.selection.push(row)
-      })
+        // 是否选择了所有数据项
+        const allSelected = this.data.selection.length > 0 &&
+          this.data.selection.length === this.data.cache.length
 
-      this.data.selection = selectedRows
-
-      // 是否选择了所有数据项
-      const allSelected = this.data.selection.length > 0 &&
-        this.data.selection.length === this.data.cache.length
-
-      this.$emit('input', selectedRows)
-      this.$emit('selection-change', {
-        selection: selectedRows,
-        allSelected
-      })
+        this.$emit('input', selectedRows)
+        this.$emit('selection-change', {
+          selection: selectedRows,
+          add: newselectRows,
+          remove: unselectedRows,
+          allSelected
+        })
+      }, 100)
     },
     onRowClick() {
       // 拦截点击事件
@@ -187,66 +204,33 @@ export default {
       const args = [].slice.apply(arguments)
       args.unshift('row-click')
       this.$emit.apply(this, args)
-    },
-    onRowContextmenu() {
-      const args = [].slice.apply(arguments)
-      args.unshift('row-contextmenu')
-      this.$emit.apply(this, args)
-    },
-    onRowDblclick() {
-      const args = [].slice.apply(arguments)
-      args.unshift('row-dblclick')
-      this.$emit.apply(this, args)
-    },
-    onHeaderClick() {
-      const args = [].slice.apply(arguments)
-      args.unshift('header-click')
-      this.$emit.apply(this, args)
-    },
-    onHeaderContextmenu() {
-      const args = [].slice.apply(arguments)
-      args.unshift('header-contextmenu')
-      this.$emit.apply(this, args)
-    },
-    onSortChange() {
-      const args = [].slice.apply(arguments)
-      args.unshift('sort-change')
-      this.$emit.apply(this, args)
-    },
-    onFilterChange() {
-      const args = [].slice.apply(arguments)
-      args.unshift('filter-change')
-      this.$emit.apply(this, args)
-    },
-    onHeaderDragend() {
-      const args = [].slice.apply(arguments)
-      args.unshift('header-dragend')
-      this.$emit.apply(this, args)
-    },
-    onExpandChange() {
-      const args = [].slice.apply(arguments)
-      args.unshift('expand-change')
-      this.$emit.apply(this, args)
-    },
-    onCellMouseEnter() {
-      const args = [].slice.apply(arguments)
-      args.unshift('cell-mouse-enter')
-      this.$emit.apply(this, args)
-    },
-    onCellMouseLeave() {
-      const args = [].slice.apply(arguments)
-      args.unshift('cell-mouse-leave')
-      this.$emit.apply(this, args)
-    },
-    onCellClick() {
-      const args = [].slice.apply(arguments)
-      args.unshift('cell-click')
-      this.$emit.apply(this, args)
-    },
-    onCellDblclick() {
-      const args = [].slice.apply(arguments)
-      args.unshift('cell-dblclick')
-      this.$emit.apply(this, args)
+    }
+  },
+  computed: {
+    boundEvents() {
+      const events = [
+        'cell-mouse-enter',
+        'cell-mouse-leave',
+        'cell-click',
+        'cell-dblclick',
+        'row-contextmenu',
+        'row-dblclick',
+        'header-click',
+        'header-contextmenu',
+        'sort-change',
+        'filter-change',
+        'current-change',
+        'header-dragend',
+        'expand-change'
+      ]
+      const bound = {}
+      for (const eventName of events) {
+        const handler = this.$listeners[eventName]
+        if (handler) {
+          bound[eventName] = handler
+        }
+      }
+      return bound
     }
   }
 }

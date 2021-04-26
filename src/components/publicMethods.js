@@ -217,14 +217,14 @@ export default {
       return this
     },
     /**
-     * 全选，仅多选时有效
+     * 全选当前页数据，仅多选时有效
      * @return {[]} 选中的数据项
      */
     selectAll() {
       if (!this.isMultipleSelection) {
         this._throwError('Method "selectAll" only allowed for multiple selection')
       }
-      let data = this.advanceSelection ? this.data.cache : this.currentData
+      let data = this.currentData
       this.select(data)
       return data
     },
@@ -246,14 +246,14 @@ export default {
       return this
     },
     /**
-     * 取消全选，仅多选时有效
+     * 取消全选当前页数据，仅多选时有效
      * @return {[]} 取消选中的数据项
      */
     deselectAll() {
       if (!this.isMultipleSelection) {
         this._throwError('Method "deselectAll" only allowed for multiple selection')
       }
-      let data = this.advanceSelection ? this.data.cache : this.currentData
+      let data = this.currentData
       this.deselect(data)
       return data
     },
@@ -276,6 +276,17 @@ export default {
       rows.forEach(row => {
         this.$refs.table.toggleRowSelection(row)
       })
+      return this
+    },
+    /**
+     * 切换当前页数据的选中状态，仅多选时有效
+     */
+    toggleAll() {
+      if (!this.isMultipleSelection) {
+        this._throwError('Method "toggleAll" only allowed for multiple selection')
+      }
+      let data = this.currentData
+      this.toggle(data)
       return this
     },
     /**
@@ -316,6 +327,10 @@ export default {
     },
     sort(prop, order) {
       this.$refs.table.sort(prop, order)
+      return this
+    },
+    toggleRowExpansion(row, expanded) {
+      this.$refs.table.toggleRowExpansion(row, expanded)
       return this
     }
   }

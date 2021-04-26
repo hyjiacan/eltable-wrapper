@@ -17,7 +17,11 @@
     ref="table"
   >
     <template v-slot:header="{data}">
-      <div>selected: {{ data.selected }}</div>
+      <div>
+        <span>selected: {{ data.selected }}</span>
+        <button @click="selectAll()">全选</button>
+        <button @click="deselectAll()">取消全选</button>
+      </div>
     </template>
     <template v-slot:pagerPrepend>
       <span>触发的字段</span>
@@ -65,6 +69,12 @@ export default {
           reject(response.data)
         })
       })
+    },
+    selectAll() {
+      this.$refs.table.selectAll()
+    },
+    deselectAll() {
+      this.$refs.table.deselectAll()
     }
   }
 }

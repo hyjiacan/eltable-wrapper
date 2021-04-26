@@ -11,7 +11,9 @@
 ```bash
 npm install @hyjiacan/eltable-wrapper
 ```
+
 或
+
 ```bash
 yarn add @hyjiacan/eltable-wrapper
 ```
@@ -19,6 +21,7 @@ yarn add @hyjiacan/eltable-wrapper
 ## 快速上手
 
 *main.js*
+
 ```javascript
 import Vue from 'vue'
 import ElTableWrapper from '@hyjiacan/ElTableWrapper'
@@ -26,31 +29,33 @@ import '@hyjiacan/eltable-wrapper/lib/eltable-wrapper.css'
 
 // 设置组件的默认值
 const defaults = {
-    // ajax请求函数
-    ajax: (e)=>{},
-    // ajax请求method
-    method: 'get',
-    // 每页显示的数据量
-    size: 10,
-    // 分页类型
-    type: 'l'
+  // ajax请求函数
+  ajax: (e) => {
+  },
+  // ajax请求method
+  method: 'get',
+  // 每页显示的数据量
+  size: 10,
+  // 分页类型
+  type: 'l'
 }
 Vue.use(ElTableWrapper, defaults)
 ```
 
 ```vue
+
 <el-table-wrapper
     url="/path/to/url"
     :params="{p0: 1}"
     @ajax-error="onAjaxError"
-    >
-  <el-table-column type="selection"></el-table-column>
-  <el-table-column prop="id"></el-table-column>
-  <el-table-column prop="name"></el-table-column>
+>
+<el-table-column type="selection"></el-table-column>
+<el-table-column prop="id"></el-table-column>
+<el-table-column prop="name"></el-table-column>
 </el-table-wrapper>
 <script>
 export default {
-  methods:{
+  methods: {
     onAjaxError(e) {
       console.error(e)
     }
@@ -69,14 +74,15 @@ import ElTableWrapper from '@hyjiacan/ElTableWrapper'
 
 // 设置组件的默认值
 const defaults = {
-    // ajax请求函数
-    ajax: (e)=>{},
-    // ajax请求method
-    method: 'get',
-    // 每页显示的数据量
-    size: 10,
-    // 分页类型
-    type: 'l'
+  // ajax请求函数
+  ajax: (e) => {
+  },
+  // ajax请求method
+  method: 'get',
+  // 每页显示的数据量
+  size: 10,
+  // 分页类型
+  type: 'l'
 }
 Vue.use(ElTableWrapper, defaults)
 ```
@@ -116,17 +122,18 @@ Vue.use(ElTableWrapper, defaults)
 `check-field` 示例:
 
 ```vue
+
 <template>
-    <el-table-wrapper check-field="isSelected" selection="multiple">
-        <template v-slot="{row}">
-            {{row.isSelected}}
-        </template>
-    </el-table-wrapper>
+  <el-table-wrapper check-field="isSelected" selection="multiple">
+    <template v-slot="{row}">
+      {{row.isSelected}}
+    </template>
+  </el-table-wrapper>
 </template>
 ```
+
 > `check-field` 通常与 `toggle-on-row-click` 属性联合使用，以在不使用 `checkbox`（选择列）的时候用来标记行的选中状态。
 > 为保证数据能正确响应，最好在数据加载到表格前就加上 `check-field`(即上例中的 `_isSelected` 属性 ) 字段。
-
 
 ### AJAX属性
 
@@ -172,28 +179,29 @@ Vue.use(ElTableWrapper, defaults)
 
 ```javascript
 ajax({
-    option: {...}
+  option: {...}
 })
 ```
 
 上面代码中 `option` 就是 `ajax-option` 的值。
 
-但有时候我们仅仅需要设置其中的一个或几个属性，
-此时再写一个对象就显示繁琐了。于是，就支持了以下的简写：
+但有时候我们仅仅需要设置其中的一个或几个属性， 此时再写一个对象就显示繁琐了。于是，就支持了以下的简写：
 
 ```vue
+
 <el-table-wrapper
-  :ajax-option-foo="true"
-  :ajax-option-bar="false"
-  ajax-option-foobar-fool="ish"
+    :ajax-option-foo="true"
+    :ajax-option-bar="false"
+    ajax-option-foobar-fool="ish"
 ></el-table-wrapper>
 ```
 
 以上写法等价于
 
 ```vue
+
 <el-table-wrapper
-  :ajax-option="{
+    :ajax-option="{
     foo: true,
     bar: false,
     foobar: {
@@ -214,7 +222,6 @@ ajax({
 |inc-size|String/Number|80|增量分页时每次向服务器请求的数据量|
 |param-inc|String|lastId|增量加载数据时，增量参数名|
 |inc-id|String|-|增量加载数据时，数据项的标识字段，未指定时，使用 `idField` 的值,用法与 `idField` 相同|
-
 
 #### 服务器分页特有属性
 
@@ -245,30 +252,33 @@ ajax({
 |remove|data: Array/Object/String/Number|this|从数据缓存中移除数据项。参数可以是数据项，也可以是数据对应`id-field` 指定值|
 |getRowId|row: Object, \[idField]: string|this|根配置的 idField 读取数据项的 id|
 |select|rows: Object/Array|this|选中指定的行。参数可以是数据项，也可以是数据对应`id-field` 指定值|
-|selectAll|-|Array|全选，仅在多选时生效，返回选中的数据项|
+|selectAll|-|Array|全选当前页数据，仅在多选时生效，返回选中的数据项|
 |deselect|rows: Object/Array|this|取消选中指定的行，参数可以是数据项，也可以是数据对应`id-field` 指定值|
-|deselectAll|-|Array|取消全选，仅在多选时生效，返回取消选中的数据项|
+|deselectAll|-|Array|取消全选当前页数据，仅在多选时生效，返回取消选中的数据项|
+|toggle|rows: Object/Array|this|切换指定的行的选中状态，参数可以是数据项，也可以是数据对应`id-field` 指定值|
+|toggleAll|-|this|切换当前页的选中状态，仅在多选时生效|
 |getSelection|-|Array/Object|获取选中的行，单选时返回选中的行对象，多选时返回行集合|
 |clearSelection|-|this|清除所有选中|
 |clearSort|-|this|`ElTable` 的 `clearSort` 方法|
 |clearFilter|-|this|`ElTable` 的 `clearFilter` 方法|
 |doLayout|-|this|`ElTable` 的 `doLayout` 方法|
-|sort|-|this|`doLayout` 的 `sort` 方法|
+|sort|-|this|`ElTable` 的 `doLayout` 方法|
+|toggleRowExpansion|-|this|`ElTable` 的 `toggleRowExpansion` 方法|
 
 `info()` 返回值:
 
 ```javascript
 const data = {
-    // 页码
-    pageIndex: Number,
-    // 总页数
-    pageCount: Number,
-    // 每页的数据量
-    pageSize: Number,
-    // 总数据量
-    dataSize: Number,
-    // 选中数量
-    selected: Number
+  // 页码
+  pageIndex: Number,
+  // 总页数
+  pageCount: Number,
+  // 每页的数据量
+  pageSize: Number,
+  // 总数据量
+  dataSize: Number,
+  // 选中数量
+  selected: Number
 }
 ```
 
@@ -290,7 +300,7 @@ const data = {
 |page-size-change|size: Number|表格每页显示的数据量变化|
 |page-index-change|index: Number|表格的页码变化|
 |select|selected: Object, prevSelected: Object|在单选时，行被点击后触发|
-|selection-change|{selection: Array, allSelected: Boolean}|多选时，选中或取消选中行时触发；当没有数据项时，`allSelected`始终为`false`|
+|selection-change|{selection: Array, add: Array, remove: Array, allSelected: Boolean}|详见 [selection-change](#selection-change)|
 |cell-mouse-enter|-|ElTable 事件|
 |cell-mouse-leave|-|ElTable 事件|
 |cell-click|-|ElTable 事件|
@@ -304,6 +314,29 @@ const data = {
 |filter-change|-|ElTable 事件|
 |header-dragend|-|ElTable 事件|
 |expand-change|-|ElTable 事件|
+
+### selection-change
+
+此事件在启用了多选时(`selection=multiple`)，选中或取消选中行时触发。
+
+参数说明：
+
+```js
+e = {
+  selection: [],
+  add: [],
+  remove: [],
+  allSelected: []
+}
+```
+
+- `selection` 当前选中的行集合
+- `add` 此次新选中的行集合
+- `remove` 此次被移除选中的行集合
+- `allSelected` 标记是否已经选中了所有当前缓存的数据,当没有数据项时，`allSelected`始终为`false`
+    - `type=l` 时，表示 `local-data` 指定的所有数据
+    - `type=i` 时，表示已经加载的所有数据
+    - `type=s` 时，表示当前页的数据
 
 ## 插槽
 
@@ -329,18 +362,18 @@ const data = {
 
 ```javascript
 const data = {
-    // 页码
-    pageIndex: Number,
-    // 总页数
-    pageCount: Number,
-    // 每页的数据量
-    pageSize: Number,
-    // 总数据量
-    dataSize: Number,
-    // 当前页的数据量
-    viewSize: Number,
-    // 选中数量
-    selected: Number
+  // 页码
+  pageIndex: Number,
+  // 总页数
+  pageCount: Number,
+  // 每页的数据量
+  pageSize: Number,
+  // 总数据量
+  dataSize: Number,
+  // 当前页的数据量
+  viewSize: Number,
+  // 选中数量
+  selected: Number
 }
 ```
 
@@ -348,12 +381,12 @@ const data = {
 
 ```javascript
 const data = {
-    pageIndex: Number,
-    pageCount: Number,
-    pageSize: Number,
-    dataSize: Number,
-    selected: Number,
-    viewSize: Number,
-    position: String['top', 'bottom']
+  pageIndex: Number,
+  pageCount: Number,
+  pageSize: Number,
+  dataSize: Number,
+  selected: Number,
+  viewSize: Number,
+  position: String['top', 'bottom']
 }
 ```

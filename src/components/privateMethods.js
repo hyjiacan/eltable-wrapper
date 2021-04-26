@@ -136,6 +136,8 @@ export default {
             this._loadIncData()
           })
         }
+      }).catch(() => {
+        this.data.view = []
       })
     },
     /**
@@ -162,6 +164,8 @@ export default {
         this.data.view = this.data.cache = data[this.listField] || []
         this._updatePageCount()
         this._updateSelection()
+      }).catch(() => {
+        this.data.view = this.data.cache = []
       })
     },
     /**
@@ -191,6 +195,8 @@ export default {
           this.data.count = data[this.totalField]
           this.data.view = this.data.cache = data[this.listField] || []
         }
+      }).catch(() => {
+        this.data.view = this.data.cache = []
       })
     },
     _invokeResponseHandler(data) {
